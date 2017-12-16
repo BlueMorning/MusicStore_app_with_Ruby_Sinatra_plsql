@@ -10,19 +10,19 @@ DROP TABLE IF EXISTS artists;
 -- Table artists
 CREATE TABLE artists (
   art_id SERIAL4 PRIMARY KEY,
-  art_name VARCHAR(50) NOT NULL
+  art_name VARCHAR(50) UNIQUE NOT NULL
 );
 
 -- Table genres
 CREATE TABLE genres (
   gen_id SERIAL4 PRIMARY KEY,
-  gen_name VARCHAR(50) NOT NULL
+  gen_name VARCHAR(50) UNIQUE NOT NULL
 );
 
 -- Table albums
 CREATE TABLE albums (
   alb_id SERIAL4 PRIMARY KEY,
-  alb_title VARCHAR(50) NOT NULL,
+  alb_title VARCHAR(50) UNIQUE NOT NULL,
   alb_price INT2 NOT NULL,
   alb_cover_image VARCHAR(50),
   alb_art_id INT4 REFERENCES artists(art_id) NOT NULL,
@@ -35,19 +35,19 @@ CREATE TABLE stocks (
   sto_qty_available INT2 NOT NULL,
   sto_qty_min INT2 NOT NULL,
   sto_qty_max INT2 NOT NULL,
-  sto_alb_id INT4 REFERENCES albums(alb_id) NOT NULL
+  sto_alb_id INT4 REFERENCES albums(alb_id) UNIQUE NOT NULL
 );
 
 -- Table suppliers
 CREATE TABLE suppliers (
   sup_id SERIAL4 PRIMARY KEY,
-  sup_name VARCHAR(50) NOT NULL
+  sup_name VARCHAR(50) UNIQUE NOT NULL
 );
 
 -- Table customers
 CREATE TABLE customers (
   cus_id SERIAL4 PRIMARY KEY,
-  cus_name VARCHAR(50) NOT NULL
+  cus_name VARCHAR(50) UNIQUE NOT NULL
 );
 
 -- Table purchases
