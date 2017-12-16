@@ -29,6 +29,18 @@ class Genre
     return genre
   end
 
+  # Delete from the table genres the given gen_id
+  def self.delete_by_id(gen_id)
+    query   = "DELETE FROM genres WHERE gen_id = $1"
+    DbHelper.run_sql(query, [gen_id])
+  end
+
+  # Find the genre on the given gen_id
+  def self.find_by_id(gen_id)
+    query   = "SELECT gen_id, gen_name FROM genres WHERE gen_id = $1"
+    return DbHelper.run_sql_and_return_one_object(query, [gen_id], Genre)
+  end
+
 
 
   private
