@@ -16,7 +16,7 @@ class Album
   end
 
 
-
+  # Perform an insert or an update depending on the value of ald_id
   def save()
     if(@alb_id)
       update()
