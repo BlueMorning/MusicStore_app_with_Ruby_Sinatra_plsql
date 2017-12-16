@@ -24,11 +24,23 @@ class Artist
 
 
   # Class methods
-  # Delete from the table artists the given object.
+  # Delete from the table artists the given object and return the object
   def self.delete(artist)
     query   = "DELETE FROM artists WHERE art_id = $1"
     DbHelper.run_sql(query, [artist.art_id])
     return artist
+  end
+
+  # Delete from the table artists the given art_id
+  def self.delete_by_id(art_id)
+    query   = "DELETE FROM artists WHERE art_id = $1"
+    DbHelper.run_sql(query, [art_id])
+  end
+
+  # Find the artist on the given art_id
+  def self.find_by_id(art_id)
+    query   = "SELECT art_id, art_name FROM artists WHERE art_id = $1"
+    return DbHelper.run_sql_and_return_one_object(query, [art_id], Artist)
   end
 
 
