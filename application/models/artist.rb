@@ -20,6 +20,15 @@ class Artist
 
 
 
+  # Class methods
+  def self.delete(artist)
+    query   = "DELETE FROM artists WHERE art_id = $1"
+    DbHelper.run_sql(query, [artist.art_id])
+    return artist
+  end
+
+
+
   private
 
   # Insert the artist in the Artist table
