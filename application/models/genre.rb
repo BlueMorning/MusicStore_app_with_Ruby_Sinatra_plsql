@@ -2,11 +2,12 @@ require_relative('./../helper/dbhelper')
 
 class Genre
 
-  attr_reader :id, :name
+  attr_reader :gen_id, :gen_name
+  attr_accessor :gen_name
 
   def initialize(options)
     @gen_id   = options['gen_id'] if options['gen_id']
-    @gen_name = options['name']
+    @gen_name = options['gen_name']
   end
 
 
@@ -48,7 +49,7 @@ class Genre
   # Insert the genre in the Genres table
   def insert()
     query   = "INSERT INTO genres (gen_name) VALUES ($1) RETURNING gen_id"
-    @gen_id = DbHelper.run_sql(query, [@gen_name])
+    @gen_id = DbHelper.run_sql_return_first_row_column_value(query, [@gen_name], 'gen_id')
   end
 
   # Update the genre in the Genres table
