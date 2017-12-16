@@ -20,6 +20,17 @@ class DbHelper
     return result
   end
 
+
+  def self.run_sql_no_prep(sql)
+    begin
+      db_connection = PG.connect({dbname: "music_store", host: "localhost"})
+      db_connection.exec(sql)
+    ensure
+      db_connection.close() if db_connection != nil
+    end
+  end
+
+
   # sql: query to execute.
   # params : array of the parameters used in the query.
   # return the value of the given column of the first row
