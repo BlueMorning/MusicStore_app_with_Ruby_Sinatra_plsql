@@ -55,7 +55,7 @@ class Genre
   # Update the genre in the Genres table
   def update()
     query   = "UPDATE genres SET gen_name = $1 WHERE gen_id = $2"
-    @gen_id = DbHelper.run_sql(query, [@gen_name, @gen_id])
+    DbHelper.run_sql(query, [@gen_name, @gen_id])
   end
 
 
