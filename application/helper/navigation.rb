@@ -1,6 +1,7 @@
 class NavMusicStore
 
-  ROOT = "/mstore"
+  ROOT             = "/mstore"
+  DATA_IMAGES_PATH = "/data_images/"
 
 end
 
