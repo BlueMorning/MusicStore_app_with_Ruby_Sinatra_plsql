@@ -21,14 +21,14 @@ get NavArtists::GET_NEW do
   erb(:"artists/new_or_edit")
 end
 
-# Create a new album entry in the stock from the form
+# Create a new artist from the form
 post NavArtists::GET_INDEX do
   @artist = Artist.new(params)
   @artist.save()
   redirect(:"#{NavArtists::GET_INDEX}")
 end
 
-# Display the stocks of albums whose name match with the research
+# Display the artists whose name match with the research
 get NavArtists::GET_WITH_FILTERS do
   @art_name = params['art_name']
   @artists  = Artist.search_all_by_name(@art_name)
@@ -36,16 +36,20 @@ get NavArtists::GET_WITH_FILTERS do
 end
 
 
-# Form to edit an album
+# Form to edit an artist
 get NavArtists::GET_EDIT_BY_ID do
-
-
+  @artist             = Artist.find_by_id(params['art_id'])
+  @form_title         = "Modify Artist"
+  @form_action        = NavArtists.nav_post_update_by_id(@artist.art_id)
+  @form_submit_label  = "Update"
+  erb(:"artists/new_or_edit")
 end
 
-# Update the modifications of the album
+# Update the modifications on the artist
 post NavArtists::POST_UPDATE_BY_ID do
-
-
+  @artist = Artist.new(params)
+  @artist.save()
+  redirect(:"#{NavArtists::GET_INDEX}")
 end
 
 # Delete the album on its id

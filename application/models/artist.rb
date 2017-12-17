@@ -13,8 +13,8 @@ class Artist
     @art_photo          = @art_name.downcase.sub(" ","")
     @art_photo_path     = NavMusicStore::DATA_IMAGES_PATH + @art_photo + ".jpg"
     @nav_to_albums      = NavStockAlbums::GET_WITH_FILTERS + "art_id=#{@art_id}"
-    @nav_to_edit_form   = NavArtists::GET_EDIT_BY_ID
-    @nav_to_delete      = NavArtists::POST_DELETE_BY_ID
+    @nav_to_edit_form   = NavArtists.nav_get_edit_by_id(@art_id)
+    @nav_to_delete      = NavArtists.nav_post_delete_by_id(@art_id)
   end
 
 
