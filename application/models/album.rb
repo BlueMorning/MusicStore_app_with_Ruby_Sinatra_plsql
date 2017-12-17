@@ -7,14 +7,22 @@ class Album
   attr_accessor :alb_title, :alb_price, :alb_cover_image, :alb_art_id, :alb_gen_id
 
   def initialize(options)
-    @alb_id             = options['alb_id'] if options['alb_id']
-    @alb_title          = options['alb_title']
-    @alb_price          = options['alb_price']
-    @alb_cover_image    = options['alb_cover_image']
-    @alb_art_id         = options['alb_art_id']
-    @alb_gen_id         = options['alb_gen_id']
+    if(options != nil)
+      @alb_id             = options['alb_id'] if options['alb_id']
+      @alb_title          = options['alb_title']
+      @alb_price          = options['alb_price']
+      @alb_cover_image    = options['alb_cover_image']
+      @alb_art_id         = options['alb_art_id']
+      @alb_gen_id         = options['alb_gen_id']
+    else
+      @alb_id             = 0
+      @alb_title          = ""
+      @alb_price          = 0
+      @alb_cover_image    = ""
+      @alb_art_id         = 0
+      @alb_gen_id         = 0
+    end
   end
-
 
   # Perform an insert or an update depending on the value of ald_id
   def save()
