@@ -54,6 +54,6 @@ end
 
 # Delete the album on its id
 post NavArtists::POST_DELETE_BY_ID do
-
-
+  Artist.delete_by_id(params['art_id'])
+  redirect(:"#{NavArtists::GET_INDEX}")
 end
