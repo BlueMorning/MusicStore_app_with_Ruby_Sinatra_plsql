@@ -10,7 +10,8 @@ DROP TABLE IF EXISTS artists;
 -- Table artists
 CREATE TABLE artists (
   art_id SERIAL4 PRIMARY KEY,
-  art_name VARCHAR(50) UNIQUE NOT NULL
+  art_name  VARCHAR(50) UNIQUE NOT NULL,
+  art_photo VARCHAR(50) UNIQUE NOT NULL
 );
 
 -- Table genres
