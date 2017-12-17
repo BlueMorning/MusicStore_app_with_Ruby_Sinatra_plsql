@@ -3,11 +3,14 @@ require_relative('./../helper/dbhelper')
 class Genre
 
   attr_reader :gen_id, :gen_name
-  attr_accessor :gen_name
+  attr_accessor :gen_name, :nav_to_albums, :nav_to_edit_form, :nav_to_delete
 
   def initialize(options)
     @gen_id   = options['gen_id'] if options['gen_id']
     @gen_name = options['gen_name']
+    @nav_to_albums      = NavStockAlbums::GET_WITH_FILTERS + "gen_id=#{@gen_id}"
+    @nav_to_edit_form   = NavGenres.nav_get_edit_by_id(@gen_id)
+    @nav_to_delete      = NavGenres.nav_post_delete_by_id(@gen_id)
   end
 
 
@@ -23,6 +26,10 @@ class Genre
 
 
   # Class methods
+  def self.link_create_new_genre()
+    return NavGenres::GET_NEW
+  end
+
   # Delete from the table genres the given object
   def self.delete(genre)
     query   = "DELETE FROM genres WHERE gen_id = $1"
@@ -42,6 +49,23 @@ class Genre
     return DbHelper.run_sql_and_return_one_object(query, [gen_id], Genre)
   end
 
+  # Find the genre on the given gen_id
+  def self.find_by_id(gen_id)
+    query   = "SELECT gen_id, gen_name FROM genres WHERE gen_id = $1"
+    return DbHelper.run_sql_and_return_one_object(query, [gen_id], Genre)
+  end
+
+  # Find all the genres
+  def self.find_all()
+    query   = "SELECT gen_id, gen_name FROM genres"
+    return DbHelper.run_sql_and_return_many_objects(query, [], Genre)
+  end
+
+  # Find all the genres
+  def self.search_all_by_name(gen_name)
+    query   = "SELECT gen_id, gen_name FROM genres WHERE lower(gen_name) LIKE lower($1) #{DbHelper::NB_ROWS_LIMIT}"
+    return DbHelper.run_sql_and_return_many_objects(query, ["%#{gen_name}%"], Genre)
+  end
 
 
   private
