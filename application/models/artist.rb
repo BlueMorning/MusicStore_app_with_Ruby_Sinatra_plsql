@@ -1,4 +1,5 @@
 require_relative('./../helper/dbhelper')
+require_relative('./../helper/navigation')
 
 
 class Artist
@@ -7,8 +8,13 @@ class Artist
   attr_accessor :art_name
 
   def initialize(options)
-    @art_id   = options['art_id'] if options['art_id']
-    @art_name = options['art_name']
+    @art_id             = options['art_id'] if options['art_id']
+    @art_name           = options['art_name']
+
+
+    @nav_to_albums     = NavArtists::GET_EDIT_BY_ID
+    @nav_to_edit_form  = NavArtists::GET_EDIT_BY_ID
+    @nav_to_delete     = NavArtists::POST_DELETE_BY_ID
   end
 
 
@@ -20,6 +26,7 @@ class Artist
       insert()
     end
   end
+
 
 
 
@@ -44,11 +51,16 @@ class Artist
   end
 
   # Find all the artists whose name matches
-  def self.find_all_by_name(art_name)
-    query   = "SELECT art_id, art_name FROM artists WHERE lower(art_name) = $1 #{DBHelper.NB_ROWS_LIMIT}"
-    return DbHelper.run_sql_and_return_one_object(query, ["%#{art_name}%"], Artist)
+  def self.find_all()
+    query   = "SELECT art_id, art_name FROM artists"
+    return DbHelper.run_sql_and_return_many_objects(query, [], Artist)
   end
 
+  # Find all the artists
+  def self.search_all_by_name(art_name)
+    query   = "SELECT art_id, art_name FROM artists WHERE lower(art_name) LIKE lower($1) #{DbHelper::NB_ROWS_LIMIT}"
+    return DbHelper.run_sql_and_return_many_objects(query, ["%#{art_name}%"], Artist)
+  end
 
 
   private
