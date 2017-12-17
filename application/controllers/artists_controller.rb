@@ -14,12 +14,22 @@ end
 
 # Form to create a new album entry in the stock
 get NavArtists::GET_NEW do
+  @artist             = Artist.new({"art_name" => ""})
+  @form_title         = "New Artist"
+  @form_action        = NavArtists::POST_NEW
+  @form_submit_label  = "Save"
+  erb(:"artists/new_or_edit")
+end
 
-
+# Create a new album entry in the stock from the form
+post NavArtists::GET_INDEX do
+  @artist = Artist.new(params)
+  @artist.save()
+  redirect(:"#{NavArtists::GET_INDEX}")
 end
 
 # Display the stocks of albums whose name match with the research
-get NavArtists::GET_BY_NAME do
+get NavArtists::GET_WITH_FILTERS do
   @art_name = params['art_name']
   @artists  = Artist.search_all_by_name(@art_name)
   erb(:"artists/index")
