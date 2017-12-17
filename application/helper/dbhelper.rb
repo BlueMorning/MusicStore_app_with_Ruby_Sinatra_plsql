@@ -5,7 +5,7 @@ require('pg')
 class DbHelper
 
   # Constant to be used in select queries to limit the number of returned row
-  NB_ROWS_LIMIT = 100
+  NB_ROWS_LIMIT = "LIMIT 100"
 
   # sql: query to execute.
   # params : array of the parameters used in the query.
