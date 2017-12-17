@@ -43,6 +43,12 @@ class Artist
     return DbHelper.run_sql_and_return_one_object(query, [art_id], Artist)
   end
 
+  # Find all the artists whose name matches
+  def self.find_all_by_name(art_name)
+    query   = "SELECT art_id, art_name FROM artists WHERE lower(art_name) = $1 #{DBHelper.NB_ROWS_LIMIT}"
+    return DbHelper.run_sql_and_return_one_object(query, ["%#{art_name}%"], Artist)
+  end
+
 
 
   private
