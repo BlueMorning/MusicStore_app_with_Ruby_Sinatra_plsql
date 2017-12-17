@@ -5,16 +5,16 @@ require_relative('./../helper/navigation')
 class Artist
 
   attr_reader :art_id, :art_name
-  attr_accessor :art_name
+  attr_accessor :art_name, :art_photo, :art_photo_path, :nav_to_albums, :nav_to_edit_form, :nav_to_delete
 
   def initialize(options)
     @art_id             = options['art_id'] if options['art_id']
     @art_name           = options['art_name']
-
-
-    @nav_to_albums     = NavArtists::GET_EDIT_BY_ID
-    @nav_to_edit_form  = NavArtists::GET_EDIT_BY_ID
-    @nav_to_delete     = NavArtists::POST_DELETE_BY_ID
+    @art_photo          = @art_name.downcase.sub(" ","")
+    @art_photo_path     = NavMusicStore::DATA_IMAGES_PATH + @art_photo + ".jpg"
+    @nav_to_albums      = NavStockAlbums::GET_WITH_FILTERS + "art_id=#{@art_id}"
+    @nav_to_edit_form   = NavArtists::GET_EDIT_BY_ID
+    @nav_to_delete      = NavArtists::POST_DELETE_BY_ID
   end
 
 
@@ -31,6 +31,11 @@ class Artist
 
 
   # Class methods
+  def self.link_create_new_artist()
+    return NavArtists::GET_NEW
+  end
+
+
   # Delete from the table artists the given object and return the object
   def self.delete(artist)
     query   = "DELETE FROM artists WHERE art_id = $1"
@@ -67,14 +72,14 @@ class Artist
 
   # Insert the artist in the Artist table
   def insert()
-    query   = "INSERT INTO artists (art_name) VALUES ($1) RETURNING art_id"
-    @art_id = DbHelper.run_sql_return_first_row_column_value(query, [@art_name], 'art_id');
+    query   = "INSERT INTO artists (art_name, art_photo) VALUES ($1, $2) RETURNING art_id"
+    @art_id = DbHelper.run_sql_return_first_row_column_value(query, [@art_name, @art_photo], 'art_id');
   end
 
   # Update the artist in the Artist table
   def update()
-    query   = "UPDATE artists SET art_name = $1 WHERE art_id = $2"
-    DbHelper.run_sql(query, [@art_name, @art_id])
+    query   = "UPDATE artists SET art_name = $1, art_photo = $2 WHERE art_id = $3"
+    DbHelper.run_sql(query, [@art_name, @art_photo, @art_id])
   end
 
 
