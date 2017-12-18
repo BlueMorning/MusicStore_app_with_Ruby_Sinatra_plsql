@@ -1,0 +1,41 @@
+<div class="customers_main">
+  <!-- Customers header -->
+  <div class="customers_header">
+      <div>
+        <h1>Customers</h1>
+      </div>
+      <div>
+        <form action="/mstore/customers/" method="get">
+          <input type="text" name="cus_name" value="<%= @filters["cus_name"] %>">
+          <input type="submit" name="" value="Search">
+        </form>
+      </div>
+      <div>
+
+      </div>
+      <div>
+        <a href="<%= NavCustomers::GET_NEW %>">Create a new Customer</a>
+      </div>
+  </div>
+  <!-- Customers list -->
+  <div>
+      <table>
+          <th>Name</th>
+          <th>Sales</th>
+          <th>Modify</th>
+          <th>Delete</th>
+          <% @customers.each do |customer| %>
+            <tr>
+              <td><%= customer.cus_name %></td>
+              <td><a href="">Sales</a></td>
+              <td>
+                <a href="<%= NavCustomers.nav_get_edit_by_id(customer.cus_id) %>">Edit</a></td>
+              <td>
+                <form action="<%= NavCustomers.nav_post_delete_by_id(customer.cus_id) %>" method="POST">
+                  <input type="submit" value="Delete" />
+                </form>
+            </tr>
+          <% end %>
+      </table>
+  </div>
+</div>

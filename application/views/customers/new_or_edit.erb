@@ -1,0 +1,17 @@
+<div>
+  <div>
+    <h1><%= @form_title %></h1>
+  </div>
+  <div>
+        <form action="<%= @form_action %>" method="post">
+          <div>
+              <label for="cus_name">Name</label>
+              <input id="cus_name" name="cus_name" type="text" maxlength="50" value="<%= @customer.cus_name %>"
+                placeholder="name"/>
+          </div>
+          <div>
+            <input type="submit" value="<%= @form_submit_label %>" />
+          </div>
+        </form>
+  </div>
+<div>

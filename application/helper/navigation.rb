@@ -6,9 +6,11 @@ class NavMusicStore
   def self.all_front_pages()
     pages = []
 
-    pages.push({"link_path" => NavGenres::GET_INDEX,  "link_name" =>   "Genres"}) #Genres
-    pages.push({"link_path" => NavArtists::GET_INDEX, "link_name" =>  "Artists"}) #Artists
-    pages.push({"link_path" => NavAlbums::GET_INDEX,  "link_name" =>   "Albums"}) #Albums
+    pages.push({"link_path" => NavGenres::GET_INDEX,      "link_name" =>   "Genres"})     #Genres
+    pages.push({"link_path" => NavArtists::GET_INDEX,     "link_name" =>   "Artists"})     #Artists
+    pages.push({"link_path" => NavAlbums::GET_INDEX,      "link_name" =>   "Albums"})     #Albums
+    pages.push({"link_path" => NavCustomers::GET_INDEX,   "link_name" =>   "Customers"})  #Customers
+    pages.push({"link_path" => NavSuppliers::GET_INDEX,   "link_name" =>   "Suppliers"})  #Suppliers
     # pages.push() #Purchases
     # pages.push() #Suppliers
     # pages.push() #Sales
@@ -105,5 +107,59 @@ class NavAlbums
 
   def self.nav_post_delete_by_id(alb_id)
     return NavMusicStore::ROOT+"/albums/#{alb_id}/delete"
+  end
+end
+
+class NavCustomers
+
+  GET_INDEX         = NavMusicStore::ROOT+"/customers"
+  GET_NEW           = NavMusicStore::ROOT+"/customers/new"
+  POST_NEW          = NavMusicStore::ROOT+"/customers"
+  GET_WITH_FILTERS  = NavMusicStore::ROOT+"/customers/?"
+  GET_EDIT_BY_ID    = NavMusicStore::ROOT+"/customers/:cus_id/edit"
+  POST_UPDATE_BY_ID = NavMusicStore::ROOT+'/customers/:cus_id'
+  POST_DELETE_BY_ID = NavMusicStore::ROOT+'/customers/:cus_id/delete'
+
+  def self.nav_get_with_art_name(cus_name, strict = false)
+    return NavMusicStore::ROOT+"/customers/?cus_name=#{cus_name}&strict=#{strict}"
+  end
+
+  def self.nav_get_edit_by_id(cus_id)
+    return NavMusicStore::ROOT+"/customers/#{cus_id}/edit"
+  end
+
+  def self.nav_post_update_by_id(cus_id)
+    return NavMusicStore::ROOT+"/customers/#{cus_id}"
+  end
+
+  def self.nav_post_delete_by_id(cus_id)
+    return NavMusicStore::ROOT+"/customers/#{cus_id}/delete"
+  end
+end
+
+class NavSuppliers
+
+  GET_INDEX         = NavMusicStore::ROOT+"/suppliers"
+  GET_NEW           = NavMusicStore::ROOT+"/suppliers/new"
+  POST_NEW          = NavMusicStore::ROOT+"/suppliers"
+  GET_WITH_FILTERS  = NavMusicStore::ROOT+"/suppliers/?"
+  GET_EDIT_BY_ID    = NavMusicStore::ROOT+"/suppliers/:sup_id/edit"
+  POST_UPDATE_BY_ID = NavMusicStore::ROOT+'/suppliers/:sup_id'
+  POST_DELETE_BY_ID = NavMusicStore::ROOT+'/suppliers/:sup_id/delete'
+
+  def self.nav_get_with_art_name(sup_name, strict = false)
+    return NavMusicStore::ROOT+"/suppliers/?sup_name=#{sup_name}&strict=#{strict}"
+  end
+
+  def self.nav_get_edit_by_id(sup_id)
+    return NavMusicStore::ROOT+"/suppliers/#{sup_id}/edit"
+  end
+
+  def self.nav_post_update_by_id(sup_id)
+    return NavMusicStore::ROOT+"/suppliers/#{sup_id}"
+  end
+
+  def self.nav_post_delete_by_id(sup_id)
+    return NavMusicStore::ROOT+"/suppliers/#{sup_id}/delete"
   end
 end
