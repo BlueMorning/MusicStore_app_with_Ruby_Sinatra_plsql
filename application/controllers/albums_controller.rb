@@ -8,7 +8,8 @@ require_relative('./../helper/navigation')
 
 
 get NavAlbums::GET_INDEX do
-
+  @albums = Album.find_all()
+  erb(:"/albums/index")
 end
 
 get NavAlbums::GET_WITH_FILTERS do
@@ -49,5 +50,6 @@ post NavAlbums::POST_UPDATE_BY_ID do
 end
 
 post NavAlbums::POST_DELETE_BY_ID do
-
+  Album.delete_by_id(params['alb_id'])
+  redirect(:"#{NavAlbums::GET_INDEX}")
 end
