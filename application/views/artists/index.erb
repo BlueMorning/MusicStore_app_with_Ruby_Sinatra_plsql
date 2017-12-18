@@ -1,0 +1,43 @@
+<div class="artists_main">
+  <!-- Artists header -->
+  <div class="artists_header">
+      <div>
+        <h1>Artists</h1>
+      </div>
+      <div>
+        <form action="/mstore/artists/" method="get">
+          <input type="text" name="art_name" value="<%= @filters["art_name"] %>">
+          <input type="submit" name="" value="Search">
+        </form>
+      </div>
+      <div>
+
+      </div>
+      <div>
+        <a href="<%= Artist.link_create_new_artist() %>">Create a new Artist</a>
+      </div>
+  </div>
+  <!-- Artists list -->
+  <div>
+      <table>
+          <th>Photo</th>
+          <th>Name</th>
+          <th>Albums</th>
+          <th>Link to modify</th>
+          <th>Link to delete</th>
+          <% @artists.each do |artist| %>
+            <tr>
+              <td><image class="artist_img_artist" src="<%= artist.art_photo_path %>" alt="<%= artist.art_name %>"></td>
+              <td><%= artist.art_name %></td>
+              <td><a href="<%= NavAlbums.nav_get_with_art_name(artist.art_name) %>">Albums</a></td>
+              <td>
+                <a href="<%= NavArtists.nav_get_edit_by_id(artist.art_id) %>">Edit</a></td>
+              <td>
+                <form action="<%= NavArtists.nav_post_delete_by_id(artist.art_id) %>" method="POST">
+                  <input type="submit" value="Delete" />
+                </form>
+            </tr>
+          <% end %>
+      </table>
+  </div>
+</div>

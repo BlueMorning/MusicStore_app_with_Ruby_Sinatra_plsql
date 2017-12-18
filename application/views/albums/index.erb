@@ -1,0 +1,93 @@
+<div class="albums_main">
+  <!-- Albums header -->
+  <div class="albums_header">
+      <div>
+        <h1>Albums</h1>
+      </div>
+      <div>
+        <form action="/mstore/albums/" method="get">
+          <input type="text" name="alb_title" value="<%= @filters["alb_title"] %>" placeholder="Search for title">
+          <input type="text" name="art_name"  value="<%= @filters["art_name"] %>"  placeholder="Search for artist">
+          <select class="" name="alb_gen_id" id="alb_gen_id">
+              <option value="">Genres</option>
+              <% @genres.each do |genre| %>
+                <option value="<%= genre.gen_id %>"
+                  <% if(@filters["alb_gen_id"] == genre.gen_id)%>
+                    selected
+                  <% end %>
+                >
+                  <%= genre.gen_name.capitalize() %>
+              </option>
+              <% end %>
+          </select>
+
+          <select class="" name="stock_level" id="stock_level">
+              <option value="">Stock Level</option>
+              <% Album.all_stock_level().each do |stock_level| %>
+                <option value="<%= stock_level %>"
+                  <% if(@filters["stock_level"] == stock_level)%>
+                    selected
+                  <% end %>
+                  >
+                  <%= stock_level.capitalize() %>
+              </option>
+              <% end %>
+          </select>
+
+          <input type="submit" name="" value="Search">
+        </form>
+      </div>
+      <div>
+
+      </div>
+      <div>
+        <a href="<%= Album.link_create_new_album() %>">Create a new Album</a>
+      </div>
+  </div>
+  <!-- Albums list -->
+  <div>
+      <table>
+          <th>Cover</th>
+          <th>Title</th>
+          <th>Artist</th>
+          <th>Genre</th>
+          <th>Stock</th>
+          <th>Unit Sale Price</th>
+          <th>Sales</th>
+          <th>Modify</th>
+          <th>Delete</th>
+          <% @albums.each do |album| %>
+            <tr>
+              <td><image class="album_cover_image" src="<%= album.alb_image %>" alt="<%= album.alb_title %>"></td>
+              <td><%= album.alb_title %></td>
+              <td><%= album.artist.art_name %>
+                 <span><a href="<%= NavArtists.nav_get_with_art_name(album.artist.art_name, true) %>">View</a></span>
+               </td>
+              <td>
+                <%= album.genre.gen_name %>
+                <span><a href="<%= NavGenres.nav_get_with_gen_name(album.genre.gen_name, true) %>">View</a></span>
+              </td>
+              <td>
+                <p><span>Available</span> <%= album.alb_qty_available %> <p>
+                <p><span>Min.</span> <%= album.alb_qty_min %> <p>
+                <p><span>Max.</span> <%= album.alb_qty_max %> <p>
+              </td>
+
+              <td><span>£</span><%= album.alb_price %></td>
+              <td>
+                <p><span>Qty. Sold</span> <%= album.nb_sales() %></p>
+                <p><span>Total Amount</span><span>£</span><%= album.total_amount() %></p></td>
+
+              <td>
+                <a href="<%= NavAlbums.nav_get_edit_by_id(album.alb_id) %>">Edit</a></td>
+              <td>
+              <td>
+                <form action="<%= NavAlbums.nav_post_delete_by_id(album.alb_id) %>" method="POST">
+                  <input type="submit" value="Delete" />
+                </form>
+              </td>
+            </tr>
+          <% end %>
+      </table>
+  </div>
+</div>
