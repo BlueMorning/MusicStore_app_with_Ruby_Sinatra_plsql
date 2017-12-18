@@ -3,6 +3,21 @@ class NavMusicStore
   ROOT             = "/mstore"
   DATA_IMAGES_PATH = "/data_images/"
 
+  def self.all_front_pages()
+    pages = []
+
+    pages.push({"link_path" => NavGenres::GET_INDEX,  "link_name" =>   "Genres"}) #Genres
+    pages.push({"link_path" => NavArtists::GET_INDEX, "link_name" =>  "Artists"}) #Artists
+    pages.push({"link_path" => NavAlbums::GET_INDEX,  "link_name" =>   "Albums"}) #Albums
+    # pages.push() #Purchases
+    # pages.push() #Suppliers
+    # pages.push() #Sales
+    # pages.push() #Customers
+
+    return pages
+  end
+
+
 end
 
 

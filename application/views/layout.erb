@@ -8,7 +8,17 @@
     <link href="/style/css/style.css"      rel="stylesheet">
   </head>
   <body>
-
+    <header>
+      <nav>
+        <div>
+          <ul>
+          <% NavMusicStore.all_front_pages.each do |link| %>
+            <li><a href="<%= link["link_path"] %>"> <%= link["link_name"] %></a></li>
+          <% end %>
+          <ul>
+        </div>
+      </nav>
+    </header>
 
     <div class="layout_main">
       <%= yield %>
