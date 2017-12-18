@@ -136,22 +136,35 @@ class Album
 
       query += " WHERE 1=1"
 
-      if(filters.include?("alb_title"))
-        query += " AND lower(alb_title) LIKE lower($1)"
-        query_values.push("%#{["alb_title"]}%")
+      if(filters.include?("alb_title") &&
+         filters["alb_title"] != "")
+
+        query_values.push("%#{filters["alb_title"]}%")
+        query += " AND lower(alb_title) LIKE lower($#{query_values.count()})"
+
       end
 
-      if(filters.include?("art_name"))
-        query += " AND lower(art_name) LIKE lower($2)"
-        query_values.push("%#{["art_name"]}%")
+      if(filters.include?("art_name") &&
+         filters["art_name"] != "")
+
+         query_values.push("%#{filters["art_name"]}%")
+         query += " AND lower(art_name) LIKE lower($#{query_values.count()})"
+
       end
 
-      if(filters.include?("gen_name"))
-        query += " AND lower(gen_name) LIKE lower($3)"
-        query_values.push("%#{["gen_name"]}%")
+      if(filters.include?("alb_gen_id") &&
+         filters["alb_gen_id"] != "" &&
+         filters["alb_gen_id"] != 0 )
+
+        query_values.push(filters["alb_gen_id"])
+        query += " AND alb_gen_id = $#{query_values.count()}"
+
       end
 
-      if(filters.include?("stock_level"))
+      if(filters.include?("stock_level") &&
+         filters["stock_level"] != "" &&
+         filters["stock_level"] != 0)
+
         if    filters["stock_level"] == "low"
             query += " AND alb_qty_available <= alb_qty_min"
         elsif filters["stock_level"] == "medium"
@@ -159,6 +172,7 @@ class Album
         elsif filters["stock_level"] == "high"
             query += " AND alb_qty_available >= alb_qty_max"
         end
+
       end
     end
 

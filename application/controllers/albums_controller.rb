@@ -9,11 +9,23 @@ require_relative('./../helper/navigation')
 
 get NavAlbums::GET_INDEX do
   @albums = Album.find_all()
-  erb(:"/albums/index")
+  @genres = Genre.find_all()
+  @filters = {}
+  @filters["alb_title"]   = ""
+  @filters["art_name"]    = ""
+  @filters["alb_gen_id"]  = ""
+  @filters["stock_level"] = ""
 end
 
 get NavAlbums::GET_WITH_FILTERS do
-
+  @albums  = Album.find_with_filters(params)
+  @genres  = Genre.find_all()
+  @filters = {}
+  params.include?("alb_title")   ? @filters["alb_title"]    = params["alb_title"]   : @filters["alb_title"]   = ""
+  params.include?("art_name")    ? @filters["art_name"]     = params["art_name"]    : @filters["art_name"]    = ""
+  params.include?("alb_gen_id")  ? @filters["alb_gen_id"]   = params["alb_gen_id"]  : @filters["alb_gen_id"]  = ""
+  params.include?("stock_level") ? @filters["stock_level"]  = params["stock_level"] : @filters["stock_level"] = ""
+  erb(:"/albums/index")
 end
 
 get NavAlbums::GET_NEW do
