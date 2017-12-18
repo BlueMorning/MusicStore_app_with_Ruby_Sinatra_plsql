@@ -67,13 +67,30 @@ class Album
     return DbHelper.run_sql_and_return_one_object(query, [alb_id], Album)
   end
 
+  def self.find_all(limit = 0)
+    query = "SELECT alb_id, alb_title, alb_price, alb_image, alb_art_id, alb_gen_id,
+                    alb_qty_available, alb_qty_min, alb_qty_max,
+                    art_id, art_name, art_photo,
+                    gen_id, gen_name
+             FROM
+             albums INNER JOIN albums  on stocks.sto_alb_id = albums.alb_id
+                    INNER JOIN genres  on albums.alb_gen_id = genres.gen_id
+                    INNER JOIN artists on albums.alb_art_id = artists.art_id"
+
+    if limit > 0
+      query += " LIMIT #{limit}"
+    end
+
+    return DbHelper.run_sql_and_return_many_objects(query, query_values, Album)
+  end
+
   def self.find_with_filters(filters, limit = 0)
     query = "SELECT alb_id, alb_title, alb_price, alb_image, alb_art_id, alb_gen_id,
                     alb_qty_available, alb_qty_min, alb_qty_max,
                     art_id, art_name, art_photo,
                     gen_id, gen_name
              FROM
-             stocks INNER JOIN albums  on stocks.sto_alb_id = albums.alb_id
+             albums INNER JOIN albums  on stocks.sto_alb_id = albums.alb_id
                     INNER JOIN genres  on albums.alb_gen_id = genres.gen_id
                     INNER JOIN artists on albums.alb_art_id = artists.art_id"
 
@@ -114,6 +131,39 @@ class Album
     end
 
     return DbHelper.run_sql_and_return_many_objects(query, query_values, Album)
+  end
+
+  private
+
+  def insert()
+    query   = "INSERT INTO albums (alb_title, alb_price, alb_image, alb_art_id, alb_gen_id,
+                                   alb_qty_available, alb_qty_min, alb_qty_max)
+               VALUES ($1, $2, $3, $4, $5, $6, $7, $8) RETURNING alb_id"
+    @alb_id = DbHelper.run_sql_return_first_row_column_value(query,
+      [@alb_title,
+       @alb_price,
+       @alb_image,
+       @alb_art_id,
+       @alb_gen_id,
+       @alb_qty_available,
+       @alb_qty_min,
+       @alb_qty_max], 'alb_id');
+  end
+
+  def update()
+    query   = "UPDATE albums SET (alb_title, alb_price, alb_image, alb_art_id, alb_gen_id,
+                                  alb_qty_available, alb_qty_min, alb_qty_max) =
+                                 ($1, $2, $3, $4, $5, $6, $7, $8) WHERE alb_id = $9"
+    @alb_id = DbHelper.run_sql(query,
+      [@alb_title,
+       @alb_price,
+       @alb_image,
+       @alb_art_id,
+       @alb_gen_id,
+       @alb_qty_available,
+       @alb_qty_min,
+       @alb_qty_max,
+       @alb_id]);
   end
 
   private
