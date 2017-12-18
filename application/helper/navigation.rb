@@ -62,29 +62,29 @@ class NavGenres
 end
 
 
-class NavStockAlbums
+class NavAlbums
 
-  GET_INDEX         = NavMusicStore::ROOT+"/albums_in_stock"
-  GET_NEW           = NavMusicStore::ROOT+"/albums_in_stock/new"
-  POST_NEW          = NavMusicStore::ROOT+"/albums_in_stock"
-  GET_WITH_FILTERS  = NavMusicStore::ROOT+"/albums_in_stock/?"
-  GET_EDIT_BY_ID    = NavMusicStore::ROOT+"/albums_in_stock/:sto_id/edit"
-  POST_UPDATE_BY_ID = NavMusicStore::ROOT+'/albums_in_stock/:sto_id'
-  POST_DELETE_BY_ID = NavMusicStore::ROOT+'/albums_in_stock/:sto_id/delete'
+  GET_INDEX         = NavMusicStore::ROOT+"/albums"
+  GET_NEW           = NavMusicStore::ROOT+"/albums/new"
+  POST_NEW          = NavMusicStore::ROOT+"/albums"
+  GET_WITH_FILTERS  = NavMusicStore::ROOT+"/albums/?"
+  GET_EDIT_BY_ID    = NavMusicStore::ROOT+"/albums/:alb_id/edit"
+  POST_UPDATE_BY_ID = NavMusicStore::ROOT+'/albums/:alb_id'
+  POST_DELETE_BY_ID = NavMusicStore::ROOT+'/albums/:alb_id/delete'
 
   def self.nav_get_with_filters(alb_title)
-    return NavMusicStore::ROOT+"/albums_in_stock?alb_title=#{alb_title}"
+    return NavMusicStore::ROOT+"/albums?alb_title=#{alb_title}"
   end
 
-  def self.nav_get_edit_by_id(sto_id)
-    return NavMusicStore::ROOT+"/albums_in_stock/#{sto_id}/edit"
+  def self.nav_get_edit_by_id(alb_id)
+    return NavMusicStore::ROOT+"/albums/#{alb_id}/edit"
   end
 
-  def self.nav_post_update_by_id(sto_id)
-    return NavMusicStore::ROOT+"/albums_in_stock/#{sto_id}"
+  def self.nav_post_update_by_id(alb_id)
+    return NavMusicStore::ROOT+"/albums/#{alb_id}"
   end
 
-  def self.nav_post_delete_by_id(sto_id)
-    return NavMusicStore::ROOT+"/albums_in_stock/#{sto_id}/delete"
+  def self.nav_post_delete_by_id(alb_id)
+    return NavMusicStore::ROOT+"/albums/#{alb_id}/delete"
   end
 end
