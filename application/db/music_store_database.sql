@@ -25,7 +25,7 @@ CREATE TABLE albums (
   alb_id SERIAL4 PRIMARY KEY,
   alb_title VARCHAR(50) UNIQUE NOT NULL,
   alb_price INT2 NOT NULL,
-  alb_cover_image VARCHAR(50),
+  alb_image VARCHAR(50),
   alb_art_id INT4 REFERENCES artists(art_id) NOT NULL,
   alb_gen_id INT4 REFERENCES genres(gen_id) NOT NULL
 );
