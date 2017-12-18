@@ -2,7 +2,6 @@ DROP TABLE IF EXISTS purchases;
 DROP TABLE IF EXISTS sales;
 DROP TABLE IF EXISTS suppliers;
 DROP TABLE IF EXISTS customers;
-DROP TABLE IF EXISTS stocks;
 DROP TABLE IF EXISTS albums;
 DROP TABLE IF EXISTS genres;
 DROP TABLE IF EXISTS artists;
@@ -27,16 +26,10 @@ CREATE TABLE albums (
   alb_price INT2 NOT NULL,
   alb_image VARCHAR(50),
   alb_art_id INT4 REFERENCES artists(art_id) NOT NULL,
-  alb_gen_id INT4 REFERENCES genres(gen_id) NOT NULL
-);
-
--- Table stocks
-CREATE TABLE stocks (
-  sto_id SERIAL4 PRIMARY KEY,
-  sto_qty_available INT2 NOT NULL,
-  sto_qty_min INT2 NOT NULL,
-  sto_qty_max INT2 NOT NULL,
-  sto_alb_id INT4 REFERENCES albums(alb_id) UNIQUE NOT NULL
+  alb_gen_id INT4 REFERENCES genres(gen_id) NOT NULL,
+  alb_qty_available INT2 NOT NULL,
+  alb_qty_min INT2 NOT NULL,
+  alb_qty_max INT2 NOT NULL
 );
 
 -- Table suppliers
