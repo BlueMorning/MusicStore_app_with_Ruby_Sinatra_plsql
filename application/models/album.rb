@@ -20,8 +20,6 @@ class Album
       @alb_qty_available    = options['alb_qty_available']
       @alb_qty_min          = options['alb_qty_min']
       @alb_qty_max          = options['alb_qty_max']
-      @nav_to_edit_form     = NavAlbums.nav_get_edit_by_id(@alb_id)
-      @nav_to_delete        = NavAlbums.nav_post_delete_by_id(@alb_id)
 
       if(init_artist_genres)
         @artist = Artist.new(options)

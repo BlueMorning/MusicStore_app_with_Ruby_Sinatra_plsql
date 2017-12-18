@@ -15,6 +15,7 @@ get NavAlbums::GET_INDEX do
   @filters["art_name"]    = ""
   @filters["alb_gen_id"]  = ""
   @filters["stock_level"] = ""
+  erb(:"/albums/index")
 end
 
 get NavAlbums::GET_WITH_FILTERS do

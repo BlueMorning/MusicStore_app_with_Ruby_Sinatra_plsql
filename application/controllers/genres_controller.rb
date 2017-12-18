@@ -7,7 +7,9 @@ require_relative('./../helper/navigation')
 
 # Display the list of genres
 get NavGenres::GET_INDEX do
-  @gen_name = params.include?('gen_name') ? params['gen_name'] : ""
+  @filters = {}
+  params.include?("gen_name") ? @filters["gen_name"] = params["gen_name"] : @filters["gen_name"] = ""
+  params.include?("strict")   ? @filters["strict"]   = params["strict"]   : @filters["strict"]   = false
   @genres   = Genre.find_all()
   erb(:"genres/index")
 end
@@ -30,8 +32,10 @@ end
 
 # Display the genres whose name match with the research
 get NavGenres::GET_WITH_FILTERS do
-  @gen_name = params['gen_name']
-  @genres  = Genre.search_all_by_name(@gen_name)
+  @filters = {}
+  params.include?("gen_name") ? @filters["gen_name"] = params["gen_name"] : @filters["gen_name"] = ""
+  params.include?("strict")   ? @filters["strict"]   = params["strict"]   : @filters["strict"]   = false
+  @genres  = Genre.search_all_by_name(@filters['gen_name'], @filters['strict'])
   erb(:"genres/index")
 end
 

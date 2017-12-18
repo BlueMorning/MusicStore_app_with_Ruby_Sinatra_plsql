@@ -7,8 +7,9 @@ require_relative('./../helper/navigation')
 
 # Display the list of artist
 get NavArtists::GET_INDEX do
-  @art_name = params.include?('art_name') ? params['art_name'] : ""
-  @artists  = Artist.find_all()
+  @filters             = {}
+  @filters["art_name"] = ""
+  @artists             = Artist.find_all()
   erb(:"artists/index")
 end
 
@@ -30,8 +31,10 @@ end
 
 # Display the artists whose name match with the research
 get NavArtists::GET_WITH_FILTERS do
-  @art_name = params['art_name']
-  @artists  = Artist.search_all_by_name(@art_name)
+  @filters = {}
+  params.include?("art_name") ? @filters["art_name"] = params["art_name"] : @filters["art_name"] = ""
+  params.include?("strict")   ? @filters["strict"]   = params["strict"]   : @filters["strict"]   = false
+  @artists  = Artist.search_all_by_name(@filters['art_name'], @filters['strict'])
   erb(:"artists/index")
 end
 

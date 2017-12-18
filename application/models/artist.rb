@@ -5,7 +5,7 @@ require_relative('./../helper/navigation')
 class Artist
 
   attr_reader :art_id, :art_name
-  attr_accessor :art_name, :art_photo, :art_photo_path, :nav_to_albums, :nav_to_edit_form, :nav_to_delete
+  attr_accessor :art_name, :art_photo, :art_photo_path
 
   def initialize(options)
     if(options != nil)
@@ -13,17 +13,11 @@ class Artist
       @art_name           = options['art_name']
       @art_photo          = @art_name.downcase.sub(" ","")
       @art_photo_path     = NavMusicStore::DATA_IMAGES_PATH + @art_photo + ".jpg"
-      @nav_to_albums      = NavAlbums::GET_WITH_FILTERS + "art_id=#{@art_id}"
-      @nav_to_edit_form   = NavArtists.nav_get_edit_by_id(@art_id)
-      @nav_to_delete      = NavArtists.nav_post_delete_by_id(@art_id)
     else
       @art_id             = 0
       @art_name           = ""
       @art_photo          = ""
       @art_photo_path     = ""
-      @nav_to_albums      = ""
-      @nav_to_edit_form   = ""
-      @nav_to_delete      = ""
     end
   end
 
@@ -73,9 +67,15 @@ class Artist
   end
 
   # Find all the artists
-  def self.search_all_by_name(art_name)
-    query   = "SELECT art_id, art_name FROM artists WHERE lower(art_name) LIKE lower($1) #{DbHelper::NB_ROWS_LIMIT}"
-    return DbHelper.run_sql_and_return_many_objects(query, ["%#{art_name}%"], Artist)
+  def self.search_all_by_name(art_name, strict = false)
+    if(! strict)
+      query   = "SELECT art_id, art_name FROM artists WHERE lower(art_name) LIKE lower($1)"
+      return DbHelper.run_sql_and_return_many_objects(query, ["%#{art_name}%"], Artist)
+    else
+      query   = "SELECT art_id, art_name FROM artists WHERE art_name = $1"
+      return DbHelper.run_sql_and_return_many_objects(query, ["#{art_name}"], Artist)
+    end
+
   end
 
 

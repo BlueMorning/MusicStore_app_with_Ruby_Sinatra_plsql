@@ -9,9 +9,6 @@ class Genre
     if(options != nil)
       @gen_id   = options['gen_id'] if options['gen_id']
       @gen_name = options['gen_name']
-      @nav_to_albums      = NavAlbums::GET_WITH_FILTERS + "gen_id=#{@gen_id}"
-      @nav_to_edit_form   = NavGenres.nav_get_edit_by_id(@gen_id)
-      @nav_to_delete      = NavGenres.nav_post_delete_by_id(@gen_id)
     else
       @gen_id             = 0
       @gen_name           = ""
@@ -33,9 +30,6 @@ class Genre
 
 
   # Class methods
-  def self.link_create_new_genre()
-    return NavGenres::GET_NEW
-  end
 
   # Delete from the table genres the given object
   def self.delete(genre)
@@ -69,9 +63,15 @@ class Genre
   end
 
   # Find all the genres
-  def self.search_all_by_name(gen_name)
-    query   = "SELECT gen_id, gen_name FROM genres WHERE lower(gen_name) LIKE lower($1) #{DbHelper::NB_ROWS_LIMIT}"
-    return DbHelper.run_sql_and_return_many_objects(query, ["%#{gen_name}%"], Genre)
+  def self.search_all_by_name(gen_name, strict = false)
+    if (!strict)
+      query   = "SELECT gen_id, gen_name FROM genres WHERE lower(gen_name) LIKE lower($1) #{DbHelper::NB_ROWS_LIMIT}"
+      return DbHelper.run_sql_and_return_many_objects(query, ["%#{gen_name}%"], Genre)
+    else
+      query   = "SELECT gen_id, gen_name FROM genres WHERE gen_name = $1"
+      return DbHelper.run_sql_and_return_many_objects(query, ["#{gen_name}"], Genre)
+    end
+
   end
 
 
