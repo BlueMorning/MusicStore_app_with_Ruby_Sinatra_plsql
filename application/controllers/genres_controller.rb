@@ -14,7 +14,7 @@ end
 
 # Form to create a new genre
 get NavGenres::GET_NEW do
-  @genre              = Genre.new({"gen_name" => ""})
+  @genre              = Genre.new(nil)
   @form_title         = "New Genre"
   @form_action        = NavGenres::POST_NEW
   @form_submit_label  = "Save"
