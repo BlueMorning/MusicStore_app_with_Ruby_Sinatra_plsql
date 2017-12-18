@@ -3,12 +3,12 @@ require_relative('./../helper/dbhelper')
 
 class Album
 
-  attr_reader   :alb_id
+  attr_reader   :alb_id, :artist, :genre
   attr_accessor :alb_title, :alb_price, :alb_image, :alb_image_path, :alb_art_id, :alb_gen_id,
-                :alb_qty_available, :alb_qty_min, :alb_qty_max
+                :alb_qty_available, :alb_qty_min, :alb_qty_max, :nav_to_edit_form, :nav_to_delete
 
 
-  def initialize(options)
+  def initialize(options, init_artist_genres = false)
     if(options != nil)
       @alb_id               = options['alb_id'] if options['alb_id']
       @alb_title            = options['alb_title']
@@ -20,6 +20,16 @@ class Album
       @alb_qty_available    = options['alb_qty_available']
       @alb_qty_min          = options['alb_qty_min']
       @alb_qty_max          = options['alb_qty_max']
+      @nav_to_edit_form     = NavAlbums.nav_get_edit_by_id(@alb_id)
+      @nav_to_delete        = NavAlbums.nav_post_delete_by_id(@alb_id)
+
+      if(init_artist_genres)
+        @artist = Artist.new(options)
+        @genre  = Genre.new(options)
+      else
+        @artist = nil
+        @genre  = nil
+      end
 
     else
       @alb_id               = 0
@@ -32,6 +42,8 @@ class Album
       @alb_qty_available    = 0
       @alb_qty_min          = 0
       @alb_qty_max          = 0
+      @artist               = nil
+      @genre                = nil
     end
   end
 
@@ -44,8 +56,25 @@ class Album
     end
   end
 
+  def nb_sales()
+    query = "SELECT SUM(sal_qty) total_qty FROM sales WHERE sal_alb_id = $1"
+    result = DbHelper.run_sql_return_first_row_column_value(query, [@alb_id], "total_qty")
+    return result != nil ? result : 0
+  end
+
+  def total_amount()
+    query = "SELECT SUM(sal_total_price) total_amount FROM sales WHERE sal_alb_id = $1"
+    result = DbHelper.run_sql_return_first_row_column_value(query, [@alb_id], "total_amount")
+    return result != nil ? result : 0
+  end
+
 
   #Class method
+  def self.link_create_new_album()
+    return NavAlbums::GET_NEW
+  end
+
+
   # Delete from the table albums the given object and return the object
   def self.delete(album)
     query   = "DELETE FROM albums WHERE alb_id = $1"
@@ -73,15 +102,14 @@ class Album
                     art_id, art_name, art_photo,
                     gen_id, gen_name
              FROM
-             albums INNER JOIN albums  on stocks.sto_alb_id = albums.alb_id
-                    INNER JOIN genres  on albums.alb_gen_id = genres.gen_id
+             albums INNER JOIN genres  on albums.alb_gen_id = genres.gen_id
                     INNER JOIN artists on albums.alb_art_id = artists.art_id"
 
     if limit > 0
       query += " LIMIT #{limit}"
     end
 
-    return DbHelper.run_sql_and_return_many_objects(query, query_values, Album)
+    return DbHelper.run_sql(query).map{|album| Album.new(album, true)}
   end
 
   def self.find_with_filters(filters, limit = 0)
@@ -90,8 +118,7 @@ class Album
                     art_id, art_name, art_photo,
                     gen_id, gen_name
              FROM
-             albums INNER JOIN albums  on stocks.sto_alb_id = albums.alb_id
-                    INNER JOIN genres  on albums.alb_gen_id = genres.gen_id
+             albums INNER JOIN genres  on albums.alb_gen_id = genres.gen_id
                     INNER JOIN artists on albums.alb_art_id = artists.art_id"
 
     if(filters.count() > 0)
@@ -130,7 +157,7 @@ class Album
       query += " LIMIT #{limit}"
     end
 
-    return DbHelper.run_sql_and_return_many_objects(query, query_values, Album)
+    return DbHelper.run_sql(query, query_values).map{|album| Album.new(album, true)}
   end
 
   private
