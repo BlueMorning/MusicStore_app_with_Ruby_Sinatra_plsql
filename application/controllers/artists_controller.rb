@@ -5,16 +5,16 @@ require_relative('./../models/artist')
 require_relative('./../helper/navigation')
 
 
-# Display the stock of albums
+# Display the list of artist
 get NavArtists::GET_INDEX do
   @art_name = params.include?('art_name') ? params['art_name'] : ""
   @artists  = Artist.find_all()
   erb(:"artists/index")
 end
 
-# Form to create a new album entry in the stock
+# Form to create a artist
 get NavArtists::GET_NEW do
-  @artist             = Artist.new({"art_name" => ""})
+  @artist             = Artist.new(nil)
   @form_title         = "New Artist"
   @form_action        = NavArtists::POST_NEW
   @form_submit_label  = "Save"
