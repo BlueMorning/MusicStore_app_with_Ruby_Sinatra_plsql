@@ -4,23 +4,25 @@ require_relative('./../helper/dbhelper')
 class Album
 
   attr_reader   :alb_id
-  attr_accessor :alb_title, :alb_price, :alb_cover_image, :alb_art_id, :alb_gen_id
+  attr_accessor :alb_title, :alb_price, :alb_image, :alb_image_path, :alb_art_id, :alb_gen_id
 
   def initialize(options)
     if(options != nil)
-      @alb_id             = options['alb_id'] if options['alb_id']
-      @alb_title          = options['alb_title']
-      @alb_price          = options['alb_price']
-      @alb_cover_image    = options['alb_cover_image']
-      @alb_art_id         = options['alb_art_id']
-      @alb_gen_id         = options['alb_gen_id']
+      @alb_id               = options['alb_id'] if options['alb_id']
+      @alb_title            = options['alb_title']
+      @alb_price            = options['alb_price']
+      @alb_image            = @alb_title.downcase.sub(" ","")
+      @alb_image_path       = NavMusicStore::DATA_IMAGES_PATH + @alb_image + ".jpg"
+      @alb_art_id           = options['alb_art_id']
+      @alb_gen_id           = options['alb_gen_id']
     else
-      @alb_id             = 0
-      @alb_title          = ""
-      @alb_price          = 0
-      @alb_cover_image    = ""
-      @alb_art_id         = 0
-      @alb_gen_id         = 0
+      @alb_id               = 0
+      @alb_title            = ""
+      @alb_price            = 0
+      @alb_image            = ""
+      @alb_image_path       = ""
+      @alb_art_id           = 0
+      @alb_gen_id           = 0
     end
   end
 
@@ -50,7 +52,7 @@ class Album
 
   # Find the album on the given alb_id
   def self.find_by_id(alb_id)
-    query   = "SELECT alb_id, alb_title, alb_price, alb_cover_image, alb_art_id, alb_gen_id FROM artists
+    query   = "SELECT alb_id, alb_title, alb_price, alb_image, alb_art_id, alb_gen_id FROM artists
                WHERE alb_id = $1"
     return DbHelper.run_sql_and_return_one_object(query, [alb_id], Album)
   end
@@ -59,23 +61,23 @@ class Album
   private
 
   def insert()
-    query   = "INSERT INTO albums (alb_title, alb_price, alb_cover_image, alb_art_id, alb_gen_id)
+    query   = "INSERT INTO albums (alb_title, alb_price, alb_image, alb_art_id, alb_gen_id)
                VALUES ($1, $2, $3, $4, $5) RETURNING alb_id"
     @alb_id = DbHelper.run_sql_return_first_row_column_value(query,
       [@alb_title,
        @alb_price,
-       @alb_cover_image,
+       @alb_image,
        @alb_art_id,
        @alb_gen_id], 'alb_id');
   end
 
   def update()
-    query   = "UPDATE albums SET (alb_title, alb_price, alb_cover_image, alb_art_id, alb_gen_id) =
+    query   = "UPDATE albums SET (alb_title, alb_price, alb_image, alb_art_id, alb_gen_id) =
                                  ($1, $2, $3, $4, $5) WHERE alb_id = $6"
     @alb_id = DbHelper.run_sql(query,
       [@alb_title,
        @alb_price,
-       @alb_cover_image,
+       @alb_image,
        @alb_art_id,
        @alb_gen_id,
        @alb_id]);
