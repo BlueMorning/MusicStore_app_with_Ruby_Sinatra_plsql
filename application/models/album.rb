@@ -68,6 +68,15 @@ class Album
     return result != nil ? result : 0
   end
 
+  def stock_level()
+    if(   @alb_qty_available <= @alb_qty_min)
+      return Album.all_stock_level[0]
+    elsif(@alb_qty_available >= @alb_qty_max)
+      return Album.all_stock_level[2]
+    else
+      return Album.all_stock_level[1]
+    end
+  end
 
   #Class method
   def self.link_create_new_album()
@@ -144,11 +153,11 @@ class Album
 
       if(filters.include?("stock_level"))
         if    filters["stock_level"] == "low"
-            query += " AND sto_qty_available <= sto_qty_min"
+            query += " AND alb_qty_available <= alb_qty_min"
         elsif filters["stock_level"] == "medium"
-            query += " AND sto_qty_available > sto_qty_min AND sto_qty_available < sto_qty_max"
+            query += " AND alb_qty_available > alb_qty_min AND alb_qty_available < alb_qty_max"
         elsif filters["stock_level"] == "high"
-            query += " AND sto_qty_available >= sto_qty_max"
+            query += " AND alb_qty_available >= alb_qty_max"
         end
       end
     end
@@ -159,6 +168,12 @@ class Album
 
     return DbHelper.run_sql(query, query_values).map{|album| Album.new(album, true)}
   end
+
+
+  def self.all_stock_level()
+    return ["low", "medium", "high"]
+  end
+
 
   private
 
