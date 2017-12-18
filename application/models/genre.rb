@@ -9,7 +9,7 @@ class Genre
     if(options != nil)
       @gen_id   = options['gen_id'] if options['gen_id']
       @gen_name = options['gen_name']
-      @nav_to_albums      = NavStockAlbums::GET_WITH_FILTERS + "gen_id=#{@gen_id}"
+      @nav_to_albums      = NavAlbums::GET_WITH_FILTERS + "gen_id=#{@gen_id}"
       @nav_to_edit_form   = NavGenres.nav_get_edit_by_id(@gen_id)
       @nav_to_delete      = NavGenres.nav_post_delete_by_id(@gen_id)
     else
