@@ -9,7 +9,7 @@ class Supplier
 
   def initialize(options)
     if(options != nil)
-      @sup_id             = options['sup_id'] if options['sup_id']
+      @sup_id             = options['sup_id'].to_i if options['sup_id']
       @sup_name           = options['sup_name']
     else
       @sup_id             = 0
@@ -21,7 +21,7 @@ class Supplier
 
   # Perform an insert or an update depending on the value of sup_id
   def save()
-    if(@sup_id) #if the row already exists
+    if(@sup_id && @sup_id != 0) #if the row already exists
       update()
     else
       insert()
@@ -76,7 +76,7 @@ class Supplier
   # Insert the supplier
   def insert()
     query   = "INSERT INTO suppliers (sup_name) VALUES ($1) RETURNING sup_id"
-    @sup_id = DbHelper.run_sql_return_first_row_column_value(query, [@sup_name], 'sup_id');
+    @sup_id = DbHelper.run_sql_return_first_row_column_value(query, [@sup_name], 'sup_id').to_i;
   end
 
   # Update the supplier

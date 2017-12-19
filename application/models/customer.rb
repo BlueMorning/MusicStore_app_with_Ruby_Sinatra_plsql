@@ -9,7 +9,7 @@ class Customer
 
   def initialize(options)
     if(options != nil)
-      @cus_id             = options['cus_id'] if options['cus_id']
+      @cus_id             = options['cus_id'].to_i if options['cus_id']
       @cus_name           = options['cus_name']
 
     else
@@ -22,7 +22,7 @@ class Customer
 
   # Perform an insert or an update depending on the value of cus_id
   def save()
-    if(@cus_id) #if the row already exists
+    if(@cus_id && @cus_id != 0) #if the row already exists
       update()
     else
       insert()
@@ -77,7 +77,7 @@ class Customer
   # Insert the customer
   def insert()
     query   = "INSERT INTO customers (cus_name) VALUES ($1) RETURNING cus_id"
-    @cus_id = DbHelper.run_sql_return_first_row_column_value(query, [@cus_name], 'cus_id');
+    @cus_id = DbHelper.run_sql_return_first_row_column_value(query, [@cus_name], 'cus_id').to_i;
   end
 
   # Update the customer

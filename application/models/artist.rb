@@ -9,7 +9,7 @@ class Artist
 
   def initialize(options)
     if(options != nil)
-      @art_id             = options['art_id'] if options['art_id']
+      @art_id             = options['art_id'].to_i if options['art_id']
       @art_name           = options['art_name']
       @art_photo          = @art_name.downcase.sub(" ","")
       @art_photo_path     = NavMusicStore::DATA_IMAGES_PATH + @art_photo + ".jpg"
@@ -25,7 +25,7 @@ class Artist
 
   # Perform an insert or an update depending on the value of art_id
   def save()
-    if(@art_id) #if the row already exists
+    if(@art_id && @art_id != 0) #if the row already exists
       update()
     else
       insert()
@@ -84,7 +84,7 @@ class Artist
   # Insert the artist in the Artist table
   def insert()
     query   = "INSERT INTO artists (art_name, art_photo) VALUES ($1, $2) RETURNING art_id"
-    @art_id = DbHelper.run_sql_return_first_row_column_value(query, [@art_name, @art_photo], 'art_id');
+    @art_id = DbHelper.run_sql_return_first_row_column_value(query, [@art_name, @art_photo], 'art_id').to_i;
   end
 
   # Update the artist in the Artist table

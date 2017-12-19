@@ -1,7 +1,7 @@
 require_relative('./../helper/dbhelper')
-require_relative('./../models/artist')
-require_relative('./../models/album')
-require_relative('./../models/genre')
+require_relative('./artist')
+require_relative('./album')
+require_relative('./genre')
 
 
 class Stock
