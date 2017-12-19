@@ -1,0 +1,87 @@
+<div>
+
+
+    <section>
+      <div>Sale Orders</div>
+      <div>
+        <form class="" action="<%= NavSaleOrders::GET_WITH_FILTERS %>" method="get">
+
+          <input value="<%= @filters['slo_id'] %>" name="slo_id" placeholder="N°Sale Order"/>
+
+          <select class="" name="slo_cus_id" id="slo_cus_id">
+              <option value="">Customers</option>
+              <% @customers.each do |customer| %>
+                <option value="<%= customer.cus_id %>"
+                  <% if(@filters['slo_cus_id'] == customer.cus_id)%>
+                    selected
+                  <% end %>
+                  >
+                  <%= customer.cus_name.capitalize() %>
+              </option>
+              <% end %>
+          </select>
+
+          <select class="" name="order_by" id="order_by">
+              <option value="">Order By</option>
+              <% SaleOrder.query_orderby.each do |orderby_key, orderby_value| %>
+                <option value="<%= orderby_key %>"
+                  <% if(@filters['order_by'] == orderby_key)%>
+                    selected
+                  <% end %>
+                  >
+                  <%= orderby_value %>
+              </option>
+              <% end %>
+          </select>
+
+          <input type="submit" value="GO !" />
+
+        </form>
+      </div>
+
+      <div><a href="<%= NavSaleOrders::GET_NEW %>">Create a new Sale Order</a></div>
+
+    <section>
+    <section>
+      <table>
+        <thead>
+          <th>N°</th>
+          <th>Status</th>
+          <th>Date</th>
+          <th>Customer</th>
+          <th>Total Amount</th>
+          <th>Nb. Rows</th>
+          <th>Nb. Items</th>
+          <th>Modify</th>
+          <th>Delete</th>
+        </thead>
+        <tbody>
+          <% @sale_orders.each do |sale_order|  %>
+            <tr>
+              <td><%= sale_order.slo_id                       %></td>
+              <td><%= sale_order.slo_status_label()           %></td>
+              <td><%= sale_order.slo_date                     %></td>
+              <td><%= sale_order.customer.cus_name.capitalize %></td>
+              <td><%= sale_order.slo_total_price              %></td>
+              <td><%= sale_order.nb_items()                   %></td>
+              <td><%= sale_order.total_quantity()             %></td>
+              <td>
+                  <% if(sale_order.can_be_modify())           %>
+                    <form class="" action="<%= NavSaleOrders.nav_get_edit_by_id(sale_order.slo_id) %>" method="get">
+                        <input type="submit" value="Modify" />
+                    </form>
+                  <% end %>
+              </td>
+              <td>
+                  <% if(sale_order.can_be_delete())           %>
+                    <form class="" action="<%= NavSaleOrders.nav_post_delete_by_id(sale_order.slo_id) %>" method="post">
+                        <input type="submit" value="Delete" />
+                    </form>
+                  <% end %>
+              </td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    <section>
+<div>
