@@ -6,16 +6,6 @@ require_relative('./../models/customer')
 require_relative('./../helper/navigation')
 
 
-# Display the list of sales
-# get NavSaleOrders::GET_INDEX do
-#   @filters = {}
-#   params.include?("slo_cus_id") ? @filters["slo_cus_id"] = params["slo_cus_id"] : @filters["slo_cus_id"] = ""
-#   params.include?("order_by")   ? @filters["order_by"]   = params["order_by"]   : @filters["order_by"]   = ""
-#   @customers    = Customer.find_all()
-#   @sale_orders  = SaleOrder.find_all()
-#   erb(:"sale_orders/index")
-# end
-
 # Display the sales which match with the research filters
 get NavSaleOrders::GET_WITH_FILTERS do
   @filters = {}
@@ -36,7 +26,7 @@ get NavSaleOrders::GET_NEW do
   @sale_order.set_list_of_sales_item_to_display(album_search)
   @customers          = Customer.find_all()
   @form_title         = "New Sale Order"
-  @form_submit_label  = "Ckeckout"
+  @form_submit_label  = "Checkout"
   @form_search_action = NavSaleOrders::GET_NEW
   erb(:"sale_orders/new_or_edit")
 end
@@ -48,18 +38,18 @@ get NavSaleOrders::GET_EDIT_BY_ID do
   @sale_order.set_list_of_sales_item_to_display(album_search)
   @customers          = Customer.find_all()
   @form_title         = "Modify Sale Order"
-  @form_submit_label  = "Ckeckout"
+  @form_submit_label  = "Checkout"
   @form_search_action = NavSaleOrders.nav_get_edit_by_id(@sale_order.slo_id)
   erb(:"sale_orders/new_or_edit")
 end
 
 
-# Create a new sale from the form
-post NavSaleOrders::GET_INDEX do
-  @sale_order = SaleOrder.new(params)
-  @sale_order.save()
-  redirect(:"#{NavSaleOrders::GET_INDEX}")
-end
+# # Create a new sale from the form
+# post NavSaleOrders::GET_INDEX do
+#   @sale_order = SaleOrder.new(params)
+#   @sale_order.save()
+#   redirect(:"#{NavSaleOrders::GET_INDEX}")
+# end
 
 # Collect all the sale items whose quantity > 0 and add them to the sale order
 post NavSaleOrders::POST_ADD_ITEMS do
@@ -78,6 +68,7 @@ post NavSaleOrders::POST_ADD_ITEMS do
 
   sale_order_id = params['slo_id'].to_i
   customer_id   = params["slo_cus_id"].to_i
+
 
   if(sale_order_id == 0)
     @sale_order = SaleOrder.new({"slo_cus_id"       => customer_id,

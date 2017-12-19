@@ -1,0 +1,87 @@
+<div>
+
+
+    <section>
+      <div>Purchase Orders</div>
+      <div>
+        <form class="" action="<%= NavPurchaseOrders::GET_WITH_FILTERS %>" method="get">
+
+          <input value="<%= @filters['pro_id'] %>" name="pro_id" placeholder="N°Purchase Order"/>
+
+          <select class="" name="pro_sup_id" id="pro_sup_id">
+              <option value="">Customers</option>
+              <% @suppliers.each do |supplier| %>
+                <option value="<%= supplier.sup_id %>"
+                  <% if(@filters['pro_sup_id'] == supplier.sup_id)%>
+                    selected
+                  <% end %>
+                  >
+                  <%= supplier.sup_name.capitalize() %>
+              </option>
+              <% end %>
+          </select>
+
+          <select class="" name="order_by" id="order_by">
+              <option value="">Order By</option>
+              <% PurchaseOrder.query_orderby.each do |orderby_key, orderby_value| %>
+                <option value="<%= orderby_key %>"
+                  <% if(@filters['order_by'] == orderby_key)%>
+                    selected
+                  <% end %>
+                  >
+                  <%= orderby_value %>
+              </option>
+              <% end %>
+          </select>
+
+          <input type="submit" value="GO !" />
+
+        </form>
+      </div>
+
+      <div><a href="<%= NavPurchaseOrders::GET_NEW %>">Create a new Purchase Order</a></div>
+
+    <section>
+    <section>
+      <table>
+        <thead>
+          <th>N°</th>
+          <th>Status</th>
+          <th>Date</th>
+          <th>Customer</th>
+          <th>Total Amount</th>
+          <th>Nb. Rows</th>
+          <th>Nb. Items</th>
+          <th>Modify</th>
+          <th>Delete</th>
+        </thead>
+        <tbody>
+          <% @purchase_orders.each do |purchase_order|  %>
+            <tr>
+              <td><%= purchase_order.pro_id                       %></td>
+              <td><%= purchase_order.pro_status_label()           %></td>
+              <td><%= purchase_order.pro_date                     %></td>
+              <td><%= purchase_order.supplier.sup_name.capitalize %></td>
+              <td><%= purchase_order.pro_total_price              %></td>
+              <td><%= purchase_order.nb_items()                   %></td>
+              <td><%= purchase_order.total_quantity()             %></td>
+              <td>
+                  <% if(purchase_order.can_be_modify())           %>
+                    <form class="" action="<%= NavPurchaseOrders.nav_get_edit_by_id(purchase_order.pro_id) %>" method="get">
+                        <input type="submit" value="Modify" />
+                    </form>
+                  <% end %>
+              </td>
+              <td>
+                  <% if(purchase_order.can_be_delete())           %>
+                    <form class="" action="<%= NavPurchaseOrders.nav_post_delete_by_id(purchase_order.pro_id) %>" method="post">
+                        <input type="submit" value="Delete" />
+                    </form>
+                  <% end %>
+              </td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    <section>
+<div>

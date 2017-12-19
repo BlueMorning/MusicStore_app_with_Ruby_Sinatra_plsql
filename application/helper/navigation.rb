@@ -6,13 +6,13 @@ class NavMusicStore
   def self.all_front_pages()
     pages = []
 
-    pages.push({"link_path" => NavGenres::GET_INDEX,              "link_name" =>   "Genres"})         #Genres
-    pages.push({"link_path" => NavArtists::GET_INDEX,             "link_name" =>   "Artists"})        #Artists
-    pages.push({"link_path" => NavAlbums::GET_WITH_FILTERS,       "link_name" =>   "Albums"})         #Albums
-    pages.push({"link_path" => NavCustomers::GET_INDEX,           "link_name" =>   "Customers"})      #Customers
-    pages.push({"link_path" => NavSuppliers::GET_INDEX,           "link_name" =>   "Suppliers"})      #Suppliers
-    pages.push({"link_path" => NavSaleOrders::GET_INDEX,          "link_name" =>   "Sale Orders"})   #Sale Orders
-    # pages.push({"link_path" => NavPurchaseOrders::GET_INDEX,   "link_name" =>   "Sale Orders"}) #Purchase Orders
+    pages.push({"link_path" => NavGenres::GET_INDEX,              "link_name" =>   "Genres"})             #Genres
+    pages.push({"link_path" => NavArtists::GET_INDEX,             "link_name" =>   "Artists"})            #Artists
+    pages.push({"link_path" => NavAlbums::GET_WITH_FILTERS,       "link_name" =>   "Albums"})             #Albums
+    pages.push({"link_path" => NavCustomers::GET_INDEX,           "link_name" =>   "Customers"})          #Customers
+    pages.push({"link_path" => NavSuppliers::GET_INDEX,           "link_name" =>   "Suppliers"})          #Suppliers
+    pages.push({"link_path" => NavSaleOrders::GET_INDEX,          "link_name" =>   "Sale Orders"})        #Sale Orders
+    pages.push({"link_path" => NavPurchaseOrders::GET_INDEX,      "link_name" =>   "Purchase Orders"})    #Purchase Orders
 
     return pages
   end
@@ -198,6 +198,46 @@ class NavSaleOrders
 
   def self.nav_post_add_items(slo_id)
     return NavMusicStore::ROOT+"/sale_orders/#{slo_id}/add_items"
+  end
+
+
+end
+
+class NavPurchaseOrders
+
+  GET_INDEX             = NavMusicStore::ROOT+"/purchase_orders"
+  GET_NEW               = NavMusicStore::ROOT+"/purchase_orders/new/"
+  POST_NEW              = NavMusicStore::ROOT+"/purchase_orders"
+  GET_WITH_FILTERS      = NavMusicStore::ROOT+"/purchase_orders/?"
+  GET_EDIT_BY_ID        = NavMusicStore::ROOT+"/purchase_orders/:pro_id/edit/"
+  POST_UPDATE_BY_ID     = NavMusicStore::ROOT+'/purchase_orders/:pro_id'
+  POST_DELETE_BY_ID     = NavMusicStore::ROOT+'/purchase_orders/:pro_id/delete'
+  POST_CHECKOUT_BY_ID   = NavMusicStore::ROOT+'/purchase_orders/:pro_id/checkout'
+  POST_ADD_ITEMS        = NavMusicStore::ROOT+'/purchase_orders/:pro_id/add_items'
+
+
+  def self.nav_get_with_sal_alb_id(pro_alb_id, strict = false)
+    return NavMusicStore::ROOT+"/purchase_orders/?pro_alb_id=#{pro_alb_id}"
+  end
+
+  def self.nav_get_edit_by_id(pro_id)
+    return NavMusicStore::ROOT+"/purchase_orders/#{pro_id}/edit/"
+  end
+
+  def self.nav_post_update_by_id(pro_id)
+    return NavMusicStore::ROOT+"/purchase_orders/#{pro_id}"
+  end
+
+  def self.nav_post_delete_by_id(pro_id)
+    return NavMusicStore::ROOT+"/purchase_orders/#{pro_id}/delete"
+  end
+
+  def self.nav_post_checkout_by_id(pro_id)
+    return NavMusicStore::ROOT+"/purchase_orders/#{pro_id}/checkout"
+  end
+
+  def self.nav_post_add_items(pro_id)
+    return NavMusicStore::ROOT+"/purchase_orders/#{pro_id}/add_items"
   end
 
 

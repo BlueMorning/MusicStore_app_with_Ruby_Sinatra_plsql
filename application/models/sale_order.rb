@@ -262,15 +262,16 @@ class SaleOrder
   private
 
   def insert()
-    query = "INSERT INTO sale_orders (slo_cus_id, slo_total_price, slo_date)
-             VALUES ($1, $2, $3) RETURNING slo_id"
-    @slo_id = DbHelper.run_sql_return_first_row_column_value(query, [@slo_cus_id, @slo_total_price, @slo_date], 'slo_id')
+    query = "INSERT INTO sale_orders (slo_cus_id, slo_total_price, slo_date, slo_status)
+             VALUES ($1, $2, $3, $4) RETURNING slo_id"
+    @slo_id = DbHelper.run_sql_return_first_row_column_value(query,
+      [@slo_cus_id, @slo_total_price, @slo_date, @slo_status], 'slo_id')
   end
 
   def update()
-    query   = "UPDATE sale_orders SET (slo_cus_id, slo_total_price, slo_date) =
-                                      ($1, $2, $3) WHERE slo_id = $4"
-    DbHelper.run_sql(query, [@slo_cus_id, @slo_total_price, @slo_date, @slo_id])
+    query   = "UPDATE sale_orders SET (slo_cus_id, slo_total_price, slo_date, slo_status) =
+                                      ($1, $2, $3, $4) WHERE slo_id = $5"
+    DbHelper.run_sql(query, [@slo_cus_id, @slo_total_price, @slo_date,@slo_status, @slo_id])
   end
 
 end

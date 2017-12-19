@@ -1,0 +1,121 @@
+<div>
+
+
+  <!-- Purchase Orde Header -->
+  <div>
+    <h1><%= @form_title %></h1>
+  </div>
+  <div>
+    <div>
+      <div>
+
+
+      </div>
+      <!-- CHECKOUT Button -->
+      <div>
+        <form class="" action="<%= NavPurchaseOrders.nav_post_checkout_by_id(@purchase_order.pro_id) %>" method="post">
+            <input type="submit" value="<%= @form_submit_label %>" />
+        </form>
+      </div>
+    </div>
+    <div>
+        <p>Nb Items :<span><%= @purchase_order.nb_items() %></span></p>
+        <p>Nb Items :<span>£<%= @purchase_order.pro_total_price %></span></p>
+    </div>
+  </div>
+
+
+  <!-- Seraching bar -->
+  <div>
+    <form class="" action="<%= @form_search_action %>" method="get">
+        <input type="text" name="album_search" placeholder="Title album or Artist's name" />
+        <input type="submit" value="GO !" />
+    </form>
+  </div>
+
+  <!-- List of items -->
+  <form class="" action="<%= NavPurchaseOrders.nav_post_add_items(@purchase_order.pro_id) %>" method="post">
+
+    <div>
+      <select class="" name="pro_sup_id" id="pro_sup_id">
+          <option value="">Customers</option>
+          <% @suppliers.each do |supplier| %>
+            <option value="<%= supplier.sup_id %>"
+              <% if(@purchase_order.pro_sup_id == supplier.sup_id)%>
+                selected
+              <% end %>
+            >
+              <%= supplier.sup_name.capitalize() %>
+          </option>
+          <% end %>
+      </select>
+
+    </div
+
+
+    <div>
+
+      <table>
+        <thead>
+          <th>Album</th>
+          <th>Artist</th>
+          <th>Genre</th>
+          <th>Unit Price</th>
+          <th>Quantity</th>
+        </thead>
+        <tbody>
+          <% @purchase_order.purchase_items.each do |purchase_item|  %>
+            <tr>
+              <td><%= purchase_item.album.alb_title  %></td>
+              <td><%= purchase_item.artist.art_name %></td>
+              <td><%= purchase_item.genre.gen_name  %></td>
+              <td><%= purchase_item.album.alb_price %></td>
+              <td>
+                <input type="number" step="1"
+                 name="<%= "alb_id_#{purchase_item.album.alb_id}" %>"
+                 value="<%= purchase_item.pri_qty %>" />
+              </td>
+              <td><%= "Avail. Qty. : #{purchase_item.album.alb_qty_available}" %></td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+
+
+    <div>
+      <table>
+        <thead>
+          <th>Album</th>
+          <th>Artist</th>
+          <th>Genre</th>
+          <th>Unit Price</th>
+          <th>Quantity</th>
+        </thead>
+        <tbody>
+          <% @purchase_order.purchase_items_not_added.each do |purchase_item|  %>
+            <tr>
+              <td><%= purchase_item.album.alb_title  %></td>
+              <td><%= purchase_item.artist.art_name %></td>
+              <td><%= purchase_item.genre.gen_name  %></td>
+              <td><%= purchase_item.album.alb_price %></td>
+              <td>
+                <input type="number" step="1"
+                 name="<%= "alb_id_#{purchase_item.album.alb_id}" %>"
+                 value="<%= purchase_item.pri_qty %>"
+                />
+              </td>
+              <td><%= "Avail. Qty. : #{purchase_item.album.alb_qty_available}" %></td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+
+    </div>
+    <!-- ADD button -->
+    <div>
+      <input type="submit" value="Add items to the cart" />
+    </div>
+  </form>
+</div>

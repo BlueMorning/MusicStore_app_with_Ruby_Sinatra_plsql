@@ -57,13 +57,13 @@ class Album
   def nb_sales()
     query = "SELECT SUM(sli_qty) total_qty FROM sale_items WHERE sli_alb_id = $1"
     result = DbHelper.run_sql_return_first_row_column_value(query, [@alb_id], "total_qty")
-    return result != nil ? result : 0
+    return result != nil ? result.to_i : 0
   end
 
   def total_amount()
     query = "SELECT SUM(sli_unit_price*sli_qty) total_amount FROM sale_items WHERE sli_alb_id = $1"
     result = DbHelper.run_sql_return_first_row_column_value(query, [@alb_id], "total_amount")
-    return result != nil ? result : 0
+    return result != nil ? result.to_i : 0
   end
 
   def stock_level()
