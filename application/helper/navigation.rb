@@ -6,12 +6,12 @@ class NavMusicStore
   def self.all_front_pages()
     pages = []
 
-    pages.push({"link_path" => NavGenres::GET_INDEX,      "link_name" =>   "Genres"})         #Genres
-    pages.push({"link_path" => NavArtists::GET_INDEX,     "link_name" =>   "Artists"})        #Artists
-    pages.push({"link_path" => NavAlbums::GET_INDEX,      "link_name" =>   "Albums"})         #Albums
-    pages.push({"link_path" => NavCustomers::GET_INDEX,   "link_name" =>   "Customers"})      #Customers
-    pages.push({"link_path" => NavSuppliers::GET_INDEX,   "link_name" =>   "Suppliers"})      #Suppliers
-    pages.push({"link_path" => NavSaleOrders::GET_INDEX,   "link_name" =>   "Sale Orders"})   #Sale Orders
+    pages.push({"link_path" => NavGenres::GET_INDEX,              "link_name" =>   "Genres"})         #Genres
+    pages.push({"link_path" => NavArtists::GET_INDEX,             "link_name" =>   "Artists"})        #Artists
+    pages.push({"link_path" => NavAlbums::GET_WITH_FILTERS,       "link_name" =>   "Albums"})         #Albums
+    pages.push({"link_path" => NavCustomers::GET_INDEX,           "link_name" =>   "Customers"})      #Customers
+    pages.push({"link_path" => NavSuppliers::GET_INDEX,           "link_name" =>   "Suppliers"})      #Suppliers
+    pages.push({"link_path" => NavSaleOrders::GET_INDEX,          "link_name" =>   "Sale Orders"})   #Sale Orders
     # pages.push({"link_path" => NavPurchaseOrders::GET_INDEX,   "link_name" =>   "Sale Orders"}) #Purchase Orders
 
     return pages
