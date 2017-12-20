@@ -67,8 +67,7 @@ class PurchaseItem
 
   # Delete from the table purchases the given pli_id
   def self.delete_by_id(pri_id)
-    purchase_item    = self.find_by_id(pri_id)
-    query        = "DELETE FROM purchase_items WHERE pri_id = $1"
+    query         = "DELETE FROM purchase_items WHERE pri_id = $1"
     DbHelper.run_sql(query, [pri_id])
   end
 

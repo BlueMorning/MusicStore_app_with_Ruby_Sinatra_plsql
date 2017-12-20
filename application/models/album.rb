@@ -107,18 +107,25 @@ class Album
 
   #Class method
 
-
-  # Delete from the table albums the given object and return the object
-  def self.delete(album)
-    query   = "DELETE FROM albums WHERE alb_id = $1"
-    DbHelper.run_sql(query, [album.alb_id])
-    return album
+  def self.can_be_deleted(alb_id)
+    query = "SELECT
+                (SELECT COUNT(sli_id) from sale_items     WHERE sale_items.sli_alb_id = $1)
+                +
+                (SELECT COUNT(pri_id) from purchase_items WHERE purchase_items.pri_alb_id = $2)
+             nb_references"
+    return DbHelper.run_sql_return_first_row_column_value(query, [alb_id, alb_id], 'nb_references').to_i == 0;
   end
+
 
   # Delete from the table albums the given alb_id
   def self.delete_by_id(alb_id)
-    query   = "DELETE FROM albums WHERE alb_id = $1"
-    DbHelper.run_sql(query, [alb_id])
+    if(Album.can_be_deleted(alb_id))
+      query   = "DELETE FROM albums WHERE alb_id = $1"
+      DbHelper.run_sql(query, [alb_id])
+      return true
+    else
+      return false
+    end
   end
 
   # Find the album on the given alb_id

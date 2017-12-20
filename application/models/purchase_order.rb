@@ -155,14 +155,7 @@ class PurchaseOrder
   #class methods
 
   def self.status_all()
-    return { self::STATUS_ONGOING => "On Going", self::STATUS_DONE => "Done" }
-  end
-
-  # Delete from the table purchase_orders the given object
-  def self.delete(purchase_order)
-    query   = "DELETE FROM purchase_orders WHERE pro_id = $1"
-    DbHelper.run_sql(query, [purchase_order.pro_id])
-    return purchase_order
+    return { PurchaseOrder::STATUS_ONGOING => "On Going", PurchaseOrder::STATUS_DONE => "Done" }
   end
 
   # Delete from the table purchase_orders the purchase_order pro_id

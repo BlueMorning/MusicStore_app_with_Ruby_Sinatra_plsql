@@ -26,7 +26,7 @@ class NavArtists
   GET_INDEX         = NavMusicStore::ROOT+"/artists"
   GET_NEW           = NavMusicStore::ROOT+"/artists/new"
   POST_NEW          = NavMusicStore::ROOT+"/artists"
-  GET_WITH_FILTERS  = NavMusicStore::ROOT+"/artists/?"
+  GET_WITH_FILTERS  = NavMusicStore::ROOT+"/artists/search?"
   GET_EDIT_BY_ID    = NavMusicStore::ROOT+"/artists/:art_id/edit"
   POST_UPDATE_BY_ID = NavMusicStore::ROOT+'/artists/:art_id'
   POST_DELETE_BY_ID = NavMusicStore::ROOT+'/artists/:art_id/delete'
@@ -54,7 +54,7 @@ class NavGenres
   GET_INDEX         = NavMusicStore::ROOT+"/genres"
   GET_NEW           = NavMusicStore::ROOT+"/genres/new"
   POST_NEW          = NavMusicStore::ROOT+"/genres"
-  GET_WITH_FILTERS  = NavMusicStore::ROOT+"/genres/?"
+  GET_WITH_FILTERS  = NavMusicStore::ROOT+"/genres/search?"
   GET_EDIT_BY_ID    = NavMusicStore::ROOT+"/genres/:gen_id/edit"
   POST_UPDATE_BY_ID = NavMusicStore::ROOT+'/genres/:gen_id'
   POST_DELETE_BY_ID = NavMusicStore::ROOT+'/genres/:gen_id/delete'
@@ -82,7 +82,7 @@ class NavAlbums
   GET_INDEX         = NavMusicStore::ROOT+"/albums"
   GET_NEW           = NavMusicStore::ROOT+"/albums/new"
   POST_NEW          = NavMusicStore::ROOT+"/albums"
-  GET_WITH_FILTERS  = NavMusicStore::ROOT+"/albums/?"
+  GET_WITH_FILTERS  = NavMusicStore::ROOT+"/albums/search/?"
   GET_EDIT_BY_ID    = NavMusicStore::ROOT+"/albums/:alb_id/edit"
   POST_UPDATE_BY_ID = NavMusicStore::ROOT+'/albums/:alb_id'
   POST_DELETE_BY_ID = NavMusicStore::ROOT+'/albums/:alb_id/delete'
@@ -113,7 +113,7 @@ class NavCustomers
   GET_INDEX         = NavMusicStore::ROOT+"/customers"
   GET_NEW           = NavMusicStore::ROOT+"/customers/new"
   POST_NEW          = NavMusicStore::ROOT+"/customers"
-  GET_WITH_FILTERS  = NavMusicStore::ROOT+"/customers/?"
+  GET_WITH_FILTERS  = NavMusicStore::ROOT+"/customers/search/?"
   GET_EDIT_BY_ID    = NavMusicStore::ROOT+"/customers/:cus_id/edit"
   POST_UPDATE_BY_ID = NavMusicStore::ROOT+'/customers/:cus_id'
   POST_DELETE_BY_ID = NavMusicStore::ROOT+'/customers/:cus_id/delete'
@@ -140,7 +140,7 @@ class NavSuppliers
   GET_INDEX         = NavMusicStore::ROOT+"/suppliers"
   GET_NEW           = NavMusicStore::ROOT+"/suppliers/new"
   POST_NEW          = NavMusicStore::ROOT+"/suppliers"
-  GET_WITH_FILTERS  = NavMusicStore::ROOT+"/suppliers/?"
+  GET_WITH_FILTERS  = NavMusicStore::ROOT+"/suppliers/search/?"
   GET_EDIT_BY_ID    = NavMusicStore::ROOT+"/suppliers/:sup_id/edit"
   POST_UPDATE_BY_ID = NavMusicStore::ROOT+'/suppliers/:sup_id'
   POST_DELETE_BY_ID = NavMusicStore::ROOT+'/suppliers/:sup_id/delete'
@@ -166,22 +166,27 @@ end
 class NavSaleOrders
 
   GET_INDEX             = NavMusicStore::ROOT+"/sale_orders"
-  GET_NEW               = NavMusicStore::ROOT+"/sale_orders/new/"
+  GET_VIEW              = NavMusicStore::ROOT+"/sale_orders/:slo_id"
+  GET_NEW               = NavMusicStore::ROOT+"/sale_orders/new"
   POST_NEW              = NavMusicStore::ROOT+"/sale_orders"
-  GET_WITH_FILTERS      = NavMusicStore::ROOT+"/sale_orders/?"
-  GET_EDIT_BY_ID        = NavMusicStore::ROOT+"/sale_orders/:slo_id/edit/"
+  GET_WITH_FILTERS      = NavMusicStore::ROOT+"/sale_orders/search/?"
+  GET_EDIT_BY_ID        = NavMusicStore::ROOT+"/sale_orders/:slo_id/edit"
   POST_UPDATE_BY_ID     = NavMusicStore::ROOT+'/sale_orders/:slo_id'
   POST_DELETE_BY_ID     = NavMusicStore::ROOT+'/sale_orders/:slo_id/delete'
   POST_CHECKOUT_BY_ID   = NavMusicStore::ROOT+'/sale_orders/:slo_id/checkout'
   POST_ADD_ITEMS        = NavMusicStore::ROOT+'/sale_orders/:slo_id/add_items'
 
 
+  def self.nav_get_view_by_id(slo_alb_id)
+    return NavMusicStore::ROOT+"/sale_orders/#{slo_alb_id}/view"
+  end
+
   def self.nav_get_with_sal_alb_id(slo_alb_id, strict = false)
     return NavMusicStore::ROOT+"/sale_orders/?slo_alb_id=#{slo_alb_id}"
   end
 
   def self.nav_get_edit_by_id(slo_id)
-    return NavMusicStore::ROOT+"/sale_orders/#{slo_id}/edit/"
+    return NavMusicStore::ROOT+"/sale_orders/#{slo_id}/edit"
   end
 
   def self.nav_post_update_by_id(slo_id)
@@ -206,22 +211,26 @@ end
 class NavPurchaseOrders
 
   GET_INDEX             = NavMusicStore::ROOT+"/purchase_orders"
-  GET_NEW               = NavMusicStore::ROOT+"/purchase_orders/new/"
+  GET_VIEW              = NavMusicStore::ROOT+"/purchase_orders/:pro_id"
+  GET_NEW               = NavMusicStore::ROOT+"/purchase_orders/new"
   POST_NEW              = NavMusicStore::ROOT+"/purchase_orders"
-  GET_WITH_FILTERS      = NavMusicStore::ROOT+"/purchase_orders/?"
-  GET_EDIT_BY_ID        = NavMusicStore::ROOT+"/purchase_orders/:pro_id/edit/"
+  GET_WITH_FILTERS      = NavMusicStore::ROOT+"/purchase_orders/search/?"
+  GET_EDIT_BY_ID        = NavMusicStore::ROOT+"/purchase_orders/:pro_id/edit"
   POST_UPDATE_BY_ID     = NavMusicStore::ROOT+'/purchase_orders/:pro_id'
   POST_DELETE_BY_ID     = NavMusicStore::ROOT+'/purchase_orders/:pro_id/delete'
   POST_CHECKOUT_BY_ID   = NavMusicStore::ROOT+'/purchase_orders/:pro_id/checkout'
   POST_ADD_ITEMS        = NavMusicStore::ROOT+'/purchase_orders/:pro_id/add_items'
 
+  def self.nav_get_view_by_id(pro_id)
+    return NavMusicStore::ROOT+"/sale_orders/#{pro_id}/view"
+  end
 
   def self.nav_get_with_sal_alb_id(pro_alb_id, strict = false)
     return NavMusicStore::ROOT+"/purchase_orders/?pro_alb_id=#{pro_alb_id}"
   end
 
   def self.nav_get_edit_by_id(pro_id)
-    return NavMusicStore::ROOT+"/purchase_orders/#{pro_id}/edit/"
+    return NavMusicStore::ROOT+"/purchase_orders/#{pro_id}/edit"
   end
 
   def self.nav_post_update_by_id(pro_id)

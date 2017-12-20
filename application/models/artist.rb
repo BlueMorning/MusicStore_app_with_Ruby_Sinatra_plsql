@@ -41,17 +41,21 @@ class Artist
   end
 
 
-  # Delete from the table artists the given object and return the object
-  def self.delete(artist)
-    query   = "DELETE FROM artists WHERE art_id = $1"
-    DbHelper.run_sql(query, [artist.art_id])
-    return artist
+  # Delete from the table artists the given artist
+  def self.can_be_deleted(art_id)
+    query = "SELECT COUNT(albums.alb_id) nb_references from albums WHERE albums.alb_art_id = $1"
+    return DbHelper.run_sql_return_first_row_column_value(query, [art_id], 'nb_references').to_i == 0;
   end
 
   # Delete from the table artists the given art_id
   def self.delete_by_id(art_id)
-    query   = "DELETE FROM artists WHERE art_id = $1"
-    DbHelper.run_sql(query, [art_id])
+    if(Artist.can_be_deleted(art_id))
+      query   = "DELETE FROM artists WHERE art_id = $1"
+      DbHelper.run_sql(query, [art_id])
+      return true
+    else
+      return false
+    end
   end
 
   # Find the artist on the given art_id

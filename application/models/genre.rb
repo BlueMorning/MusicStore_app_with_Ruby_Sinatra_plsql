@@ -28,17 +28,20 @@ class Genre
 
   # Class methods
 
-  # Delete from the table genres the given object
-  def self.delete(genre)
-    query   = "DELETE FROM genres WHERE gen_id = $1"
-    DbHelper.run_sql(query, [genre.gen_id])
-    return genre
+  def self.can_be_deleted(gen_id)
+    query = "SELECT COUNT(albums.alb_id) nb_references from albums WHERE albums.alb_gen_id = $1"
+    return DbHelper.run_sql_return_first_row_column_value(query, [gen_id], 'nb_references').to_i == 0;
   end
 
   # Delete from the table genres the given gen_id
   def self.delete_by_id(gen_id)
-    query   = "DELETE FROM genres WHERE gen_id = $1"
-    DbHelper.run_sql(query, [gen_id])
+    if(Genre.can_be_deleted(gen_id))
+      query   = "DELETE FROM genres WHERE gen_id = $1"
+      DbHelper.run_sql(query, [gen_id])
+      return true
+    else
+      return false
+    end
   end
 
   # Find the genre on the given gen_id

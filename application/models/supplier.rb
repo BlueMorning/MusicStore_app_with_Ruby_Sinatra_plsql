@@ -46,17 +46,20 @@ class Supplier
 
   # Class methods
 
-  # Delete from the table suppliers the given object and return the object
-  def self.delete(supplier)
-    query   = "DELETE FROM suppliers WHERE sup_id = $1"
-    DbHelper.run_sql(query, [supplier.sup_id])
-    return supplier
+  def self.can_be_deleted(sup_id)
+    query = "SELECT COUNT(purchase_orders.pro_id) nb_references from purchase_orders WHERE purchase_orders.pro_sup_id = $1"
+    return DbHelper.run_sql_return_first_row_column_value(query, [sup_id], 'nb_references').to_i == 0;
   end
 
   # Delete from the table supplier the given sup_id
   def self.delete_by_id(sup_id)
-    query   = "DELETE FROM suppliers WHERE sup_id = $1"
-    DbHelper.run_sql(query, [sup_id])
+    if(Supplier.can_be_deleted(sup_id))
+      query   = "DELETE FROM suppliers WHERE sup_id = $1"
+      DbHelper.run_sql(query, [sup_id])
+      return true
+    else
+      return false
+    end
   end
 
   # Find the supplier on the given sup_id

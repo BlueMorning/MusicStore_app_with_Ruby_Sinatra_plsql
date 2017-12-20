@@ -47,17 +47,20 @@ class Customer
 
   # Class methods
 
-  # Delete from the table customers the given object and return the object
-  def self.delete(customer)
-    query   = "DELETE FROM customers WHERE cus_id = $1"
-    DbHelper.run_sql(query, [customer.cus_id])
-    return customer
+  def self.can_be_deleted(cus_id)
+    query = "SELECT COUNT(sale_orders.slo_id) nb_references from sale_orders WHERE sale_orders.slo_cus_id = $1"
+    return DbHelper.run_sql_return_first_row_column_value(query, [cus_id], 'nb_references').to_i == 0;
   end
 
   # Delete from the table customer the given cus_id
   def self.delete_by_id(cus_id)
-    query   = "DELETE FROM customers WHERE cus_id = $1"
-    DbHelper.run_sql(query, [cus_id])
+    if(Customer.can_be_deleted(cus_id))
+      query   = "DELETE FROM customers WHERE cus_id = $1"
+      DbHelper.run_sql(query, [cus_id])
+      return true
+    else
+      return false
+    end
   end
 
   # Find the customer on the given cus_id
