@@ -54,13 +54,13 @@ end
 # Collect all the sale items whose quantity > 0 and add them to the sale order
 post NavSaleOrders::POST_ADD_ITEMS do
 
-  sale_item_from_params = params.select {|key, value| key.match(/alb_id_*/)}
+  sale_item_from_params = params.select {|key, value| key.match(/qty_alb_id_*/)}
   sale_items_to_add     = []
   sale_item_from_params.each do |key, value|
     if(value.to_i) > 0
-      sale_item = SaleItem.new(nil)
-      sale_item.sli_alb_id = key.sub("alb_id_", "").to_i
-      sale_item.sli_qty    = value.to_i
+      sale_item            = SaleItem.new(nil)
+      sale_item.sli_alb_id = key.sub("qty_alb_id_", "").to_i
+      sale_item.sli_qty    = params["qty_alb_id_#{sale_item.sli_alb_id}"].to_i
       sale_items_to_add.push(sale_item)
     end
   end

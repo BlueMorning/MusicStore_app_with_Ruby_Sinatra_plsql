@@ -54,28 +54,32 @@ end
 # Collect all the purchase items whose quantity > 0 and add them to the Purchase Order
 post NavPurchaseOrders::POST_ADD_ITEMS do
 
-  purchase_item_from_params = params.select {|key, value| key.match(/alb_id_*/)}
+  purchase_item_from_params = params.select {|key, value| key.match(/qty_alb_id_*/)}
   purchase_items_to_add     = []
+
   purchase_item_from_params.each do |key, value|
     if(value.to_i) > 0
-      purchase_item = PurchaseItem.new(nil)
-      purchase_item.pri_alb_id = key.sub("alb_id_", "").to_i
-      purchase_item.pri_qty    = value.to_i
+
+      purchase_item                 = PurchaseItem.new(nil)
+      purchase_item.pri_alb_id      = key.sub("qty_alb_id_", "").to_i
+      purchase_item.pri_unit_price  = params["price_alb_id_#{purchase_item.pri_alb_id}"].to_i
+      purchase_item.pri_qty         = params["qty_alb_id_#{purchase_item.pri_alb_id}"].to_i
+
       purchase_items_to_add.push(purchase_item)
     end
   end
 
 
   purchase_order_id = params['pro_id'].to_i
-  customer_id   = params["pro_sup_id"].to_i
+  customer_id       = params["pro_sup_id"].to_i
 
   if(purchase_order_id == 0)
     @purchase_order = PurchaseOrder.new({"pro_sup_id"       => customer_id,
-                                 "pro_total_price"  => 0,
-                                 "pro_date"         => Time.now,
-                                 "pro_status"       => PurchaseOrder::STATUS_ONGOING})
+                                         "pro_total_price"  => 0,
+                                         "pro_date"         => Time.now,
+                                         "pro_status"       => PurchaseOrder::STATUS_ONGOING})
   else
-    @purchase_order = PurchaseOrder.find_by_id(purchase_order_id)
+    @purchase_order            = PurchaseOrder.find_by_id(purchase_order_id)
     @purchase_order.pro_sup_id = customer_id
   end
 

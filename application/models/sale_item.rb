@@ -44,8 +44,7 @@ class SaleItem
 
   # Perform an insert or an update depending on the value of sli_id
   def save()
-
-    sale_done      = false
+    
     qty_available  = Album.qty_available(@sli_alb_id)
 
     if(qty_available >= @sli_qty)
@@ -55,12 +54,7 @@ class SaleItem
       else
         insert()
       end
-
-      Album.update_qty_available(@sli_alb_id, -@sli_qty)
-      sale_done = true;
     end
-
-    return sale_done
   end
 
   def previous_sale_qty()
@@ -74,7 +68,6 @@ class SaleItem
   def self.delete(sale_item)
     query   = "DELETE FROM sale_items WHERE sli_id = $1"
     DbHelper.run_sql(query, [sale.sal_id])
-    Album.update_qty_available(@sli_alb_id, sale_item.sli_qty)
     return sale_item
   end
 
@@ -83,7 +76,6 @@ class SaleItem
     sale_item    = self.find_by_id(sli_id)
     query        = "DELETE FROM sale_items WHERE sli_id = $1"
     DbHelper.run_sql(query, [sli_id])
-    Album.update_qty_available(sale_item.sli_alb_id, sale_item.sli_qty)
   end
 
   # Find the sale_order on the given sli_id

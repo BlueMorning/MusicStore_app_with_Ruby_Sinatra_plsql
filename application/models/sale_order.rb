@@ -126,9 +126,16 @@ class SaleOrder
   end
 
   def checkout()
+
     if(nb_items() > 0)
       query = "UPDATE sale_orders SET slo_status = $1 WHERE sale_orders.slo_id = $2 "
       DbHelper.run_sql(query, [SaleOrder::STATUS_DONE, @slo_id])
+
+      saleItems = SaleItem.find_all_by_sale_order_id(@slo_id)
+      saleItems.each do |sale_item|
+        Album.update_qty_available(sale_item.sli_alb_id, -sale_item.sli_qty)
+      end
+
     end
   end
 

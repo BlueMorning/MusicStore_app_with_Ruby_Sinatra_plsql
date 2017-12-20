@@ -60,22 +60,28 @@
           <th>Album</th>
           <th>Artist</th>
           <th>Genre</th>
-          <th>Unit Price</th>
+          <th>Unit Sale Price</th>
+          <th>Unit Purchase Price</th>
           <th>Quantity</th>
         </thead>
         <tbody>
           <% @purchase_order.purchase_items.each do |purchase_item|  %>
             <tr>
-              <td><%= purchase_item.album.alb_title  %></td>
+              <td><%= purchase_item.album.alb_title %></td>
               <td><%= purchase_item.artist.art_name %></td>
               <td><%= purchase_item.genre.gen_name  %></td>
               <td><%= purchase_item.album.alb_price %></td>
               <td>
                 <input type="number" step="1"
-                 name="<%= "alb_id_#{purchase_item.album.alb_id}" %>"
+                 name="<%= "price_alb_id_#{purchase_item.album.alb_id}" %>"
+                 value="<%= purchase_item.pri_unit_price %>" />
+              </td>
+              <td>
+                <input type="number" step="1"
+                 name="<%= "qty_alb_id_#{purchase_item.album.alb_id}" %>"
                  value="<%= purchase_item.pri_qty %>" />
               </td>
-              <td><%= "Avail. Qty. : #{purchase_item.album.alb_qty_available}" %></td>
+              <td><%= "Stock Qty. : #{purchase_item.album.alb_qty_available}" %></td>
             </tr>
           <% end %>
         </tbody>
@@ -89,7 +95,8 @@
           <th>Album</th>
           <th>Artist</th>
           <th>Genre</th>
-          <th>Unit Price</th>
+          <th>Unit Sale Price</th>
+          <th>Unit Purchase Price</th>
           <th>Quantity</th>
         </thead>
         <tbody>
@@ -100,12 +107,16 @@
               <td><%= purchase_item.genre.gen_name  %></td>
               <td><%= purchase_item.album.alb_price %></td>
               <td>
-                <input type="number" step="1"
-                 name="<%= "alb_id_#{purchase_item.album.alb_id}" %>"
-                 value="<%= purchase_item.pri_qty %>"
-                />
+                <input type="number" step="1" min="0"
+                 name="<%= "price_alb_id_#{purchase_item.album.alb_id}" %>"
+                 value="<%= purchase_item.pri_unit_price %>" />
               </td>
-              <td><%= "Avail. Qty. : #{purchase_item.album.alb_qty_available}" %></td>
+              <td>
+                <input type="number" step="1" min="0"
+                 name="<%= "qty_alb_id_#{purchase_item.album.alb_id}" %>"
+                 value="<%= purchase_item.pri_qty %>" />
+              </td>
+              <td><%= "Stock Qty. : #{purchase_item.album.alb_qty_available}" %></td>
             </tr>
           <% end %>
         </tbody>

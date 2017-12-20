@@ -44,14 +44,11 @@ class PurchaseItem
 
   # Perform an insert or an update depending on the value of pri_id
   def save()
-
       if(@pri_id && @pri_id != 0)
         update()
       else
         insert()
       end
-
-      Album.update_qty_available(@pri_alb_id, @pri_qty)
   end
 
   def previous_purchase_qty()
@@ -65,7 +62,6 @@ class PurchaseItem
   def self.delete(purchase_item)
     query   = "DELETE FROM purchase_items WHERE pri_id = $1"
     DbHelper.run_sql(query, [purchase_item.pli_id])
-    Album.update_qty_available(@pri_alb_id, purchase_item.pri_qty)
     return purchase_item
   end
 
@@ -74,7 +70,6 @@ class PurchaseItem
     purchase_item    = self.find_by_id(pri_id)
     query        = "DELETE FROM purchase_items WHERE pri_id = $1"
     DbHelper.run_sql(query, [pri_id])
-    Album.update_qty_available(purchase_item.pri_alb_id, purchase_item.pri_qty)
   end
 
   # Find the purchase_order on the given pri_id

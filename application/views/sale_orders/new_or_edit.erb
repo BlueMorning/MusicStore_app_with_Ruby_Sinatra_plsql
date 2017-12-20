@@ -71,12 +71,12 @@
               <td><%= sale_item.genre.gen_name  %></td>
               <td><%= sale_item.album.alb_price %></td>
               <td>
-                <input type="number" step="1"
-                 name="<%= "alb_id_#{sale_item.album.alb_id}" %>"
+                <input type="number" step="1" min="0"
+                 name="<%= "qty_alb_id_#{sale_item.album.alb_id}" %>"
                  value="<%= sale_item.sli_qty %>"
                  max="<%= sale_item.album.alb_qty_available %>" />
               </td>
-              <td><%= sale_item.album.alb_qty_available %></td>
+              <td><%= "Max.: #{sale_item.album.alb_qty_available}" %></td>
             </tr>
           <% end %>
         </tbody>
@@ -101,12 +101,12 @@
               <td><%= sale_item.genre.gen_name  %></td>
               <td><%= sale_item.album.alb_price %></td>
               <td>
-                <input type="number" step="1"
-                 name="<%= "alb_id_#{sale_item.album.alb_id}" %>"
+                <input type="number" step="1" min="0"
+                 name="<%= "qty_alb_id_#{sale_item.album.alb_id}" %>"
                  value="<%= sale_item.sli_qty %>"
-                 max="<%= sale_item.album.alb_qty_available %>" />
+                 max="<%= (sale_item.album.alb_qty_available) %>" />
               </td>
-              <td><%= sale_item.album.alb_qty_available %></td>
+              <td><%= "Max.: #{sale_item.album.alb_qty_available}" %></td>
             </tr>
           <% end %>
         </tbody>

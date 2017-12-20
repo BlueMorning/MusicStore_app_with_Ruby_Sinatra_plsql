@@ -80,7 +80,7 @@ class PurchaseOrder
             "pri_id"          => 0,
             "pri_pro_id"      => @pro_id,
             "pri_qty"         => 0,
-            "pri_unit_price"  => album.alb_price,
+            "pri_unit_price"  => 0,
             "pri_alb_id"      => album.alb_id
           }
         )
@@ -106,7 +106,6 @@ class PurchaseOrder
     # Adding of all the purchase items whose qty set by the user > 0
     purchase_items_to_add.each do |purchase_item|
       purchase_item.pri_pro_id      = @pro_id
-      purchase_item.pri_unit_price  = Album.find_by_id(purchase_item.pri_alb_id).alb_price.to_i
       purchase_item.pri_total_price = purchase_item.pri_unit_price * purchase_item.pri_qty.to_i
       purchase_item.save()
     end
@@ -126,9 +125,16 @@ class PurchaseOrder
   end
 
   def checkout()
+
     if(nb_items() > 0)
       query = "UPDATE purchase_orders SET pro_status = $1 WHERE purchase_orders.pro_id = $2 "
       DbHelper.run_sql(query, [PurchaseOrder::STATUS_DONE, @pro_id])
+
+      purchaseItems = PurchaseItem.find_all_by_purchase_order_id(@pro_id)
+      purchaseItems.each do |purchase_item|
+        Album.update_qty_available(purchase_item.pri_alb_id, purchase_item.pri_qty)
+      end
+
     end
   end
 
