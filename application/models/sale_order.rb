@@ -140,13 +140,7 @@ class SaleOrder
   end
 
   def slo_status_label()
-    if   (slo_status == STATUS_ONGOING)
-      return "OnGoing"
-    elsif(slo_status == STATUS_DONE)
-      return "Done"
-    else
-      return "Done"
-    end
+    return SaleOrder.status_all()[@slo_status]
   end
 
 
@@ -160,6 +154,11 @@ class SaleOrder
   end
 
   #class methods
+
+  def self.status_all()
+    return { self::STATUS_ONGOING => "On Going", self::STATUS_DONE => "Done" }
+  end
+
   # Delete from the table sales_orders the given object
   def self.delete(sale_order)
     query   = "DELETE FROM sale_orders WHERE slo_id = $1"
@@ -251,12 +250,22 @@ class SaleOrder
         query += " AND slo_id = $#{query_values.count()}"
       end
 
+      if(filters.include?("slo_status") &&
+         filters["slo_status"] != "" &&
+         filters["slo_status"] != nil)
+
+        query_values.push(filters["slo_status"])
+        query += " AND slo_status = $#{query_values.count()}"
+      end
+
       if(filters.include?("order_by") &&
          filters["order_by"] != "")
 
          query += " ORDER BY slo_total_price ASC"   if filters["order_by"] == "slo_total_price_asc"
          query += " ORDER BY slo_total_price DESC"  if filters["order_by"] == "slo_total_price_desc"
-      end
+       else
+         query += " ORDER BY slo_status DESC, slo_date DESC"
+       end
     end
 
     if limit > 0

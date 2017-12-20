@@ -139,13 +139,7 @@ class PurchaseOrder
   end
 
   def pro_status_label()
-    if   (pro_status == STATUS_ONGOING)
-      return "OnGoing"
-    elsif(pro_status == STATUS_DONE)
-      return "Done"
-    else
-      return "Done"
-    end
+    return PurchaseOrder.status_all()[@pro_status]
   end
 
 
@@ -159,6 +153,11 @@ class PurchaseOrder
   end
 
   #class methods
+
+  def self.status_all()
+    return { self::STATUS_ONGOING => "On Going", self::STATUS_DONE => "Done" }
+  end
+
   # Delete from the table purchase_orders the given object
   def self.delete(purchase_order)
     query   = "DELETE FROM purchase_orders WHERE pro_id = $1"
@@ -250,11 +249,21 @@ class PurchaseOrder
         query += " AND pro_id = $#{query_values.count()}"
       end
 
+      if(filters.include?("pro_status") &&
+         filters["pro_status"] != "" &&
+         filters["pro_status"] != nil)
+
+        query_values.push(filters["pro_status"])
+        query += " AND pro_status = $#{query_values.count()}"
+      end
+
       if(filters.include?("order_by") &&
          filters["order_by"] != "")
 
          query += " ORDER BY pro_total_price ASC"   if filters["order_by"] == "pro_total_price_asc"
          query += " ORDER BY pro_total_price DESC"  if filters["order_by"] == "pro_total_price_desc"
+      else
+         query += " ORDER BY pro_status DESC, pro_date DESC"
       end
     end
 

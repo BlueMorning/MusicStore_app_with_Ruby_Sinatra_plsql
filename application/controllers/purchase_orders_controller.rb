@@ -6,12 +6,28 @@ require_relative('./../models/supplier')
 require_relative('./../helper/navigation')
 
 
+
+# Display the purchases which match with the research filters
+get NavPurchaseOrders::GET_INDEX do
+  @filters = {}
+  params.include?("pro_id")           ? @filters["pro_id"]     = params["pro_id"].to_i                : @filters["pro_id"]     = 0
+  params.include?("pro_sup_id")       ? @filters["pro_sup_id"] = params["pro_sup_id"].to_i            : @filters["pro_sup_id"] = 0
+  params.include?("pro_status")       ? @filters["pro_status"] = params["pro_status"]                 : @filters["pro_status"] = ""
+  params.include?("order_by")         ? @filters["order_by"]   = params["order_by"]                   : @filters["order_by"]   = ""
+
+  @suppliers   = Supplier.find_all()
+  @purchase_orders = PurchaseOrder.find_with_filters(@filters)
+  erb(:"purchase_orders/index")
+end
+
+
 # Display the purchases which match with the research filters
 get NavPurchaseOrders::GET_WITH_FILTERS do
   @filters = {}
-  params.include?("pro_id")     ? @filters["pro_id"]     = params["pro_id"].to_i      : @filters["pro_id"]     = 0
-  params.include?("pro_sup_id") ? @filters["pro_sup_id"] = params["pro_sup_id"].to_i  : @filters["pro_sup_id"] = 0
-  params.include?("order_by")   ? @filters["order_by"]   = params["order_by"]         : @filters["order_by"]   = ""
+  params.include?("pro_id")           ? @filters["pro_id"]     = params["pro_id"].to_i                : @filters["pro_id"]     = 0
+  params.include?("pro_sup_id")       ? @filters["pro_sup_id"] = params["pro_sup_id"].to_i            : @filters["pro_sup_id"] = 0
+  params.include?("pro_status")       ? @filters["pro_status"] = params["pro_status"]                 : @filters["pro_status"] = ""
+  params.include?("order_by")         ? @filters["order_by"]   = params["order_by"]                   : @filters["order_by"]   = ""
 
   @suppliers   = Supplier.find_all()
   @purchase_orders = PurchaseOrder.find_with_filters(@filters)

@@ -21,6 +21,19 @@
               <% end %>
           </select>
 
+          <select class="" name="slo_status" id="slo_status">
+              <option value="">Status</option>
+              <% SaleOrder.status_all.each do |status, status_label| %>
+                <option value="<%= status %>"
+                  <% if(@filters['pro_status'] == status)%>
+                    selected
+                  <% end %>
+                  >
+                  <%= status_label.capitalize() %>
+              </option>
+              <% end %>
+          </select>
+
           <select class="" name="order_by" id="order_by">
               <option value="">Order By</option>
               <% SaleOrder.query_orderby.each do |orderby_key, orderby_value| %>

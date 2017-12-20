@@ -54,14 +54,26 @@ class Album
     end
   end
 
-  def nb_sales()
+  def nb_item_sold()
     query = "SELECT SUM(sli_qty) total_qty FROM sale_items WHERE sli_alb_id = $1"
     result = DbHelper.run_sql_return_first_row_column_value(query, [@alb_id], "total_qty")
     return result != nil ? result.to_i : 0
   end
 
-  def total_amount()
+  def nb_item_purchased()
+    query = "SELECT SUM(pri_qty) total_qty FROM purchase_items WHERE pri_alb_id = $1"
+    result = DbHelper.run_sql_return_first_row_column_value(query, [@alb_id], "total_qty")
+    return result != nil ? result.to_i : 0
+  end
+
+  def total_amount_sold()
     query = "SELECT SUM(sli_unit_price*sli_qty) total_amount FROM sale_items WHERE sli_alb_id = $1"
+    result = DbHelper.run_sql_return_first_row_column_value(query, [@alb_id], "total_amount")
+    return result != nil ? result.to_i : 0
+  end
+
+  def total_amount_purchased()
+    query = "SELECT SUM(pri_unit_price*pri_qty) total_amount FROM purchase_items WHERE pri_alb_id = $1"
     result = DbHelper.run_sql_return_first_row_column_value(query, [@alb_id], "total_amount")
     return result != nil ? result.to_i : 0
   end
@@ -75,6 +87,23 @@ class Album
       return Album.all_stock_level[1]
     end
   end
+
+  def nb_distinct_customers()
+    query = "SELECT COUNT(DISTINCT(sale_orders.slo_cus_id)) nb_distinct_customers
+             FROM sale_orders
+             INNER JOIN sale_items on sale_orders.slo_id = sale_items.sli_slo_id
+             WHERE sale_items.sli_alb_id    = $1"
+    return DbHelper.run_sql_return_first_row_column_value(query, [@alb_id], 'nb_distinct_customers').to_i;
+  end
+
+  def nb_distinct_suplliers()
+    query = "SELECT COUNT(DISTINCT(purchase_orders.pro_sup_id)) nb_distinct_suplliers
+             FROM purchase_orders
+             INNER JOIN purchase_items on purchase_orders.pro_id = purchase_items.pri_pro_id
+             WHERE purchase_items.pri_alb_id    = $1"
+    return DbHelper.run_sql_return_first_row_column_value(query, [@alb_id], 'nb_distinct_suplliers').to_i;
+  end
+
 
   #Class method
 

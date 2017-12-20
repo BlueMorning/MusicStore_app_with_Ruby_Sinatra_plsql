@@ -7,11 +7,26 @@ require_relative('./../helper/navigation')
 
 
 # Display the sales which match with the research filters
+get NavSaleOrders::GET_INDEX do
+  @filters = {}
+  params.include?("slo_id")       ? @filters["slo_id"]     = params["slo_id"].to_i      : @filters["slo_id"]     = 0
+  params.include?("slo_cus_id")   ? @filters["slo_cus_id"] = params["slo_cus_id"].to_i  : @filters["slo_cus_id"] = 0
+  params.include?("slo_status")   ? @filters["slo_status"] = params["slo_status"]       : @filters["slo_status"] = ""
+  params.include?("order_by")     ? @filters["order_by"]   = params["order_by"]         : @filters["order_by"]   = ""
+
+  @customers   = Customer.find_all()
+  @sale_orders = SaleOrder.find_with_filters(@filters)
+  erb(:"sale_orders/index")
+end
+
+
+# Display the sales which match with the research filters
 get NavSaleOrders::GET_WITH_FILTERS do
   @filters = {}
-  params.include?("slo_id")     ? @filters["slo_id"]     = params["slo_id"].to_i      : @filters["slo_id"]     = 0
-  params.include?("slo_cus_id") ? @filters["slo_cus_id"] = params["slo_cus_id"].to_i  : @filters["slo_cus_id"] = 0
-  params.include?("order_by")   ? @filters["order_by"]   = params["order_by"]         : @filters["order_by"]   = ""
+  params.include?("slo_id")       ? @filters["slo_id"]     = params["slo_id"].to_i      : @filters["slo_id"]     = 0
+  params.include?("slo_cus_id")   ? @filters["slo_cus_id"] = params["slo_cus_id"].to_i  : @filters["slo_cus_id"] = 0
+  params.include?("slo_status")   ? @filters["slo_status"] = params["slo_status"]       : @filters["slo_status"] = ""
+  params.include?("order_by")     ? @filters["order_by"]   = params["order_by"]         : @filters["order_by"]   = ""
 
   @customers   = Customer.find_all()
   @sale_orders = SaleOrder.find_with_filters(@filters)

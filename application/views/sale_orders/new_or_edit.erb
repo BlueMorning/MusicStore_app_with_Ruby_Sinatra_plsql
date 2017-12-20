@@ -57,6 +57,7 @@
 
       <table>
         <thead>
+          <th>Cover</th>
           <th>Album</th>
           <th>Artist</th>
           <th>Genre</th>
@@ -66,6 +67,7 @@
         <tbody>
           <% @sale_order.sale_items.each do |sale_item|  %>
             <tr>
+              <td><image class="album_cover_image" src="<%= sale_item.album.alb_image_path %>" alt="<%= sale_item.album.alb_title %>"></td>
               <td><%= sale_item.album.alb_title  %></td>
               <td><%= sale_item.artist.art_name %></td>
               <td><%= sale_item.genre.gen_name  %></td>
@@ -87,6 +89,7 @@
     <div>
       <table>
         <thead>
+          <th>Cover</th>
           <th>Album</th>
           <th>Artist</th>
           <th>Genre</th>
@@ -96,6 +99,7 @@
         <tbody>
           <% @sale_order.sale_items_not_added.each do |sale_item|  %>
             <tr>
+              <td><image class="album_cover_image" src="<%= sale_item.album.alb_image_path %>" alt="<%= sale_item.album.alb_title %>"></td>
               <td><%= sale_item.album.alb_title  %></td>
               <td><%= sale_item.artist.art_name %></td>
               <td><%= sale_item.genre.gen_name  %></td>

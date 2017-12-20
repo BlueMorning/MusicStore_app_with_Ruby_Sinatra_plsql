@@ -34,6 +34,20 @@
               <% end %>
           </select>
 
+          <select class="" name="pro_status" id="pro_status">
+              <option value="">Status</option>
+              <% PurchaseOrder.status_all.each do |status, status_label| %>
+                <option value="<%= status %>"
+                  <% if(@filters['slo_status'] == status)%>
+                    selected
+                  <% end %>
+                  >
+                  <%= status_label.capitalize() %>
+              </option>
+              <% end %>
+          </select>
+
+
           <input type="submit" value="GO !" />
 
         </form>
@@ -70,7 +84,7 @@
                   <a href="<%= NavPurchaseOrders.nav_get_view_by_id(purchase_order.pro_id) %>">View</a>
               </td>
               <td>
-                  <a href="<%= NavPurchaseOrders.nav_get_edit_by_id(purchase_order.pro_id) %>">View</a>
+                  <a href="<%= NavPurchaseOrders.nav_get_edit_by_id(purchase_order.pro_id) %>">Modify</a>
               </td>
               <td>
                   <% if(purchase_order.can_be_delete())           %>

@@ -59,7 +59,7 @@
           <th>Delete</th>
           <% @albums.each do |album| %>
             <tr>
-              <td><image class="album_cover_image" src="<%= album.alb_image %>" alt="<%= album.alb_title %>"></td>
+              <td><image class="album_cover_image" src="<%= album.alb_image_path %>" alt="<%= album.alb_title %>"></td>
               <td><%= album.alb_title %></td>
               <td><%= album.artist.art_name %>
                  <span><a href="<%= NavArtists.nav_get_with_art_name(album.artist.art_name, true) %>">View</a></span>
