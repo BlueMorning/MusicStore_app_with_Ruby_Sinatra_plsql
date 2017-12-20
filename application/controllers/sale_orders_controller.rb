@@ -34,11 +34,17 @@ get NavSaleOrders::GET_WITH_FILTERS do
 end
 
 
+get NavSaleOrders::GET_VIEW do
+  @sale_order = SaleOrder.find_by_id(params['slo_id'].to_i, true)
+  erb(:"sale_orders/show")
+end
+
+
 # Form to create a new sale
 get NavSaleOrders::GET_NEW do
   @sale_order         = SaleOrder.new(nil)
-  album_search        = params.include?('album_search') ? params['album_search'] : ""
-  @sale_order.set_list_of_sales_item_to_display(album_search)
+  @album_search       = params.include?('album_search') ? params['album_search'] : ""
+  @sale_order.set_list_of_sales_item_to_display(@album_search)
   @customers          = Customer.find_all()
   @form_title         = "New Sale Order"
   @form_submit_label  = "Checkout"
@@ -49,8 +55,8 @@ end
 # Form to edit a sale order
 get NavSaleOrders::GET_EDIT_BY_ID do
   @sale_order         = SaleOrder.find_by_id(params['slo_id'].to_i)
-  album_search        = params.include?('album_search') ? params['album_search'] : ""
-  @sale_order.set_list_of_sales_item_to_display(album_search)
+  @album_search       = params.include?('album_search') ? params['album_search'] : ""
+  @sale_order.set_list_of_sales_item_to_display(@album_search)
   @customers          = Customer.find_all()
   @form_title         = "Modify Sale Order"
   @form_submit_label  = "Checkout"

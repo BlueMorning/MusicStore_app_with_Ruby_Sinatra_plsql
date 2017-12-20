@@ -180,13 +180,18 @@ class SaleOrder
   end
 
   # Find the sales_orders on the given slo_id
-  def self.find_by_id(slo_id)
+  def self.find_by_id(slo_id, init_sale_items = false)
     query   = "SELECT slo_id, slo_cus_id, slo_total_price, slo_date, slo_status,
                       cus_id, cus_name
                FROM  sale_orders
                INNER JOIN customers on sale_orders.slo_cus_id = customers.cus_id
                WHERE slo_id = $1"
-    return DbHelper.run_sql(query, [slo_id]).map {|sale_order| SaleOrder.new(sale_order, false, true)}[0]
+               
+    if(! init_sale_items)
+      return DbHelper.run_sql(query, [slo_id]).map {|sale_order| SaleOrder.new(sale_order, false, true)}[0]
+    else
+      return DbHelper.run_sql(query, [slo_id]).map {|sale_order| SaleOrder.new(sale_order, true, true)}[0]
+    end
   end
 
   # Find all the sale_orders

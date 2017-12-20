@@ -178,13 +178,17 @@ class PurchaseOrder
   end
 
   # Find the purchase_orders on the given pro_id
-  def self.find_by_id(pro_id)
+  def self.find_by_id(pro_id, init_sale_items = false)
     query   = "SELECT pro_id, pro_sup_id, pro_total_price, pro_date, pro_status,
                       sup_id, sup_name
                FROM  purchase_orders
                INNER JOIN suppliers on purchase_orders.pro_sup_id = suppliers.sup_id
                WHERE pro_id = $1"
-    return DbHelper.run_sql(query, [pro_id]).map {|purchase_order| PurchaseOrder.new(purchase_order, false, true)}[0]
+    if(! init_sale_items)
+      return DbHelper.run_sql(query, [pro_id]).map {|purchase_order| PurchaseOrder.new(purchase_order, false, true)}[0]
+    else
+      return DbHelper.run_sql(query, [pro_id]).map {|purchase_order| PurchaseOrder.new(purchase_order, true, true)}[0]
+    end
   end
 
   # Find all the purchase_orders

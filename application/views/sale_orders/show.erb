@@ -1,0 +1,40 @@
+<div>
+  <!-- Sale Order Header -->
+  <div>
+      <p>N°<span><%= @sale_order.slo_id %></span></p>
+      <p>Date<span><%= @sale_order.slo_date %></span></p>
+      <p>Supplier :<span><%= @sale_order.customer.cus_name.capitalize() %></span></p>
+      <p>Nb Rows :<span><%= @sale_order.nb_items() %></span></p>
+      <p>Total Quantity :<span><%= @sale_order.total_quantity() %></span></p>
+      <p>Total Amount :<span>£<%= @sale_order.slo_total_price %></span></p>
+  </div>
+
+  <!-- List of items -->
+  <div>
+    <table>
+      <thead>
+        <th>Cover</th>
+        <th>Album</th>
+        <th>Artist</th>
+        <th>Genre</th>
+        <th>Unit Price</th>
+        <th>Quantity</th>
+      </thead>
+      <tbody>
+        <% @sale_order.sale_items.each do |sale_item|  %>
+          <tr>
+            <td><image class="album_cover_image" src="<%= sale_item.album.alb_image_path %>" alt="<%= sale_item.album.alb_title %>"></td>
+            <td><%= sale_item.album.alb_title  %></td>
+            <td><%= sale_item.artist.art_name %></td>
+            <td><%= sale_item.genre.gen_name  %></td>
+            <td><%= sale_item.album.alb_price %></td>
+            <td><%= sale_item.sli_qty %></td>
+          </tr>
+        <% end %>
+       </tbody>
+      </table>
+    </div>
+    <div>
+      <a href="<%= NavSaleOrders::GET_INDEX %>">Sale Orders list</a>
+    </div>
+</div>

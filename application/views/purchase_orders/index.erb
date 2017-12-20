@@ -84,10 +84,12 @@
                   <a href="<%= NavPurchaseOrders.nav_get_view_by_id(purchase_order.pro_id) %>">View</a>
               </td>
               <td>
-                  <a href="<%= NavPurchaseOrders.nav_get_edit_by_id(purchase_order.pro_id) %>">Modify</a>
+                  <% if(purchase_order.can_be_modify()) %>
+                    <a href="<%= NavPurchaseOrders.nav_get_edit_by_id(purchase_order.pro_id) %>">Modify</a>
+                  <% end %>
               </td>
               <td>
-                  <% if(purchase_order.can_be_delete())           %>
+                  <% if(purchase_order.can_be_delete()) %>
                     <form class="" action="<%= NavPurchaseOrders.nav_post_delete_by_id(purchase_order.pro_id) %>" method="post">
                         <input type="submit" value="Delete" />
                     </form>

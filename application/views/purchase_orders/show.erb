@@ -1,0 +1,45 @@
+<div>
+  <!-- Purchase Order Header -->
+  <div>
+    <h1><%= @form_title %></h1>
+  </div>
+  <div>
+      <p>N°<span><%= @purchase_order.pro_id %></span></p>
+      <p>Date<span><%= @purchase_order.pro_date %></span></p>
+      <p>Customer :<span><%= @purchase_order.supplier.sup_name %></span></p>
+      <p>Nb Rows :<span><%= @purchase_order.nb_items() %></span></p>
+      <p>Total Quantity :<span><%= @purchase_order.total_quantity() %></span></p>
+      <p>Total Amount :<span>£<%= @purchase_order.pro_total_price %></span></p>
+  </div>
+
+  <!-- List of items -->
+  <div>
+    <table>
+      <thead>
+        <th>Cover</th>
+        <th>Album</th>
+        <th>Artist</th>
+        <th>Genre</th>
+        <th>Unit Sale Price</th>
+        <th>Unit Purchase Price</th>
+        <th>Quantity</th>
+      </thead>
+      <tbody>
+        <% @purchase_order.purchase_items.each do |purchase_item|  %>
+          <tr>
+            <td><image class="album_cover_image" src="<%= purchase_item.album.alb_image_path %>" alt="<%= purchase_item.album.alb_title %>"></td>
+            <td><%= purchase_item.album.alb_title %></td>
+            <td><%= purchase_item.artist.art_name %></td>
+            <td><%= purchase_item.genre.gen_name  %></td>
+            <td><%= purchase_item.album.alb_price %></td>
+            <td><%= purchase_item.pri_unit_price %></td>
+            <td><%= purchase_item.pri_qty %></td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+  <div>
+    <a href="<%= NavPurchaseOrders::GET_INDEX %>">Purchase Orders list</a>
+  </div>
+</div>

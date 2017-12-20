@@ -75,7 +75,7 @@
               </td>
               <td>
                 <p><span>Qty. Purchased</span><%= album.nb_item_purchased() %>
-                   <span><a href="<%= NavGenres.nav_get_with_gen_name(album.genre.gen_name, true) %>">View</a></span>
+                   <!-- <span><a href="<%= NavGenres.nav_get_with_gen_name(album.genre.gen_name, true) %>">View</a></span> -->
                 <p>
                 <p><span>Total</span><span>£</span><%= album.total_amount_purchased() %></p>
                 <p><span>Nb. Suppliers</span><%= album.nb_distinct_suplliers() %></p>
@@ -83,7 +83,7 @@
               <td><span>£</span><%= album.alb_price %></td>
               <td>
                   <p><span>Qty. Sold</span><%= album.nb_item_sold() %>
-                    <span><a href="<%= NavGenres.nav_get_with_gen_name(album.genre.gen_name, true) %>">View</a></span>
+                    <!-- <span><a href="<%= NavGenres.nav_get_with_gen_name(album.genre.gen_name, true) %>">View</a></span> -->
                   <p>
                   <p><span>Total</span><span>£</span><%= album.total_amount_sold() %></p>
                   <p><span>Nb. customers</span><%= album.nb_distinct_customers() %></p>

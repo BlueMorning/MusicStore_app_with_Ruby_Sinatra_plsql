@@ -83,7 +83,9 @@
                   <a href="<%= NavSaleOrders.nav_get_view_by_id(sale_order.slo_id) %>">View</a>
               </td>
               <td>
-                  <a href="<%= NavSaleOrders.nav_get_edit_by_id(sale_order.slo_id) %>">Modify</a>
+                  <% if(sale_order.can_be_modify()) %>
+                    <a href="<%= NavSaleOrders.nav_get_edit_by_id(sale_order.slo_id) %>">Modify</a>
+                  <% end %>
               </td>
               <td>
                   <% if(sale_order.can_be_delete()) %>

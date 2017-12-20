@@ -34,12 +34,16 @@ get NavPurchaseOrders::GET_WITH_FILTERS do
   erb(:"purchase_orders/index")
 end
 
+get NavPurchaseOrders::GET_VIEW do
+  @purchase_order     = PurchaseOrder.find_by_id(params['pro_id'].to_i, true)
+  erb(:"purchase_orders/show")
+end
 
 # Form to create a new purchase
 get NavPurchaseOrders::GET_NEW do
   @purchase_order     = PurchaseOrder.new(nil)
-  album_search        = params.include?('album_search') ? params['album_search'] : ""
-  @purchase_order.set_list_of_purchases_item_to_display(album_search)
+  @album_search       = params.include?('album_search') ? params['album_search'] : ""
+  @purchase_order.set_list_of_purchases_item_to_display(@album_search)
   @suppliers          = Supplier.find_all()
   @form_title         = "New Purchase Order"
   @form_submit_label  = "Ckeckout"
@@ -50,8 +54,8 @@ end
 # Form to edit a Purchase Order
 get NavPurchaseOrders::GET_EDIT_BY_ID do
   @purchase_order     = PurchaseOrder.find_by_id(params['pro_id'].to_i)
-  album_search        = params.include?('album_search') ? params['album_search'] : ""
-  @purchase_order.set_list_of_purchases_item_to_display(album_search)
+  @album_search       = params.include?('album_search') ? params['album_search'] : ""
+  @purchase_order.set_list_of_purchases_item_to_display(@album_search)
   @suppliers          = Supplier.find_all()
   @form_title         = "Modify Purchase Order"
   @form_submit_label  = "Checkout"
