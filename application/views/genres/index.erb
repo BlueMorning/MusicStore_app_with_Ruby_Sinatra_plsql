@@ -5,7 +5,7 @@
         <h1>Genres</h1>
       </div>
       <div>
-        <form action="/mstore/genres/" method="get">
+        <form action="<%= NavGenres::GET_WITH_FILTERS %>" method="get">
           <input type="text" name="gen_name" value="<%= @filters["gen_name"] %>">
           <input type="submit" name="" value="Search">
         </form>
@@ -29,7 +29,7 @@
               <td><%= genre.gen_name %></td>
               <td><a href="<%= NavAlbums.nav_get_with_gen_id(genre.gen_id) %>">Albums</a></td>
               <td>
-                <a href="<%= NavGenres.nav_get_edit_by_id(genre.gen_id) %>">Edit</a></td>
+                <a href="<%= NavGenres.nav_get_edit_by_id(genre.gen_id) %>">Modify</a></td>
               <td>
                 <form action="<%= NavGenres.nav_post_delete_by_id(genre.gen_id) %>" method="POST">
                   <input type="submit" value="Delete" />

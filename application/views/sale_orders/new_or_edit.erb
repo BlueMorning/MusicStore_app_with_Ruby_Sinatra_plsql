@@ -37,7 +37,7 @@
   <form class="" action="<%= NavSaleOrders.nav_post_add_items(@sale_order.slo_id) %>" method="post">
 
     <div>
-      <select class="" name="slo_cus_id" id="slo_cus_id">
+      <select class="" name="slo_cus_id" id="slo_cus_id" required>
           <option value="">Customers</option>
           <% @customers.each do |customer| %>
             <option value="<%= customer.cus_id %>"
@@ -74,7 +74,7 @@
                 <input type="number" step="1" min="0"
                  name="<%= "qty_alb_id_#{sale_item.album.alb_id}" %>"
                  value="<%= sale_item.sli_qty %>"
-                 max="<%= sale_item.album.alb_qty_available %>" />
+                 max="<%= sale_item.album.alb_qty_available %>" required/>
               </td>
               <td><%= "Max.: #{sale_item.album.alb_qty_available}" %></td>
             </tr>
@@ -104,7 +104,7 @@
                 <input type="number" step="1" min="0"
                  name="<%= "qty_alb_id_#{sale_item.album.alb_id}" %>"
                  value="<%= sale_item.sli_qty %>"
-                 max="<%= (sale_item.album.alb_qty_available) %>" />
+                 max="<%= (sale_item.album.alb_qty_available) %>" required/>
               </td>
               <td><%= "Max.: #{sale_item.album.alb_qty_available}" %></td>
             </tr>

@@ -37,7 +37,7 @@
   <form class="" action="<%= NavPurchaseOrders.nav_post_add_items(@purchase_order.pro_id) %>" method="post">
 
     <div>
-      <select class="" name="pro_sup_id" id="pro_sup_id">
+      <select class="" name="pro_sup_id" id="pro_sup_id" required>
           <option value="">Customers</option>
           <% @suppliers.each do |supplier| %>
             <option value="<%= supplier.sup_id %>"
@@ -74,12 +74,12 @@
               <td>
                 <input type="number" step="1"
                  name="<%= "price_alb_id_#{purchase_item.album.alb_id}" %>"
-                 value="<%= purchase_item.pri_unit_price %>" />
+                 value="<%= purchase_item.pri_unit_price %>" required/>
               </td>
               <td>
                 <input type="number" step="1"
                  name="<%= "qty_alb_id_#{purchase_item.album.alb_id}" %>"
-                 value="<%= purchase_item.pri_qty %>" />
+                 value="<%= purchase_item.pri_qty %>" required/>
               </td>
               <td><%= "Stock Qty. : #{purchase_item.album.alb_qty_available}" %></td>
             </tr>
@@ -109,12 +109,12 @@
               <td>
                 <input type="number" step="1" min="0"
                  name="<%= "price_alb_id_#{purchase_item.album.alb_id}" %>"
-                 value="<%= purchase_item.pri_unit_price %>" />
+                 value="<%= purchase_item.pri_unit_price %>" required/>
               </td>
               <td>
                 <input type="number" step="1" min="0"
                  name="<%= "qty_alb_id_#{purchase_item.album.alb_id}" %>"
-                 value="<%= purchase_item.pri_qty %>" />
+                 value="<%= purchase_item.pri_qty %>" required/>
               </td>
               <td><%= "Stock Qty. : #{purchase_item.album.alb_qty_available}" %></td>
             </tr>

@@ -5,7 +5,7 @@
         <h1>Artists</h1>
       </div>
       <div>
-        <form action="/mstore/artists/" method="get">
+        <form action="<%= NavArtists::GET_WITH_FILTERS %>" method="get">
           <input type="text" name="art_name" value="<%= @filters["art_name"] %>">
           <input type="submit" name="" value="Search">
         </form>
@@ -31,7 +31,7 @@
               <td><%= artist.art_name %></td>
               <td><a href="<%= NavAlbums.nav_get_with_art_name(artist.art_name) %>">Albums</a></td>
               <td>
-                <a href="<%= NavArtists.nav_get_edit_by_id(artist.art_id) %>">Edit</a></td>
+                <a href="<%= NavArtists.nav_get_edit_by_id(artist.art_id) %>">Modify</a></td>
               <td>
                 <form action="<%= NavArtists.nav_post_delete_by_id(artist.art_id) %>" method="POST">
                   <input type="submit" value="Delete" />

@@ -5,7 +5,7 @@
         <h1>Customers</h1>
       </div>
       <div>
-        <form action="/mstore/customers/" method="get">
+        <form action="<%= NavCustomers::GET_WITH_FILTERS %>" method="get">
           <input type="text" name="cus_name" value="<%= @filters["cus_name"] %>">
           <input type="submit" name="" value="Search">
         </form>

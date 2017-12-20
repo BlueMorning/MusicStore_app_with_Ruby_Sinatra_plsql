@@ -5,7 +5,7 @@
         <h1>Albums</h1>
       </div>
       <div>
-        <form action="/mstore/albums/" method="get">
+        <form action="<%= NavAlbums::GET_WITH_FILTERS %>" method="get">
           <input type="text" name="alb_title" value="<%= @filters["alb_title"] %>" placeholder="Search for title">
           <input type="text" name="art_name"  value="<%= @filters["art_name"] %>"  placeholder="Search for artist">
           <select class="" name="alb_gen_id" id="alb_gen_id">
@@ -52,8 +52,9 @@
           <th>Artist</th>
           <th>Genre</th>
           <th>Stock</th>
+          <th>Purchases & Suppliers</th>
           <th>Unit Sale Price</th>
-          <th>Sales</th>
+          <th>Sales & Customers</th>
           <th>Modify</th>
           <th>Delete</th>
           <% @albums.each do |album| %>
@@ -72,14 +73,23 @@
                 <p><span>Min.</span> <%= album.alb_qty_min %> <p>
                 <p><span>Max.</span> <%= album.alb_qty_max %> <p>
               </td>
-
+              <td>
+                <p><span>Qty. Purchased</span><%= album.nb_item_purchased() %>
+                   <span><a href="<%= NavGenres.nav_get_with_gen_name(album.genre.gen_name, true) %>">View</a></span>
+                <p>
+                <p><span>Total</span><span>£</span><%= album.total_amount_purchased() %></p>
+                <p><span>Nb. Suppliers</span><%= album.nb_distinct_suplliers() %></p>
+              </td>
               <td><span>£</span><%= album.alb_price %></td>
               <td>
-                <p><span>Qty. Sold</span> <%= album.nb_sales() %></p>
-                <p><span>Total Amount</span><span>£</span><%= album.total_amount() %></p></td>
-
+                  <p><span>Qty. Sold</span><%= album.nb_item_sold() %>
+                    <span><a href="<%= NavGenres.nav_get_with_gen_name(album.genre.gen_name, true) %>">View</a></span>
+                  <p>
+                  <p><span>Total</span><span>£</span><%= album.total_amount_sold() %></p>
+                  <p><span>Nb. customers</span><%= album.nb_distinct_customers() %></p>
+              </td>
               <td>
-                <a href="<%= NavAlbums.nav_get_edit_by_id(album.alb_id) %>">Edit</a></td>
+                <a href="<%= NavAlbums.nav_get_edit_by_id(album.alb_id) %>">Modify</a></td>
               <td>
               <td>
                 <form action="<%= NavAlbums.nav_post_delete_by_id(album.alb_id) %>" method="POST">

@@ -6,7 +6,7 @@
         <form action="<%= @form_action %>" method="post">
           <div>
               <label for="art_name">Name</label>
-              <input id="art_name" name="art_name" type="text" maxlength="50" value="<%= @artist.art_name %>" placeholder="name"/>
+              <input id="art_name" name="art_name" type="text" maxlength="50" value="<%= @artist.art_name %>" placeholder="name" required/>
           </div>
           <div>
             <input type="submit" value="<%= @form_submit_label %>" />

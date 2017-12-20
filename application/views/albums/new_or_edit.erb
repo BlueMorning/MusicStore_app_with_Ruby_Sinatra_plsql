@@ -36,23 +36,23 @@
           </div>
           <div>
               <label for="alb_title">Title</label>
-              <input type="text" name="alb_title" id="alb_title" value="<%= @album.alb_title %>" maxlength="50" placeholder="Title"/>
+              <input type="text" name="alb_title" id="alb_title" value="<%= @album.alb_title %>" maxlength="50" placeholder="Title" required/>
           </div>
           <div>
               <label for="alb_qty_available">Quantity in stock</label>
-              <input type="number" name="alb_qty_available" id="alb_qty_available" value="<%= @album.alb_qty_available %>" min="0" max="1000" step="1" placeholder="Quantity in stock"/>
+              <input type="number" name="alb_qty_available" id="alb_qty_available" value="<%= @album.alb_qty_available %>" min="0" max="1000" step="1" placeholder="Quantity in stock" required/>
           </div>
           <div>
               <label for="alb_qty_min">Min. Stock</label>
-              <input type="number" name="alb_qty_min" id="alb_qty_min" value="<%= @album.alb_qty_min %>" min="0" max="1000" step="1" placeholder="Min. Stock"/>
+              <input type="number" name="alb_qty_min" id="alb_qty_min" value="<%= @album.alb_qty_min %>" min="0" max="1000" step="1" placeholder="Min. Stock" required/>
           </div>
           <div>
               <label for="alb_qty_max">Max. Stock</label>
-              <input type="number" name="alb_qty_max" id="alb_qty_max" value="<%= @album.alb_qty_max %>" min="0" max="1000" step="1" placeholder="Max. Stock"/>
+              <input type="number" name="alb_qty_max" id="alb_qty_max" value="<%= @album.alb_qty_max %>" min="0" max="1000" step="1" placeholder="Max. Stock" required/>
           </div>
           <div>
               <label for="alb_price">Sale Price per unit</label>
-              <input type="number" name="alb_price" id="alb_price" value="<%= @album.alb_price %>" min="0" max="1000" step="1" placeholder="Sale Price per unit"/>
+              <input type="number" name="alb_price" id="alb_price" value="<%= @album.alb_price %>" min="0" max="1000" step="1" placeholder="Sale Price per unit" required/>
           </div>
           <div>
             <input type="submit" value="<%= @form_submit_label %>" />

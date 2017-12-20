@@ -9,7 +9,7 @@
           <input value="<%= @filters['pro_id'] %>" name="pro_id" placeholder="N°Purchase Order"/>
 
           <select class="" name="pro_sup_id" id="pro_sup_id">
-              <option value="">Customers</option>
+              <option value="">Suppliers</option>
               <% @suppliers.each do |supplier| %>
                 <option value="<%= supplier.sup_id %>"
                   <% if(@filters['pro_sup_id'] == supplier.sup_id)%>
@@ -52,6 +52,7 @@
           <th>Total Amount</th>
           <th>Nb. Rows</th>
           <th>Nb. Items</th>
+          <th>View</th>
           <th>Modify</th>
           <th>Delete</th>
         </thead>
@@ -66,11 +67,10 @@
               <td><%= purchase_order.nb_items()                   %></td>
               <td><%= purchase_order.total_quantity()             %></td>
               <td>
-                  <% if(purchase_order.can_be_modify())           %>
-                    <form class="" action="<%= NavPurchaseOrders.nav_get_edit_by_id(purchase_order.pro_id) %>" method="get">
-                        <input type="submit" value="Modify" />
-                    </form>
-                  <% end %>
+                  <a href="<%= NavPurchaseOrders.nav_get_view_by_id(purchase_order.pro_id) %>">View</a>
+              </td>
+              <td>
+                  <a href="<%= NavPurchaseOrders.nav_get_edit_by_id(purchase_order.pro_id) %>">View</a>
               </td>
               <td>
                   <% if(purchase_order.can_be_delete())           %>
