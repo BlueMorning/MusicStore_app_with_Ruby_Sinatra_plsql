@@ -21,13 +21,17 @@
   <div>
       <table>
           <th>Name</th>
+          <th>Nb. Purchases</th>
+          <th>Total Amount</th>
           <th>Purchases</th>
           <th>Modify</th>
           <th>Delete</th>
           <% @suppliers.each do |supplier| %>
             <tr>
-              <td><%= supplier.sup_name %></td>
-              <td><a href="">Purchases</a></td>
+              <td><%= supplier.sup_name       %></td>
+              <td><%= supplier.nb_purchases() %></td>
+              <td><%= supplier.total_amount() %></td>
+              <td><a href="">Purchases</a>      </td>
               <td>
                 <a href="<%= NavSuppliers.nav_get_edit_by_id(supplier.sup_id) %>">Edit</a></td>
               <td>

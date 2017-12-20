@@ -29,7 +29,20 @@ class Customer
     end
   end
 
+  def nb_sales()
+    query = "SELECT COUNT(slo_id) nb_sales FROM sale_orders WHERE sale_orders.slo_cus_id = $1"
+    return DbHelper.run_sql_return_first_row_column_value(query, [@cus_id], 'nb_sales').to_i;
+  end
 
+  def total_amount()
+    query        = "SELECT SUM(slo_total_price) total_amount FROM sale_orders WHERE sale_orders.slo_cus_id = $1"
+    total_amount = DbHelper.run_sql_return_first_row_column_value(query, [@cus_id], 'total_amount');
+    if(total_amount == nil)
+      return 0
+    else
+      return total_amount.to_i
+    end
+  end
 
 
   # Class methods

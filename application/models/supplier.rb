@@ -28,7 +28,20 @@ class Supplier
     end
   end
 
+  def nb_purchases()
+    query = "SELECT COUNT(pro_id) nb_purchases FROM purchase_orders WHERE purchase_orders.pro_sup_id = $1"
+    return DbHelper.run_sql_return_first_row_column_value(query, [@sup_id], 'nb_purchases').to_i;
+  end
 
+  def total_amount()
+    query           = "SELECT SUM(pro_total_price) total_amount FROM purchase_orders WHERE purchase_orders.pro_sup_id = $1"
+    total_amount    = DbHelper.run_sql_return_first_row_column_value(query, [@sup_id], 'total_amount');
+    if(total_amount == nil)
+      return 0
+    else
+      return total_amount.to_i
+    end
+  end
 
 
   # Class methods

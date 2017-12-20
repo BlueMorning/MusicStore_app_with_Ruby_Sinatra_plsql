@@ -21,12 +21,16 @@
   <div>
       <table>
           <th>Name</th>
+          <th>Nb. Sales</th>
+          <th>Total Amount</th>
           <th>Sales</th>
           <th>Modify</th>
           <th>Delete</th>
           <% @customers.each do |customer| %>
             <tr>
-              <td><%= customer.cus_name %></td>
+              <td><%= customer.cus_name       %>    </td>
+              <td><%= customer.nb_sales()     %>    </td>
+              <td><%= customer.total_amount() %>    </td>
               <td><a href="">Sales</a></td>
               <td>
                 <a href="<%= NavCustomers.nav_get_edit_by_id(customer.cus_id) %>">Edit</a></td>
