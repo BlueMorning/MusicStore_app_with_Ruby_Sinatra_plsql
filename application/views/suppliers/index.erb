@@ -28,7 +28,7 @@
               <td><%= supplier.sup_name       %></td>
               <td class="td-number"><%= supplier.nb_purchases() %></td>
               <td class="td-number">£<%= supplier.total_amount() %></td>
-              <td><a href="<%= NavPurchaseOrders.nav_get_with_pro_sup_id(supplier.sup_id) %>">Purchases</a>      </td>
+              <td class="td-actions"><a href="<%= NavPurchaseOrders.nav_get_with_pro_sup_id(supplier.sup_id) %>">Purchases</a>      </td>
               <td class="td-actions">
                 <a href="<%= NavSuppliers.nav_get_edit_by_id(supplier.sup_id) %>">Modify</a></td>
               <td class="td-actions">

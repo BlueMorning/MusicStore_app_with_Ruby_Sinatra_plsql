@@ -10,5 +10,5 @@ require_relative('controllers/purchase_orders_controller')
 require_relative('helper/navigation')
 
 get '/' do
-  redirect(:"#{NavArtists::GET_INDEX}")
+  redirect(:"#{NavAlbums::GET_INDEX}")
 end
