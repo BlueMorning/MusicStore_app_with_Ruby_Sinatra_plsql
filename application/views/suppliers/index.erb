@@ -1,40 +1,37 @@
-<div class="suppliers_main">
+<div class="suppliers-main">
   <!-- Suppliers header -->
-  <div class="suppliers_header">
-      <div>
+  <div class="suppliers-header">
+      <div class="supplier-page-title">
         <h1>Suppliers</h1>
       </div>
-      <div>
+      <div class="supplier-page-search-zone">
         <form action="<%= NavSuppliers::GET_WITH_FILTERS %>" method="get">
-          <input type="text" name="sup_name" value="<%= @filters["sup_name"] %>">
-          <input type="submit" name="" value="Search">
+          <input class="input-text-400" type="text" name="sup_name" value="<%= @filters["sup_name"] %>">
+          <input class="search-button" type="submit" name="" value="Search">
         </form>
       </div>
-      <div>
-
-      </div>
-      <div>
+      <div class="div-a-create-supplier">
         <a href="<%= NavSuppliers::GET_NEW %>">Create a new Supplier</a>
       </div>
   </div>
   <!-- Suppliers list -->
-  <div>
-      <table>
+  <div class="div-table-suppliers">
+      <table class="table-suppliers">
           <th>Name</th>
           <th>Nb. Purchases</th>
           <th>Total Amount</th>
           <th>Purchases</th>
           <th>Modify</th>
-          <th>Delete</th>
+          <th class="th-sale-delete">Delete</th>
           <% @suppliers.each do |supplier| %>
             <tr>
               <td><%= supplier.sup_name       %></td>
-              <td><%= supplier.nb_purchases() %></td>
-              <td><%= supplier.total_amount() %></td>
-              <td><a href="">Purchases</a>      </td>
-              <td>
+              <td class="td-number"><%= supplier.nb_purchases() %></td>
+              <td class="td-number">£<%= supplier.total_amount() %></td>
+              <td><a href="<%= NavPurchaseOrders.nav_get_with_pro_sup_id(supplier.sup_id) %>">Purchases</a>      </td>
+              <td class="td-actions">
                 <a href="<%= NavSuppliers.nav_get_edit_by_id(supplier.sup_id) %>">Modify</a></td>
-              <td>
+              <td class="td-actions">
                 <form action="<%= NavSuppliers.nav_post_delete_by_id(supplier.sup_id) %>" method="POST">
                   <input type="submit" value="Delete" />
                 </form>

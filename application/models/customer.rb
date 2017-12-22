@@ -24,8 +24,14 @@ class Customer
   def save()
     if(@cus_id && @cus_id != 0) #if the row already exists
       update()
+      return true
     else
-      insert()
+      if(! Customer.check_if_name_exists(@cus_name))
+        insert()
+        return true
+      else
+        return false
+      end
     end
   end
 
@@ -46,6 +52,11 @@ class Customer
 
 
   # Class methods
+
+  def self.check_if_name_exists(cus_name)
+    query = "SELECT COUNT(customers.cus_id) nb_customers FROM customers WHERE lower(customers.cus_name) = lower($1)"
+    return DbHelper.run_sql_return_first_row_column_value(query, [cus_name], 'nb_customers').to_i > 0;
+  end
 
   def self.can_be_deleted(cus_id)
     query = "SELECT COUNT(sale_orders.slo_id) nb_references from sale_orders WHERE sale_orders.slo_cus_id = $1"
@@ -71,14 +82,14 @@ class Customer
 
   # Find all the customers
   def self.find_all()
-    query   = "SELECT cus_id, cus_name FROM customers"
+    query   = "SELECT cus_id, cus_name FROM customers ORDER BY cus_name"
     return DbHelper.run_sql_and_return_many_objects(query, [], Customer)
   end
 
   # Find all the customers whose name matches
   def self.search_all_by_name(cus_name, strict = false)
     if(! strict)
-      query   = "SELECT cus_id, cus_name FROM customers WHERE lower(cus_name) LIKE lower($1)"
+      query   = "SELECT cus_id, cus_name FROM customers WHERE lower(cus_name) LIKE lower($1) ORDER BY cus_name"
       return DbHelper.run_sql_and_return_many_objects(query, ["%#{cus_name}%"], Customer)
     else
       query   = "SELECT cus_id, cus_name FROM customers WHERE cus_name = $1"

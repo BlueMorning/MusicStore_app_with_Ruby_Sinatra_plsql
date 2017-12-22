@@ -1,45 +1,48 @@
-<div class="customers_main">
+<div class="customers-main">
   <!-- Customers header -->
-  <div class="customers_header">
-      <div>
+  <div class="customers-header">
+      <div class="customer-page-title">
         <h1>Customers</h1>
       </div>
-      <div>
+      <div class="customer-page-search-zone">
         <form action="<%= NavCustomers::GET_WITH_FILTERS %>" method="get">
           <input type="text" name="cus_name" value="<%= @filters["cus_name"] %>">
           <input type="submit" name="" value="Search">
         </form>
       </div>
-      <div>
-
-      </div>
-      <div>
+      <div class="div-a-create-customer">
         <a href="<%= NavCustomers::GET_NEW %>">Create a new Customer</a>
       </div>
   </div>
   <!-- Customers list -->
-  <div>
-      <table>
+  <div class="div-table-customers">
+      <table class="table-customers">
+        <thead>
           <th>Name</th>
           <th>Nb. Sales</th>
           <th>Total Amount</th>
           <th>Sales</th>
-          <th>Modify</th>
-          <th>Delete</th>
+          <th class="th-action">Modify</th>
+          <th class="th-action">Delete</th>
+        </thead>
+        <tbody>
           <% @customers.each do |customer| %>
             <tr>
               <td><%= customer.cus_name       %>    </td>
-              <td><%= customer.nb_sales()     %>    </td>
-              <td><%= customer.total_amount() %>    </td>
-              <td><a href="">Sales</a></td>
-              <td>
+              <td class="td-number"><%= customer.nb_sales()     %>    </td>
+              <td class="td-number">£<%= customer.total_amount() %>    </td>
+              <td class="td-actions">
+                <a href="<%= NavSaleOrders.nav_get_with_slo_cus_id(customer.cus_id) %>">Sales</a>
+              </td>
+              <td class="td-actions">
                 <a href="<%= NavCustomers.nav_get_edit_by_id(customer.cus_id) %>">Edit</a></td>
-              <td>
+              <td class="td-actions">
                 <form action="<%= NavCustomers.nav_post_delete_by_id(customer.cus_id) %>" method="POST">
                   <input type="submit" value="Delete" />
                 </form>
             </tr>
           <% end %>
+        </tbody>
       </table>
   </div>
 </div>

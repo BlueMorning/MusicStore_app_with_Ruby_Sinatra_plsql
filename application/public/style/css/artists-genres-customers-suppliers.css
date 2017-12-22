@@ -1,0 +1,276 @@
+
+
+.artists-main,
+.genres-main,
+.customers-main,
+.suppliers-main,
+.albums-main,
+.purchases-main,
+.sales-main
+ {
+  display: flex;
+  flex-direction: column;
+}
+
+.artists-header,
+.genres-header,
+.customers-header,
+.suppliers-header,
+.albums-header
+ {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  align-items: center;
+  align-content: stretch;
+  margin-bottom: 40px;
+}
+
+.purchases-header,
+.sales-header
+ {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  align-items: center;
+  align-content: stretch;
+  margin-bottom: 20px;
+}
+
+.artist-page-title,
+.genre-page-title,
+.customer-page-title,
+.supplier-page-title,
+.album-page-title {
+  min-width: 20%;
+}
+
+.purchase-page-title,
+.sale-page-title {
+  min-width: 25%;
+}
+
+.purchase-page-title-view,
+.sale-page-title-view {
+  min-width: 80%;
+}
+
+
+.purchase-header-checkout-zone {
+  min-width: 70%;
+}
+
+.purchase-header-checkout-zone h1 {
+  min-width: 80%;
+}
+
+
+.search-button {
+  margin-left: 20px;
+}
+
+.artist-page-search-zone,
+.genre-page-search-zone,
+.customer-page-search-zone,
+.supplier-page-search-zone,
+.album-page-search-zone {
+  min-width: 65%;
+}
+
+.purchase-page-search-zone,
+.sale-page-search-zone {
+  min-width: 55%;
+}
+
+.div-a-create-artist,
+.div-a-create-genre,
+.div-a-create-customer,
+.div-a-create-supplier,
+.div-a-create-album,
+.div-a-create-purchase,
+.div-a-create-sale,
+.div-a-view-purchases,
+.div-a-view-sales
+ {
+  width: 20%;
+  text-align: right;
+}
+
+
+/* IMAGES */
+
+.artist-img {
+  width: 90px;
+  border-radius: 50%;
+  vertical-align: middle;
+  margin: 0 50%;
+  transform: translate(-50%, 0);
+}
+
+.album-img-large,
+.artist-img-large {
+  width: 180px;
+  border-radius: 5%;
+  vertical-align: middle;
+  margin: 0 50%;
+  transform: translate(-50%, 0);
+}
+
+.album-img-large-xxl {
+  width: 440px;
+  border-radius: 5%;
+  vertical-align: middle;
+  margin: 0 50%;
+  transform: translate(-50%, 0);
+}
+
+.album-img {
+  width: 160px;
+  border-radius: 5%;
+  vertical-align: middle;
+  text-align: center;
+}
+
+.album-img-small {
+  width: 70px;
+  border-radius: 5%;
+  vertical-align: middle;
+  text-align: center;
+}
+
+.album-img-small-xxs {
+  width: 45px;
+  border-radius: 5%;
+  vertical-align: middle;
+  text-align: center;
+}
+
+
+/* TABLES */
+
+.div-table-artists,
+.div-table-genres,
+.div-table-customers,
+.div-table-suppliers,
+.div-table-albums,
+.div-table-purchase,
+.div-table-sale {
+  height: 620px;
+  overflow-y: auto;
+}
+
+.div-table-artists td,
+.div-table-genres td,
+.div-table-customers td,
+.div-table-suppliers td,
+.div-table-albums td,
+.div-table-purchases td,
+.div-table-sales td {
+  height: 65px;
+  vertical-align: middle;
+}
+
+.div-table-cart {
+  height: 200px;
+  overflow-y: auto;
+}
+
+.div-table-albums-not-in-cart {
+  height: 600px;
+  overflow-y: auto;
+  margin-top: 30px;
+}
+
+.td-actions {
+  text-align: center;
+  min-width: 5%;
+}
+
+.table-purchases-cart th,
+.table-albums-not-in-cart th,
+.table-purchases-cart td,
+.table-albums-not-in-cart td,
+.table-purchases-cart td input,
+.table-albums-not-in-cart td input {
+  height: 30px;
+  vertical-align: middle;
+}
+
+
+.th-image-artist {
+  width: 100px;
+}
+
+.th-album-image {
+  width: 130px;
+}
+.th-album-title-artist {
+  width: 220px;
+}
+.th-album-genre {
+  width: 160px;
+}
+
+.th-album-image {
+  width: 140px;
+}
+
+.th-action {
+  width: 130px;
+}
+
+.td-center {
+  text-align: center;
+}
+
+
+
+.stock-low {
+  background-color: #e74c3c;
+  color: #fff;
+  border-radius: 10%;
+  padding: 3px;
+  font-weight: 400;
+}
+
+.stock-medium {
+  background-color: #27ae60;
+  color: #fff;
+  border-radius: 10%;
+  padding: 3px;
+  font-weight: 400;
+}
+
+.stock-high {
+  background-color: #f1c40f;
+  color: #fff;
+  border-radius: 10%;
+  padding: 3px;
+  font-weight: 400;
+}
+
+.div-total-amount {
+  background-color: #3498db;
+  color: #fff;
+  border-radius: 5%;
+  padding: 10px;
+  margin-bottom: 20px;
+}
+
+.purchase-page-title-view h1,
+.sale-page-title-view h1 {
+  display: inline-block;
+}
+
+.div-purchase-number,
+.div-sale-number {
+  background-color: #3498db;
+  color: #fff;
+  border-radius: 5%;
+  padding: 0px 5px;
+  margin: 0px 3px;
+}
+
+.label-h3 {
+  margin: 20px 10px 0px 0px;
+}

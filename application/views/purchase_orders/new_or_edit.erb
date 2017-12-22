@@ -1,44 +1,51 @@
-<div>
-
-
-  <!-- Purchase Orde Header -->
-  <div>
-    <h1><%= @form_title %></h1>
-  </div>
-  <div>
-    <div>
-      <div>
-
-
+<div class="purchases-main">
+  <!-- Purchase Order Header -->
+    <div class="flex-column">
+      <div class="flex-row">
+        <div class="purchases-header purchase-header-checkout-zone">
+          <h1><%= @form_title %>
+            <% if(@purchase_order.pro_id() > 0) %>
+              n°<%= @purchase_order.pro_id() %>, <%= @purchase_order.pro_date() %>
+            <% end %>
+          </h1>
+          <% if(@purchase_order.pro_id() > 0) %>
+            <form class="" action="<%= NavPurchaseOrders.nav_post_checkout_by_id(@purchase_order.pro_id) %>" method="post">
+                <input type="submit" value="<%= @form_submit_label %>" />
+            </form>
+          <% end %>
+        </div>
+        <div class="div-total-amount">
+          <div class="flex-row">
+            <div class="div-150">Nb Rows</div>
+            <div class="div-100 div-number"><%= @purchase_order.purchase_items.count() %></div>
+          </div>
+          <div class="flex-row">
+            <div class="div-150">Nb Items</div>
+            <div class="div-100 div-number"><%= @purchase_order.nb_items() %></div>
+          </div>
+          <div class="flex-row">
+            <div class="div-150">Total Amount</div>
+            <div class="div-100 div-number">£<%= @purchase_order.pro_total_price %></div>
+          </div>
+        </div>
       </div>
-      <!-- CHECKOUT Button -->
-      <div>
-        <form class="" action="<%= NavPurchaseOrders.nav_post_checkout_by_id(@purchase_order.pro_id) %>" method="post">
-            <input type="submit" value="<%= @form_submit_label %>" />
-        </form>
-      </div>
-    </div>
-    <div>
-        <p>Nb Items :<span><%= @purchase_order.nb_items() %></span></p>
-        <p>Nb Items :<span>£<%= @purchase_order.pro_total_price %></span></p>
-    </div>
-  </div>
 
+    </div>
 
   <!-- Seraching bar -->
   <div>
-    <form class="" action="<%= @form_search_action %>" method="get">
-        <input type="text" value="<%= @album_search %>" name="album_search" placeholder="Title album or Artist's name" />
-        <input type="submit" value="GO !" />
+    <form  action="<%= @form_search_action %>" method="get">
+        <input class="input-text-400" type="text" value="<%= @album_search %>" name="album_search" placeholder="Search for title album or Artist's name" />
+        <input type="submit" value="Search" />
     </form>
   </div>
 
   <!-- List of items -->
   <form class="" action="<%= NavPurchaseOrders.nav_post_add_items(@purchase_order.pro_id) %>" method="post">
-
-    <div>
-      <select class="" name="pro_sup_id" id="pro_sup_id" required>
-          <option value="">Customers</option>
+    <div class="flex-row-end">
+      <h3 class="label-h3">Select the supplier :</h3>
+      <select class="select-200" name="pro_sup_id" id="pro_sup_id" required>
+          <option value="">Suppliers</option>
           <% @suppliers.each do |supplier| %>
             <option value="<%= supplier.sup_id %>"
               <% if(@purchase_order.pro_sup_id == supplier.sup_id)%>
@@ -49,41 +56,47 @@
           </option>
           <% end %>
       </select>
-
-    </div
-
-
-    <div>
-
-      <table>
+      <input type="submit" value="Add the items to the cart" />
+    </div>
+    <div class="div-table-cart">
+      <table class="table-purchases-cart">
         <thead>
-          <th>Cover</th>
+          <th class="th-album-img-small-xxs">Cover</th>
           <th>Album</th>
           <th>Artist</th>
           <th>Genre</th>
           <th>Unit Sale Price</th>
           <th>Unit Purchase Price</th>
           <th>Quantity</th>
+          <th>Stock</th>
         </thead>
         <tbody>
           <% @purchase_order.purchase_items.each do |purchase_item|  %>
             <tr>
-              <td><image class="album_cover_image" src="<%= purchase_item.album.alb_image_path %>" alt="<%= purchase_item.album.alb_title %>"></td>
+              <td><image class="album-img-small-xxs" src="<%= purchase_item.album.alb_image_path %>" alt="<%= purchase_item.album.alb_title %>"></td>
               <td><%= purchase_item.album.alb_title %></td>
               <td><%= purchase_item.artist.art_name %></td>
               <td><%= purchase_item.genre.gen_name  %></td>
               <td><%= purchase_item.album.alb_price %></td>
-              <td>
-                <input type="number" step="1"
+              <td class="td-number">
+                <span>£</span><input class="input-number-100" type="number" step="1"
                  name="<%= "price_alb_id_#{purchase_item.album.alb_id}" %>"
                  value="<%= purchase_item.pri_unit_price %>" required/>
               </td>
-              <td>
-                <input type="number" step="1"
+              <td class="td-number">
+                <input class="input-number-100" type="number" step="1"
                  name="<%= "qty_alb_id_#{purchase_item.album.alb_id}" %>"
                  value="<%= purchase_item.pri_qty %>" required/>
               </td>
-              <td><%= "Stock Qty. : #{purchase_item.album.alb_qty_available}" %></td>
+              <td class="td-number">
+                <div class="div-80 div-number
+                <%= " stock-low"    if(purchase_item.album.stock_level()    == "low") %>
+                <%= " stock-medium" if(purchase_item.album.stock_level() == "medium") %>
+                <%= " stock-high"   if(purchase_item.album.stock_level()   == "high") %>
+                ">
+                <%= purchase_item.album.alb_qty_available %>
+                </div>
+              </td>
             </tr>
           <% end %>
         </tbody>
@@ -91,8 +104,9 @@
     </div>
 
 
-    <div>
-      <table>
+    <h3>Add new albums to your cart from the list below : </h3>
+    <div class="div-table-albums-not-in-cart">
+      <table class="table-albums-not-in-cart">
         <thead>
           <th>Cover</th>
           <th>Album</th>
@@ -101,36 +115,40 @@
           <th>Unit Sale Price</th>
           <th>Unit Purchase Price</th>
           <th>Quantity</th>
+          <th>Stock</th>
         </thead>
         <tbody>
           <% @purchase_order.purchase_items_not_added.each do |purchase_item|  %>
             <tr>
-              <td><image class="album_cover_image" src="<%= purchase_item.album.alb_image_path %>" alt="<%= purchase_item.album.alb_title %>"></td>
+              <td><image class="album-img-small-xxs" src="<%= purchase_item.album.alb_image_path %>" alt="<%= purchase_item.album.alb_title %>"></td>
               <td><%= purchase_item.album.alb_title  %></td>
               <td><%= purchase_item.artist.art_name %></td>
               <td><%= purchase_item.genre.gen_name  %></td>
-              <td><%= purchase_item.album.alb_price %></td>
-              <td>
-                <input type="number" step="1" min="0"
+              <td class="td-number">£<%= purchase_item.album.alb_price %></td>
+              <td class="td-number">
+                <span>£</span><input class="input-number-100" type="number" step="1" min="0"
                  name="<%= "price_alb_id_#{purchase_item.album.alb_id}" %>"
                  value="<%= purchase_item.pri_unit_price %>" required/>
               </td>
-              <td>
-                <input type="number" step="1" min="0"
+              <td class="td-number">
+                <input class="input-number-100" type="number" step="1" min="0"
                  name="<%= "qty_alb_id_#{purchase_item.album.alb_id}" %>"
                  value="<%= purchase_item.pri_qty %>" required/>
               </td>
-              <td><%= "Stock Qty. : #{purchase_item.album.alb_qty_available}" %></td>
+              <td class="td-number">
+                <div class="div-80 div-number
+                <%= " stock-low"    if(purchase_item.album.stock_level()    == "low") %>
+                <%= " stock-medium" if(purchase_item.album.stock_level() == "medium") %>
+                <%= " stock-high"   if(purchase_item.album.stock_level()   == "high") %>
+                ">
+                <%= purchase_item.album.alb_qty_available %>
+                </div>
+              </td>
             </tr>
           <% end %>
         </tbody>
       </table>
     </div>
 
-    </div>
-    <!-- ADD button -->
-    <div>
-      <input type="submit" value="Add items to the cart" />
-    </div>
   </form>
 </div>

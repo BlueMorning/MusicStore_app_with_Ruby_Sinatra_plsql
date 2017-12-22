@@ -1,43 +1,46 @@
-<div class="artists_main">
+<div class="artists-main">
   <!-- Artists header -->
-  <div class="artists_header">
-      <div>
+  <div class="artists-header">
+      <div class="artist-page-title">
         <h1>Artists</h1>
       </div>
-      <div>
+      <div class="artist-page-search-zone">
         <form action="<%= NavArtists::GET_WITH_FILTERS %>" method="get">
-          <input type="text" name="art_name" value="<%= @filters["art_name"] %>">
-          <input type="submit" name="" value="Search">
+            <input class="input-text-400" type="text" name="art_name" value="<%= @filters["art_name"] %>">
+            <input class="search-button" type="submit" name="" value="Search">
         </form>
       </div>
-      <div>
-
-      </div>
-      <div>
+      <div class="div-a-create-artist">
         <a href="<%= Artist.link_create_new_artist() %>">Create a new Artist</a>
       </div>
   </div>
   <!-- Artists list -->
-  <div>
-      <table>
-          <th>Photo</th>
-          <th>Name</th>
-          <th>Albums</th>
-          <th>Modify</th>
-          <th>Delete</th>
+  <div class="div-table-artists">
+      <table class="table-artists">
+        <thead>
+          <tr>
+            <th class="th-image-artist"></th>
+            <th>Artists</th>
+            <th>Albums</th>
+            <th class="th-action">Modify</th>
+            <th class="th-action">Delete</th>
+          </tr>
+         </thead>
+          <tbody>
           <% @artists.each do |artist| %>
             <tr>
-              <td><image class="artist_img_artist" src="<%= artist.art_photo_path %>" alt="<%= artist.art_name %>"></td>
+              <td><image class="artist-img" src="<%= artist.art_photo_path %>" alt="<%= artist.art_name %>"></td>
               <td><%= artist.art_name %></td>
-              <td><a href="<%= NavAlbums.nav_get_with_art_name(artist.art_name) %>">Albums</a></td>
-              <td>
+              <td class="td-actions"><a href="<%= NavAlbums.nav_get_with_art_name(artist.art_name) %>">Albums</a></td>
+              <td class="td-actions">
                 <a href="<%= NavArtists.nav_get_edit_by_id(artist.art_id) %>">Modify</a></td>
-              <td>
+              <td class="td-actions">
                 <form action="<%= NavArtists.nav_post_delete_by_id(artist.art_id) %>" method="POST">
                   <input type="submit" value="Delete" />
                 </form>
             </tr>
           <% end %>
+        </tbody>
       </table>
   </div>
 </div>

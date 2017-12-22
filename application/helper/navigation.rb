@@ -26,13 +26,13 @@ class NavArtists
   GET_INDEX         = NavMusicStore::ROOT+"/artists"
   GET_NEW           = NavMusicStore::ROOT+"/artists/new"
   POST_NEW          = NavMusicStore::ROOT+"/artists"
-  GET_WITH_FILTERS  = NavMusicStore::ROOT+"/artists/search?"
+  GET_WITH_FILTERS  = NavMusicStore::ROOT+"/artists/search/?"
   GET_EDIT_BY_ID    = NavMusicStore::ROOT+"/artists/:art_id/edit"
   POST_UPDATE_BY_ID = NavMusicStore::ROOT+'/artists/:art_id'
   POST_DELETE_BY_ID = NavMusicStore::ROOT+'/artists/:art_id/delete'
 
   def self.nav_get_with_art_name(art_name, strict = false)
-    return NavMusicStore::ROOT+"/artists/search?art_name=#{art_name}&strict=#{strict}"
+    return NavMusicStore::ROOT+"/artists/search/?art_name=#{art_name}&strict=#{strict}"
   end
 
   def self.nav_get_edit_by_id(art_id)
@@ -54,13 +54,13 @@ class NavGenres
   GET_INDEX         = NavMusicStore::ROOT+"/genres"
   GET_NEW           = NavMusicStore::ROOT+"/genres/new"
   POST_NEW          = NavMusicStore::ROOT+"/genres"
-  GET_WITH_FILTERS  = NavMusicStore::ROOT+"/genres/search?"
+  GET_WITH_FILTERS  = NavMusicStore::ROOT+"/genres/search/?"
   GET_EDIT_BY_ID    = NavMusicStore::ROOT+"/genres/:gen_id/edit"
   POST_UPDATE_BY_ID = NavMusicStore::ROOT+'/genres/:gen_id'
   POST_DELETE_BY_ID = NavMusicStore::ROOT+'/genres/:gen_id/delete'
 
   def self.nav_get_with_gen_name(gen_name, strict = false)
-    return NavMusicStore::ROOT+"/genres/search?gen_name=#{gen_name}&strict=#{strict}"
+    return NavMusicStore::ROOT+"/genres/search/?gen_name=#{gen_name}&strict=#{strict}"
   end
 
   def self.nav_get_edit_by_id(gen_id)
@@ -88,11 +88,11 @@ class NavAlbums
   POST_DELETE_BY_ID = NavMusicStore::ROOT+'/albums/:alb_id/delete'
 
   def self.nav_get_with_art_name(art_name)
-    return NavMusicStore::ROOT+"/albums/search?art_name=#{art_name}"
+    return NavMusicStore::ROOT+"/albums/search/?art_name=#{art_name}"
   end
 
   def self.nav_get_with_gen_id(alb_gen_id)
-    return NavMusicStore::ROOT+"/albums/?alb_gen_id=#{alb_gen_id}"
+    return NavMusicStore::ROOT+"/albums/search/?alb_gen_id=#{alb_gen_id}"
   end
 
   def self.nav_get_edit_by_id(alb_id)
@@ -119,7 +119,7 @@ class NavCustomers
   POST_DELETE_BY_ID = NavMusicStore::ROOT+'/customers/:cus_id/delete'
 
   def self.nav_get_with_art_name(cus_name, strict = false)
-    return NavMusicStore::ROOT+"/customers/search?cus_name=#{cus_name}&strict=#{strict}"
+    return NavMusicStore::ROOT+"/customers/search/?cus_name=#{cus_name}&strict=#{strict}"
   end
 
   def self.nav_get_edit_by_id(cus_id)
@@ -146,7 +146,7 @@ class NavSuppliers
   POST_DELETE_BY_ID = NavMusicStore::ROOT+'/suppliers/:sup_id/delete'
 
   def self.nav_get_with_art_name(sup_name, strict = false)
-    return NavMusicStore::ROOT+"/suppliers/search?sup_name=#{sup_name}&strict=#{strict}"
+    return NavMusicStore::ROOT+"/suppliers/search/?sup_name=#{sup_name}&strict=#{strict}"
   end
 
   def self.nav_get_edit_by_id(sup_id)
@@ -181,8 +181,8 @@ class NavSaleOrders
     return NavMusicStore::ROOT+"/sale_orders/#{slo_id}/view"
   end
 
-  def self.nav_get_with_sal_alb_id(slo_alb_id, strict = false)
-    return NavMusicStore::ROOT+"/sale_orders/search?slo_alb_id=#{slo_alb_id}"
+  def self.nav_get_with_slo_cus_id(slo_cus_id, strict = false)
+    return NavMusicStore::ROOT+"/sale_orders/search/?slo_cus_id=#{slo_cus_id}"
   end
 
   def self.nav_get_edit_by_id(slo_id)
@@ -225,8 +225,8 @@ class NavPurchaseOrders
     return NavMusicStore::ROOT+"/purchase_orders/#{pro_id}/view"
   end
 
-  def self.nav_get_with_sal_alb_id(pro_alb_id, strict = false)
-    return NavMusicStore::ROOT+"/purchase_orders/search?pro_alb_id=#{pro_alb_id}"
+  def self.nav_get_with_pro_sup_id(pro_sup_id, strict = false)
+    return NavMusicStore::ROOT+"/purchase_orders/search/?pro_sup_id=#{pro_sup_id}"
   end
 
   def self.nav_get_edit_by_id(pro_id)

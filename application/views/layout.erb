@@ -3,15 +3,21 @@
   <head>
     <meta charset="utf-8">
     <title>Keith's Music Store</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css?family=Lato:100,300,300i,400');
+    </style>
     <link href="/style/css/normalize.css"  rel="stylesheet">
     <link href="/style/css/reset.css"      rel="stylesheet">
     <link href="/style/css/style.css"      rel="stylesheet">
+    <link href="/style/css/form.css"      rel="stylesheet">
+    <link href="/style/css/artists-genres-customers-suppliers.css"      rel="stylesheet">
+
   </head>
   <body>
     <header>
       <nav>
-        <div>
-          <ul>
+        <div class="nav-box">
+          <ul class="nav-ul">
           <% NavMusicStore.all_front_pages.each do |link| %>
             <li><a href="<%= link["link_path"] %>"> <%= link["link_name"] %></a></li>
           <% end %>
@@ -20,7 +26,7 @@
       </nav>
     </header>
 
-    <div class="layout_main">
+    <div class="layout-main">
       <%= yield %>
     </div>
   </body>

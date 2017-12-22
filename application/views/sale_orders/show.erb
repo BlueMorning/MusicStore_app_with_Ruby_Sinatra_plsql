@@ -1,40 +1,60 @@
-<div>
+<div class="sales-main">
   <!-- Sale Order Header -->
-  <div>
-      <p>N°<span><%= @sale_order.slo_id %></span></p>
-      <p>Date<span><%= @sale_order.slo_date %></span></p>
-      <p>Supplier :<span><%= @sale_order.customer.cus_name.capitalize() %></span></p>
-      <p>Nb Rows :<span><%= @sale_order.nb_items() %></span></p>
-      <p>Total Quantity :<span><%= @sale_order.total_quantity() %></span></p>
-      <p>Total Amount :<span>£<%= @sale_order.slo_total_price %></span></p>
+  <div class="flex-column">
+    <div class="sales-header">
+      <div class="sale-page-title-view">
+        <h1>
+            Sale Orders N°<span class="div-sale-number"><%= @sale_order.slo_id %></span>:</span>
+            <span><%= @sale_order.customer.cus_name.capitalize() %>,</span>
+            <span><%= @sale_order.slo_date %></span>
+        </h1>
+      </div>
+      <div class="div-a-view-sales">
+        <a href="<%= NavSaleOrders::GET_INDEX %>">Sale Orders list</a>
+      </div>
+    </div>
+    <div class="flex-row-end">
+      <div class="div-total-amount">
+        <div class="flex-row">
+          <div class="div-150">Nb Rows</div>
+          <div class="div-100 div-number"><%= @sale_order.nb_items() %></div>
+        </div>
+        <div class="flex-row">
+          <div class="div-150">Total Quantity</div>
+          <div class="div-100 div-number"><%= @sale_order.total_quantity() %></div>
+        </div>
+        <div class="flex-row">
+          <div class="div-150">NTotal Amount</div>
+          <div class="div-100 div-number"><span>£<%= @sale_order.slo_total_price %></div>
+        </div>
+      </div>
+    </div>
   </div>
-
   <!-- List of items -->
-  <div>
-    <table>
+  <div class="div-table-purchases">
+    <table class="table-purchases">
       <thead>
         <th>Cover</th>
         <th>Album</th>
         <th>Artist</th>
         <th>Genre</th>
-        <th>Unit Price</th>
+        <th>Unit Sale Price</th>
         <th>Quantity</th>
+        <th>Total Amount</th>
       </thead>
       <tbody>
         <% @sale_order.sale_items.each do |sale_item|  %>
           <tr>
-            <td><image class="album_cover_image" src="<%= sale_item.album.alb_image_path %>" alt="<%= sale_item.album.alb_title %>"></td>
+            <td><image class="album-img-small" src="<%= sale_item.album.alb_image_path %>" alt="<%= sale_item.album.alb_title %>"></td>
             <td><%= sale_item.album.alb_title  %></td>
             <td><%= sale_item.artist.art_name %></td>
             <td><%= sale_item.genre.gen_name  %></td>
-            <td><%= sale_item.album.alb_price %></td>
-            <td><%= sale_item.sli_qty %></td>
+            <td class="td-number">£<%= sale_item.sli_unit_price %></td>
+            <td class="td-number"><%= sale_item.sli_qty %></td>
+            <td class="td-number">£<%= sale_item.sli_total_price %></td>
           </tr>
         <% end %>
        </tbody>
       </table>
-    </div>
-    <div>
-      <a href="<%= NavSaleOrders::GET_INDEX %>">Sale Orders list</a>
     </div>
 </div>

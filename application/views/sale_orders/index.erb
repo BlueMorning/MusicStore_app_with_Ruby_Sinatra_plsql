@@ -1,14 +1,12 @@
-<div>
-
-
-    <section>
-      <div>Sale Orders</div>
-      <div>
+<div class="sales-main">
+  <div class="sales-header">
+      <div class="sale-page-title">
+        <h1>Sale Orders</h1>
+      </div>
+      <div class="sale-page-search-zone">
         <form class="" action="<%= NavSaleOrders::GET_WITH_FILTERS %>" method="get">
-
-          <input value="<%= @filters['slo_id'] %>" name="slo_id" placeholder="N°Sale Order"/>
-
-          <select class="" name="slo_cus_id" id="slo_cus_id">
+          <input class="input-number-200" type="number" value="<%= @filters['slo_id'] %>" name="slo_id" placeholder="N°Sale Order"/>
+          <select class="select-150" name="slo_cus_id" id="slo_cus_id">
               <option value="">Customers</option>
               <% @customers.each do |customer| %>
                 <option value="<%= customer.cus_id %>"
@@ -21,11 +19,11 @@
               <% end %>
           </select>
 
-          <select class="" name="slo_status" id="slo_status">
+          <select class="select-150" name="slo_status" id="slo_status">
               <option value="">Status</option>
               <% SaleOrder.status_all.each do |status, status_label| %>
                 <option value="<%= status %>"
-                  <% if(@filters['pro_status'] == status)%>
+                  <% if(@filters['slo_status'] == status)%>
                     selected
                   <% end %>
                   >
@@ -34,7 +32,7 @@
               <% end %>
           </select>
 
-          <select class="" name="order_by" id="order_by">
+          <select class="select-150" name="order_by" id="order_by">
               <option value="">Order By</option>
               <% SaleOrder.query_orderby.each do |orderby_key, orderby_value| %>
                 <option value="<%= orderby_key %>"
@@ -48,15 +46,15 @@
           </select>
 
           <input type="submit" value="GO !" />
-
         </form>
       </div>
-
-      <div><a href="<%= NavSaleOrders::GET_NEW %>">Create a new Sale Order</a></div>
-
-    <section>
-    <section>
-      <table>
+      <div class="div-a-create-sale">
+        <a href="<%= NavSaleOrders::GET_NEW %>">Create Sale Order</a>
+      </div>
+    </div>
+    <!-- Sale list -->
+    <div class="div-table-sales">
+      <table class="table-sales">
         <thead>
           <th>N°</th>
           <th>Status</th>
@@ -65,29 +63,33 @@
           <th>Total Amount</th>
           <th>Nb. Rows</th>
           <th>Nb. Items</th>
-          <th>View<th>
+          <th>View</th>
           <th>Modify</th>
-          <th>Delete</th>
+          <th class="th-sale-delete">Delete</th>
         </thead>
         <tbody>
           <% @sale_orders.each do |sale_order|  %>
             <tr>
-              <td><%= sale_order.slo_id                       %></td>
-              <td><%= sale_order.slo_status_label()           %></td>
-              <td><%= sale_order.slo_date                     %></td>
-              <td><%= sale_order.customer.cus_name.capitalize %></td>
-              <td><%= sale_order.slo_total_price              %></td>
-              <td><%= sale_order.nb_items()                   %></td>
-              <td><%= sale_order.total_quantity()             %></td>
+              <td class="td-number"><%= sale_order.slo_id %></td>
+              <td><%= sale_order.slo_status_label() %></td>
+              <td><%= sale_order.slo_date %></td>
               <td>
+                  <a href="<%= NavCustomers.nav_get_with_art_name(sale_order.customer.cus_name, true) %>">
+                    <%= sale_order.customer.cus_name.capitalize %>
+                  </a>
+              </td>
+              <td class="td-number">£<%= sale_order.slo_total_price              %></td>
+              <td class="td-number"><%= sale_order.nb_items()                   %></td>
+              <td class="td-number"><%= sale_order.total_quantity()             %></td>
+              <td class="td-actions">
                   <a href="<%= NavSaleOrders.nav_get_view_by_id(sale_order.slo_id) %>">View</a>
               </td>
-              <td>
+              <td class="td-actions">
                   <% if(sale_order.can_be_modify()) %>
                     <a href="<%= NavSaleOrders.nav_get_edit_by_id(sale_order.slo_id) %>">Modify</a>
                   <% end %>
               </td>
-              <td>
+              <td class="td-actions">
                   <% if(sale_order.can_be_delete()) %>
                     <form class="" action="<%= NavSaleOrders.nav_post_delete_by_id(sale_order.slo_id) %>" method="post">
                         <input type="submit" value="Delete" />
@@ -98,5 +100,5 @@
           <% end %>
         </tbody>
       </table>
-    <section>
-<div>
+    </div>
+</div>

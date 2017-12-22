@@ -1,36 +1,33 @@
-<div class="genres_main">
+<div class="genres-main">
   <!-- Genres header -->
-  <div class="genres_header">
-      <div>
+  <div class="genres-header">
+      <div class="genre-page-title">
         <h1>Genres</h1>
       </div>
-      <div>
+      <div class="genre-page-search-zone">
         <form action="<%= NavGenres::GET_WITH_FILTERS %>" method="get">
-          <input type="text" name="gen_name" value="<%= @filters["gen_name"] %>">
-          <input type="submit" name="" value="Search">
+          <input class="input-text-400" type="text" name="gen_name" value="<%= @filters["gen_name"] %>">
+          <input class="search-button" type="submit" name="" value="Search">
         </form>
       </div>
-      <div>
-
-      </div>
-      <div>
+      <div class="div-a-create-genre">
         <a href="<%= NavGenres::GET_NEW %>">Create a new Genre</a>
       </div>
   </div>
   <!-- Genres list -->
-  <div>
-      <table>
+  <div class="div-table-genres">
+      <table class="table-genres">
           <th>Name</th>
           <th>Albums</th>
-          <th>Modify</th>
-          <th>Delete</th>
+          <th class="th-action">Modify</th>
+          <th class="th-action">Delete</th>
           <% @genres.each do |genre| %>
             <tr>
               <td><%= genre.gen_name %></td>
-              <td><a href="<%= NavAlbums.nav_get_with_gen_id(genre.gen_id) %>">Albums</a></td>
-              <td>
+              <td class="td-actions"><a href="<%= NavAlbums.nav_get_with_gen_id(genre.gen_id) %>">Albums</a></td>
+              <td class="td-actions">
                 <a href="<%= NavGenres.nav_get_edit_by_id(genre.gen_id) %>">Modify</a></td>
-              <td>
+              <td class="td-actions">
                 <form action="<%= NavGenres.nav_post_delete_by_id(genre.gen_id) %>" method="POST">
                   <input type="submit" value="Delete" />
                 </form>

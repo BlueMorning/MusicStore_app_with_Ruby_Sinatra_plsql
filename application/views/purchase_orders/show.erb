@@ -1,45 +1,60 @@
-<div>
+<div class="purchases-main">
   <!-- Purchase Order Header -->
-  <div>
-    <h1><%= @form_title %></h1>
+  <div class="flex-column">
+    <div class="purchases-header">
+          <div class="purchase-page-title-view">
+            <h1>
+                Purchase Orders N°<span class="div-purchase-number"><%= @purchase_order.pro_id %></span>:</span>
+                <span><%= @purchase_order.supplier.sup_name.capitalize %>,</span>
+                <span><%= @purchase_order.pro_date %></span>
+            </h1>
+          </div>
+          <div class="div-a-view-purchases">
+            <a href="<%= NavPurchaseOrders::GET_INDEX %>">Purchase Orders list</a>
+          </div>
+    </div>
+    <div class="flex-row-end">
+      <div class="div-total-amount">
+        <div class="flex-row">
+          <div class="div-150">Nb Rows</div>
+          <div class="div-100 div-number"><%= @purchase_order.nb_items() %></div>
+        </div>
+        <div class="flex-row">
+          <div class="div-150">Total Quantity</div>
+          <div class="div-100 div-number"><%= @purchase_order.total_quantity() %></div>
+        </div>
+        <div class="flex-row">
+          <div class="div-150">NTotal Amount</div>
+          <div class="div-100 div-number"><span>£<%= @purchase_order.pro_total_price %></div>
+        </div>
+      </div>
+    </div>
   </div>
-  <div>
-      <p>N°<span><%= @purchase_order.pro_id %></span></p>
-      <p>Date<span><%= @purchase_order.pro_date %></span></p>
-      <p>Customer :<span><%= @purchase_order.supplier.sup_name %></span></p>
-      <p>Nb Rows :<span><%= @purchase_order.nb_items() %></span></p>
-      <p>Total Quantity :<span><%= @purchase_order.total_quantity() %></span></p>
-      <p>Total Amount :<span>£<%= @purchase_order.pro_total_price %></span></p>
-  </div>
-
   <!-- List of items -->
-  <div>
-    <table>
+  <div class="div-table-purchases">
+    <table class="table-purchases">
       <thead>
         <th>Cover</th>
         <th>Album</th>
         <th>Artist</th>
         <th>Genre</th>
-        <th>Unit Sale Price</th>
         <th>Unit Purchase Price</th>
         <th>Quantity</th>
+        <th>Total Amount</th>
       </thead>
       <tbody>
         <% @purchase_order.purchase_items.each do |purchase_item|  %>
           <tr>
-            <td><image class="album_cover_image" src="<%= purchase_item.album.alb_image_path %>" alt="<%= purchase_item.album.alb_title %>"></td>
+            <td><image class="album-img-small" src="<%= purchase_item.album.alb_image_path %>" alt="<%= purchase_item.album.alb_title %>"></td>
             <td><%= purchase_item.album.alb_title %></td>
             <td><%= purchase_item.artist.art_name %></td>
             <td><%= purchase_item.genre.gen_name  %></td>
-            <td><%= purchase_item.album.alb_price %></td>
-            <td><%= purchase_item.pri_unit_price %></td>
-            <td><%= purchase_item.pri_qty %></td>
+            <td class="td-number">£<%= purchase_item.pri_unit_price %></td>
+            <td class="td-number"><%= purchase_item.pri_qty %></td>
+            <td class="td-number">£<%= purchase_item.pri_total_price %></td>
           </tr>
         <% end %>
       </tbody>
     </table>
-  </div>
-  <div>
-    <a href="<%= NavPurchaseOrders::GET_INDEX %>">Purchase Orders list</a>
   </div>
 </div>

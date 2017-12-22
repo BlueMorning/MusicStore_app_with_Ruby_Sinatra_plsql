@@ -1,0 +1,107 @@
+/*********/
+/* LABEL */
+/*********/
+
+label {
+  margin-right: 50px;
+  padding: 10px 0px;
+}
+
+input {
+  margin-bottom: 10px;
+  margin-top: 10px;
+}
+
+select {
+  margin-bottom: 10px;
+  margin-top: 10px;
+}
+
+.label-100 {
+  display: inline-block;
+  width: 100px;
+  font-size: 150%;
+  margin-left: 15px;
+}
+
+.label-200 {
+  display: inline-block;
+  width: 200px;
+  font-size: 150%;
+  margin-left: 15px;
+}
+
+.label-300 {
+  display: inline-block;
+  width: 300px;
+  font-size: 150%;
+  margin-left: 15px;
+}
+
+
+
+
+
+/*********/
+/* INPUT */
+/*********/
+
+input[type=text] {
+    padding: 4px 10px;
+    font-weight: 200;
+    height: 40px;
+}
+
+input[type=number] {
+    padding: 4px 10px;
+    text-align: right;
+    height: 40px;
+}
+
+.input-number-100,
+.input-text-100 {
+    width: 100px;
+}
+
+.input-number-200,
+.input-text-200 {
+    width: 200px;
+}
+
+.input-number-300,
+.input-text-300 {
+    width: 300px;
+}
+
+.input-number-400,
+.input-text-400 {
+    width: 400px;
+}
+
+.input-number-400,
+.input-text-400 {
+    width: 400px;
+}
+
+select {
+  padding: 4px 10px;
+  height: 40px;
+  border-radius: 4px;
+  margin-right: 20px;
+}
+
+.select-100 {
+  width: 100px;
+}
+
+.select-150 {
+  width: 150px;
+}
+
+.select-200 {
+  width: 200px;
+}
+
+.select-300 {
+  width: 300px;
+}

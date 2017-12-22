@@ -24,7 +24,12 @@ class Supplier
     if(@sup_id && @sup_id != 0) #if the row already exists
       update()
     else
-      insert()
+      if(! Supplier.check_if_name_exists(@sup_name))
+        insert()
+        return true
+      else
+        return false
+      end
     end
   end
 
@@ -45,6 +50,11 @@ class Supplier
 
 
   # Class methods
+
+  def self.check_if_name_exists(sup_name)
+    query = "SELECT COUNT(suppliers.sup_id) nb_suppliers FROM suppliers WHERE lower(suppliers.sup_name) = lower($1)"
+    return DbHelper.run_sql_return_first_row_column_value(query, [sup_name], 'nb_suppliers').to_i > 0;
+  end
 
   def self.can_be_deleted(sup_id)
     query = "SELECT COUNT(purchase_orders.pro_id) nb_references from purchase_orders WHERE purchase_orders.pro_sup_id = $1"
@@ -70,14 +80,14 @@ class Supplier
 
   # Find all the suppliers
   def self.find_all()
-    query   = "SELECT sup_id, sup_name FROM suppliers"
+    query   = "SELECT sup_id, sup_name FROM suppliers ORDER BY sup_name"
     return DbHelper.run_sql_and_return_many_objects(query, [], Supplier)
   end
 
   # Find all the suppliers whose name matches
   def self.search_all_by_name(sup_name, strict = false)
     if(! strict)
-      query   = "SELECT sup_id, sup_name FROM suppliers WHERE lower(sup_name) LIKE lower($1)"
+      query   = "SELECT sup_id, sup_name FROM suppliers WHERE lower(sup_name) LIKE lower($1) ORDER BY sup_name"
       return DbHelper.run_sql_and_return_many_objects(query, ["%#{sup_name}%"], Supplier)
     else
       query   = "SELECT sup_id, sup_name FROM suppliers WHERE sup_name = $1"

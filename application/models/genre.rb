@@ -19,14 +19,26 @@ class Genre
   def save()
     if(@gen_id && @gen_id != 0) #if the row already exists
       update()
+      return true
     else
-      insert()
+      if(! Genre.check_if_name_exists(@gen_name))
+        insert()
+        return true
+      else
+        return false
+      end
+
     end
   end
 
 
 
   # Class methods
+
+  def self.check_if_name_exists(gen_name)
+    query = "SELECT COUNT(genres.gen_id) nb_genres FROM genres WHERE lower(genres.gen_name) = lower($1)"
+    return DbHelper.run_sql_return_first_row_column_value(query, [gen_name], 'nb_genres').to_i > 0;
+  end
 
   def self.can_be_deleted(gen_id)
     query = "SELECT COUNT(albums.alb_id) nb_references from albums WHERE albums.alb_gen_id = $1"
@@ -52,17 +64,17 @@ class Genre
 
   # Find all the genres
   def self.find_all()
-    query   = "SELECT gen_id, gen_name FROM genres"
+    query   = "SELECT gen_id, gen_name FROM genres ORDER BY gen_name"
     return DbHelper.run_sql_and_return_many_objects(query, [], Genre)
   end
 
   # Find all the genres
   def self.search_all_by_name(gen_name, strict = false)
     if (!strict)
-      query   = "SELECT gen_id, gen_name FROM genres WHERE lower(gen_name) LIKE lower($1) #{DbHelper::NB_ROWS_LIMIT}"
+      query   = "SELECT gen_id, gen_name FROM genres WHERE lower(gen_name) LIKE lower($1) ORDER BY gen_name"
       return DbHelper.run_sql_and_return_many_objects(query, ["%#{gen_name}%"], Genre)
     else
-      query   = "SELECT gen_id, gen_name FROM genres WHERE gen_name = $1"
+      query   = "SELECT gen_id, gen_name FROM genres WHERE gen_name = $1 ORDER BY gen_name"
       return DbHelper.run_sql_and_return_many_objects(query, ["#{gen_name}"], Genre)
     end
 

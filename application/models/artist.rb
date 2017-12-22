@@ -11,7 +11,9 @@ class Artist
     if(options != nil)
       @art_id             = options['art_id'].to_i if options['art_id']
       @art_name           = options['art_name']
-      @art_photo          = @art_name.downcase.sub(" ","")
+      @art_photo          = @art_name.downcase()
+      @art_photo.gsub!(/\s+/, "");
+      @art_photo.sub!("'", "");
       @art_photo_path     = NavMusicStore::DATA_IMAGES_PATH + @art_photo + ".jpg"
     else
       @art_id             = 0
@@ -27,8 +29,14 @@ class Artist
   def save()
     if(@art_id && @art_id != 0) #if the row already exists
       update()
+      return true
     else
-      insert()
+      if(! Artist.check_if_name_exists(@art_name))
+        insert()
+        return true
+      else
+        return false
+      end
     end
   end
 
@@ -40,6 +48,10 @@ class Artist
     return NavArtists::GET_NEW
   end
 
+  def self.check_if_name_exists(art_name)
+    query = "SELECT COUNT(artists.art_id) nb_artists FROM artists WHERE lower(artists.art_name) = lower($1)"
+    return DbHelper.run_sql_return_first_row_column_value(query, [art_name], 'nb_artists').to_i > 0;
+  end
 
   # Delete from the table artists the given artist
   def self.can_be_deleted(art_id)
@@ -66,17 +78,17 @@ class Artist
 
   # Find all the artists whose name matches
   def self.find_all()
-    query   = "SELECT art_id, art_name FROM artists"
+    query   = "SELECT art_id, art_name FROM artists ORDER BY art_name"
     return DbHelper.run_sql_and_return_many_objects(query, [], Artist)
   end
 
   # Find all the artists
   def self.search_all_by_name(art_name, strict = false)
     if(! strict)
-      query   = "SELECT art_id, art_name FROM artists WHERE lower(art_name) LIKE lower($1)"
+      query   = "SELECT art_id, art_name FROM artists WHERE lower(art_name) LIKE lower($1) ORDER BY art_name"
       return DbHelper.run_sql_and_return_many_objects(query, ["%#{art_name}%"], Artist)
     else
-      query   = "SELECT art_id, art_name FROM artists WHERE art_name = $1"
+      query   = "SELECT art_id, art_name FROM artists WHERE art_name = $1 ORDER BY art_name"
       return DbHelper.run_sql_and_return_many_objects(query, ["#{art_name}"], Artist)
     end
 

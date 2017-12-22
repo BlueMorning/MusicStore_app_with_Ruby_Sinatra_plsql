@@ -13,8 +13,12 @@ class Album
       @alb_id               = options['alb_id'].to_i if options['alb_id']
       @alb_title            = options['alb_title']
       @alb_price            = options['alb_price'].to_i
-      @alb_image            = @alb_title.downcase.sub(" ","")
-      @alb_image_path       = NavMusicStore::DATA_IMAGES_PATH + @alb_image + ".jpg"
+      @alb_image            = options['alb_image']
+      if(@alb_title != nil  && @alb_title != "")
+        @alb_image_path     = NavMusicStore::DATA_IMAGES_PATH + Album.set_image_name_from_title(@alb_title) + ".jpg"
+      else
+        @alb_image_path     = ""
+      end
       @alb_art_id           = options['alb_art_id'].to_i
       @alb_gen_id           = options['alb_gen_id'].to_i
       @alb_qty_available    = options['alb_qty_available'].to_i
@@ -45,12 +49,19 @@ class Album
     end
   end
 
+
   # Perform an insert or an update depending on the value of ald_id
   def save()
     if(@alb_id)
       update()
+      return true
     else
-      insert()
+      if(! Album.check_if_title_exists(@alb_title))
+        insert()
+        return true
+      else
+        return false
+      end
     end
   end
 
@@ -107,6 +118,11 @@ class Album
 
   #Class method
 
+  def self.check_if_title_exists(alb_title)
+    query = "SELECT COUNT(albums.alb_id) nb_albums FROM albums WHERE lower(albums.alb_title) = lower($1)"
+    return DbHelper.run_sql_return_first_row_column_value(query, [alb_title], 'nb_albums').to_i > 0;
+  end
+
   def self.can_be_deleted(alb_id)
     query = "SELECT
                 (SELECT COUNT(sli_id) from sale_items     WHERE sale_items.sli_alb_id = $1)
@@ -144,7 +160,7 @@ class Album
              FROM
              albums
              INNER JOIN genres  on albums.alb_gen_id = genres.gen_id
-             INNER JOIN artists on albums.alb_art_id = artists.art_id"
+             INNER JOIN artists on albums.alb_art_id = artists.art_id ORDER BY alb_title"
 
     if limit > 0
       query += " LIMIT #{limit}"
@@ -161,7 +177,7 @@ class Album
              FROM albums
              INNER JOIN      artists    on albums.alb_art_id = artists.art_id
              INNER JOIN      genres     on albums.alb_gen_id = genres.gen_id
-             WHERE lower(albums.alb_title) LIKE lower($1) or lower(artists.art_name) LIKE lower($1)"
+             WHERE lower(albums.alb_title) LIKE lower($1) or lower(artists.art_name) LIKE lower($1) ORDER BY alb_title"
      return DbHelper.run_sql(query, ["%#{alb_title_or_art_name}%"]).map {|album| Album.new(album, true)}
   end
 
@@ -220,6 +236,8 @@ class Album
       end
     end
 
+    query+= " ORDER BY alb_title"
+
     if limit > 0
       query += " LIMIT #{limit}"
     end
@@ -240,6 +258,25 @@ class Album
   def self.qty_available(alb_id)
     query = "SELECT alb_qty_available FROM albums WHERE alb_id = $1"
     DbHelper.run_sql_return_first_row_column_value(query, [alb_id], "alb_qty_available").to_i
+  end
+
+  def self.set_image_name_from_title(alb_title)
+    image_name = ""
+    if(alb_title != nil)
+      title_split_by_space = alb_title.split(" ")
+
+
+      title_split_by_space.each do |item|
+        image_name += item
+      end
+
+      title_split_by_quote = image_name.split("'")
+      image_name = ""
+      title_split_by_quote.each do |item|
+        image_name += item
+      end
+    end
+    return image_name
   end
 
 
