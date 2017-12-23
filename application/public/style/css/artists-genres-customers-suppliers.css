@@ -117,7 +117,7 @@
 }
 
 .album-img-large-xxl {
-  width: 440px;
+  width: 410px;
   border-radius: 5%;
   vertical-align: middle;
   margin: 0 50%;
@@ -145,6 +145,9 @@
   text-align: center;
 }
 
+.album-form {
+  margin-left: 50px;
+}
 
 /* TABLES */
 
@@ -252,7 +255,7 @@
 .div-total-amount {
   background-color: #3498db;
   color: #fff;
-  border-radius: 5%;
+  border-radius: 3%;
   padding: 10px;
   margin-bottom: 20px;
 }
@@ -266,7 +269,7 @@
 .div-sale-number {
   background-color: #3498db;
   color: #fff;
-  border-radius: 5%;
+  border-radius: 10%;
   padding: 0px 5px;
   margin: 0px 3px;
 }

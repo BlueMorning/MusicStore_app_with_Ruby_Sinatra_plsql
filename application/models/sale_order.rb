@@ -41,7 +41,7 @@ class SaleOrder
   end
 
 
-  def nb_items()
+  def nb_rows()
     query = "SELECT COUNT(sli_id) nb_items FROM sale_items WHERE sli_slo_id = $1"
     return DbHelper.run_sql_return_first_row_column_value(query, [@slo_id], 'nb_items').to_i
   end
@@ -186,7 +186,7 @@ class SaleOrder
                FROM  sale_orders
                INNER JOIN customers on sale_orders.slo_cus_id = customers.cus_id
                WHERE slo_id = $1"
-               
+
     if(! init_sale_items)
       return DbHelper.run_sql(query, [slo_id]).map {|sale_order| SaleOrder.new(sale_order, false, true)}[0]
     else

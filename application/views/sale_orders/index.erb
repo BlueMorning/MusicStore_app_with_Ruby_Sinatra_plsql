@@ -79,7 +79,7 @@
                   </a>
               </td>
               <td class="td-number">£<%= sale_order.slo_total_price              %></td>
-              <td class="td-number"><%= sale_order.nb_items()                   %></td>
+              <td class="td-number"><%= sale_order.nb_rows()                   %></td>
               <td class="td-number"><%= sale_order.total_quantity()             %></td>
               <td class="td-actions">
                   <a href="<%= NavSaleOrders.nav_get_view_by_id(sale_order.slo_id) %>">View</a>

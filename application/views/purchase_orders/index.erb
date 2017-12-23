@@ -79,7 +79,7 @@
                 </a>
             </td>
             <td class="td-number">£<%= purchase_order.pro_total_price              %></td>
-            <td class="td-number"><%= purchase_order.nb_items()                   %></td>
+            <td class="td-number"><%= purchase_order.nb_rows()                   %></td>
             <td class="td-number"><%= purchase_order.total_quantity()             %></td>
             <td class="td-actions">
                 <a href="<%= NavPurchaseOrders.nav_get_view_by_id(purchase_order.pro_id) %>">View</a>

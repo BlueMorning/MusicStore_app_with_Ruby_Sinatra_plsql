@@ -41,7 +41,7 @@ class PurchaseOrder
   end
 
 
-  def nb_items()
+  def nb_rows()
     query = "SELECT COUNT(pri_id) nb_items FROM purchase_items WHERE pri_pro_id = $1"
     return DbHelper.run_sql_return_first_row_column_value(query, [@pro_id], 'nb_items').to_i
   end

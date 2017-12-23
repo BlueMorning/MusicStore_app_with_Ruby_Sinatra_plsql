@@ -17,11 +17,11 @@
         <div class="div-total-amount">
           <div class="flex-row">
             <div class="div-150">Nb Rows</div>
-            <div class="div-100 div-number"><%= @purchase_order.purchase_items.count() %></div>
+            <div class="div-100 div-number"><%= @purchase_order.purchase_items.nb_rows() %></div>
           </div>
           <div class="flex-row">
-            <div class="div-150">Nb Items</div>
-            <div class="div-100 div-number"><%= @purchase_order.nb_items() %></div>
+            <div class="div-150">Total Quantity</div>
+            <div class="div-100 div-number"><%= @purchase_order.total_quantity() %></div>
           </div>
           <div class="flex-row">
             <div class="div-150">Total Amount</div>
