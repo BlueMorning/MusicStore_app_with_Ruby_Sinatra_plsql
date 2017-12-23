@@ -103,7 +103,7 @@ class SaleItem
                INNER JOIN albums  on sale_items.sli_alb_id  = albums.alb_id
                INNER JOIN artists on albums.alb_art_id      = artists.art_id
                INNER JOIN genres  on albums.alb_gen_id      = genres.gen_id
-               WHERE sli_slo_id = $1"
+               WHERE sli_slo_id = $1 ORDER BY albums.alb_title"
     return DbHelper.run_sql(query, [slo_id]).map {|item| SaleItem.new(item, true)}
   end
 

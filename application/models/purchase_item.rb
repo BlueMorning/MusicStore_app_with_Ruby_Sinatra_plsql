@@ -97,7 +97,7 @@ class PurchaseItem
                INNER JOIN albums  on purchase_items.pri_alb_id  = albums.alb_id
                INNER JOIN artists on albums.alb_art_id      = artists.art_id
                INNER JOIN genres  on albums.alb_gen_id      = genres.gen_id
-               WHERE pri_pro_id = $1"
+               WHERE pri_pro_id = $1 ORDER BY albums.alb_title"
     return DbHelper.run_sql(query, [pro_id]).map {|item| PurchaseItem.new(item, true)}
   end
 
