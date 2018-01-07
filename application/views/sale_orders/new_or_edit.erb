@@ -76,7 +76,7 @@
               <td><%= sale_item.album.alb_title %></td>
               <td><%= sale_item.artist.art_name %></td>
               <td><%= sale_item.genre.gen_name  %></td>
-              <td>£<%= sale_item.album.alb_price %></td>
+              <td class="td-number">£<%= sale_item.album.alb_price %></td>
               <td class="td-number">
                 <input class="input-number-100" type="number" step="1" min="0"
                  name="<%= "qty_alb_id_#{sale_item.album.alb_id}" %>"
@@ -85,7 +85,7 @@
               <td class="td-number">
                 <div class="div-80 div-number
                 <%= " stock-low"    if(sale_item.album.stock_level()    == "low") %>
-                <%= " stock-medium" if(sale_item.album.stock_level() == "medium") %>
+                <%= " stock-medium" if(sale_item.album.stock_level()    == "medium") %>
                 <%= " stock-high"   if(sale_item.album.stock_level()   == "high") %>
                 ">
                 <%= sale_item.album.alb_qty_available %>

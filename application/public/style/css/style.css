@@ -211,7 +211,10 @@ table tr:nth-child(even) td{
 
 }
 
-.div-number,
+.div-number {
+  float: right;
+  text-align: right;
+}
 .td-number {
   text-align: right;
 }

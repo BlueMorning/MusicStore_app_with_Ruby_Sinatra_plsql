@@ -77,7 +77,7 @@
               <td><%= purchase_item.album.alb_title %></td>
               <td><%= purchase_item.artist.art_name %></td>
               <td><%= purchase_item.genre.gen_name  %></td>
-              <td><%= purchase_item.album.alb_price %></td>
+              <td class="td-number"><%= purchase_item.album.alb_price %></td>
               <td class="td-number">
                 <span>£</span><input class="input-number-100" type="number" step="1"
                  name="<%= "price_alb_id_#{purchase_item.album.alb_id}" %>"
