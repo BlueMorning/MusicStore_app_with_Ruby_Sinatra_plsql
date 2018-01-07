@@ -34,6 +34,18 @@
               <% end %>
           </select>
 
+          <select name="display_option" id="display_option" class="select-80">
+            <% ViewHelper.get_display_options_for_albums().each do |option_display| %>
+              <option value="<%= option_display["display_value"] %>"
+                <% if @filters["display_option"] == option_display["display_value"] %>
+                  selected
+                <% end %>
+                >
+                    <%= option_display["display_label"] %>
+              </option>
+            <% end %>
+          </select>
+
           <input type="submit" name="" value="GO !">
         </form>
       </div>
@@ -42,96 +54,11 @@
       </div>
   </div>
   <!-- Albums list -->
-  <div class="div-table-albums">
-      <table class="table-albums">
-          <thead>
-            <th class="th-album-image">Cover</th>
-            <th class="th-album-title-artist">Title & Artist</th>
-            <th class="th-album-genre">Genre</th>
-            <th>Stock</th>
-            <th>Purchases</th>
-            <th>Price/Unit</th>
-            <th>Sales</th>
-            <th class="th-action">Modify</th>
-            <th class="th-action">Delete</th>
-          </thead>
-          <tbody>
-          <% @albums.each do |album| %>
-            <tr>
-              <td class="td-align-top"><image width="100" src="<%= album.alb_image_path %>" alt="<%= album.alb_title %>"></td>
-              <td class="td-align-top">
-                <%= album.alb_title %><br>
-                <a href="<%= NavArtists.nav_get_with_art_name(album.artist.art_name, true) %>"><%= album.artist.art_name %></a>
-              </td>
-              <td class="td-align-top">
-                <a href="<%= NavGenres.nav_get_with_gen_name(album.genre.gen_name, true) %>"><%= album.genre.gen_name %></a>
-              </td>
-              <td class="td-align-top">
-                <div class="flex-column">
-                  <div class="flex-row">
-                    <div class="div-80">Avail. </div>
-                    <div class="div-80 div-number
-                    <%= " stock-low"    if(album.stock_level()    == "low") %>
-                    <%= " stock-medium"    if(album.stock_level() == "medium") %>
-                    <%= " stock-high"    if(album.stock_level()   == "high") %>
-                    ">
-                      <%= album.alb_qty_available %>
-                    </div>
-                  </div>
-                  <div class="flex-row">
-                    <div class="div-80">Min.</div>
-                    <div class="div-80 div-number"><%= album.alb_qty_min %></div>
-                  </div>
-                  <div class="flex-row">
-                    <div class="div-80">Max.</div>
-                    <div class="div-80 div-number"><%= album.alb_qty_max %></div>
-                  </div>
-                </div>
-              </td>
-              <td class="td-align-top">
-                <div class="flex-column">
-                  <div class="flex-row">
-                    <div class="div-80">Qty Pur.</div>
-                    <div class="div-80 div-number"><%= album.nb_item_purchased() %></div>
-                  </div>
-                  <div class="flex-row">
-                    <div class="div-80">Total</div>
-                    <div class="div-80 div-number"><span>£</span><%= album.total_amount_purchased() %></div>
-                  </div>
-                  <div class="flex-row">
-                    <div class="div-80">Nb. Sup.</div>
-                    <div class="div-80 div-number"><%= album.nb_distinct_suplliers() %></div>
-                  </div>
-                </div>
-              </td>
-              <td class="td-align-top td-number"><span>£</span><%= album.alb_price %></td>
-              <td>
-                <div class="flex-column">
-                  <div class="flex-row">
-                    <div class="div-80">Qty. Sold</div>
-                    <div class="div-80 div-number"><%= album.nb_item_sold() %></div>
-                  </div>
-                  <div class="flex-row">
-                    <div class="div-80">Total</div>
-                    <div class="div-80 div-number"><span>£</span><%= album.total_amount_sold() %></div>
-                  </div>
-                  <div class="flex-row">
-                    <div class="div-80">Nb. Cus.</div>
-                    <div class="div-80 div-number"><%= album.nb_distinct_customers() %></div>
-                  </div>
-                </div>
-              </td>
-              <td class="td-align-top td-actions">
-                <a href="<%= NavAlbums.nav_get_edit_by_id(album.alb_id) %>">Modify</a>
-              </td>
-              <td class="td-align-top td-actions">
-                <form action="<%= NavAlbums.nav_post_delete_by_id(album.alb_id) %>" method="POST">
-                  <input type="submit" value="Delete" />
-                </form>
-              </td>
-            </tr>
-          <% end %>
-        </tbody>
-      </table>
-  </div>
+  <% if    (@filters["display_option"] == "list") %>
+    <%= erb(:"albums/display_list") %>
+  <% elsif (@filters["display_option"] == "grid")%>
+    <%= erb(:"albums/display_grid") %>
+  <% else %>
+    <%= erb(:"albums/display_list") %>
+  <% end %>
 </div>

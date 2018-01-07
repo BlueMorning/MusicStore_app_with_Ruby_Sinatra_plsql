@@ -251,3 +251,11 @@ table tr:nth-child(even) td{
   justify-content: flex-end;
   align-items: baseline;
 }
+
+.flex-column-center {
+  align-items: center;
+}
+
+.flex-row-center {
+  justify-content: center;
+}

@@ -1,0 +1,47 @@
+<div class="div-table-albums">
+    <table class="table-albums">
+        <thead>
+          <th class="th-album-image">Cover</th>
+          <th class="th-album-title-artist">Title & Artist</th>
+          <th class="th-album-genre">Genre</th>
+          <th>Stock</th>
+          <th>Purchases</th>
+          <th>Price/Unit</th>
+          <th>Sales</th>
+          <th class="th-action">Modify</th>
+          <th class="th-action">Delete</th>
+        </thead>
+        <tbody>
+        <% @albums.each do |album| %>
+          <tr>
+            <td class="td-align-top"><img width="100" src="<%= album.alb_image_path %>" alt="<%= album.alb_title %>"></td>
+            <td class="td-align-top">
+              <%= album.alb_title %><br>
+              <a href="<%= NavArtists.nav_get_with_art_name(album.artist.art_name, true) %>"><%= album.artist.art_name %></a>
+            </td>
+            <td class="td-align-top">
+              <a href="<%= NavGenres.nav_get_with_gen_name(album.genre.gen_name, true) %>"><%= album.genre.gen_name %></a>
+            </td>
+            <td class="td-align-top">
+              <%= erb(:"albums/parts/stock_part", :locals => {:album => album})    %>
+            </td>
+            <td class="td-align-top">
+              <%= erb(:"albums/parts/purchase_part", :locals => {:album => album}) %>
+            </td>
+            <td class="td-align-top td-number"><span>£</span><%= album.alb_price %></td>
+            <td>
+              <%= erb(:"albums/parts/sales_part", :locals => {:album => album}) %>
+            </td>
+            <td class="td-align-top td-actions">
+              <a href="<%= NavAlbums.nav_get_edit_by_id(album.alb_id) %>">Modify</a>
+            </td>
+            <td class="td-align-top td-actions">
+              <form action="<%= NavAlbums.nav_post_delete_by_id(album.alb_id) %>" method="POST">
+                <input type="submit" value="Delete" />
+              </form>
+            </td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+</div>

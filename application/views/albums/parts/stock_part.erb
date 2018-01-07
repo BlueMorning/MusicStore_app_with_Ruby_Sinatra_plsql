@@ -1,0 +1,20 @@
+<div class="flex-column">
+  <div class="flex-row">
+    <div class="div-80">Avail. </div>
+    <div class="div-80 div-number
+    <%= " stock-low"    if(album.stock_level()    == "low") %>
+    <%= " stock-medium" if(album.stock_level()    == "medium") %>
+    <%= " stock-high"   if(album.stock_level()    == "high") %>
+    ">
+      <%= album.alb_qty_available %>
+    </div>
+  </div>
+  <div class="flex-row">
+    <div class="div-80">Min.</div>
+    <div class="div-80 div-number"><%= album.alb_qty_min %></div>
+  </div>
+  <div class="flex-row">
+    <div class="div-80">Max.</div>
+    <div class="div-80 div-number"><%= album.alb_qty_max %></div>
+  </div>
+</div>

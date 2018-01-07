@@ -86,10 +86,8 @@ post NavSaleOrders::POST_ADD_ITEMS do
     end
   end
 
-
   sale_order_id = params['slo_id'].to_i
   customer_id   = params["slo_cus_id"].to_i
-
 
   if(sale_order_id == 0)
     @sale_order = SaleOrder.new({"slo_cus_id"       => customer_id,

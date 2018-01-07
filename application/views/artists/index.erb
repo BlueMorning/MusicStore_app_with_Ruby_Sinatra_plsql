@@ -29,7 +29,7 @@
           <tbody>
           <% @artists.each do |artist| %>
             <tr>
-              <td><image class="artist-img" src="<%= artist.art_photo_path %>" alt="<%= artist.art_name %>"></td>
+              <td><img class="artist-img" src="<%= artist.art_photo_path %>" alt="<%= artist.art_name %>"></td>
               <td><%= artist.art_name %></td>
               <td class="td-actions"><a href="<%= NavAlbums.nav_get_with_art_name(artist.art_name) %>">Albums</a></td>
               <td class="td-actions">

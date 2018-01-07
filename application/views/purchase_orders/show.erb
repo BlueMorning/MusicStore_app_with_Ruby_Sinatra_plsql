@@ -45,7 +45,7 @@
       <tbody>
         <% @purchase_order.purchase_items.each do |purchase_item|  %>
           <tr>
-            <td><image class="album-img-small" src="<%= purchase_item.album.alb_image_path %>" alt="<%= purchase_item.album.alb_title %>"></td>
+            <td><img class="album-img-small" src="<%= purchase_item.album.alb_image_path %>" alt="<%= purchase_item.album.alb_title %>"></td>
             <td><%= purchase_item.album.alb_title %></td>
             <td><%= purchase_item.artist.art_name %></td>
             <td><%= purchase_item.genre.gen_name  %></td>

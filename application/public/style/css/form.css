@@ -90,6 +90,10 @@ select {
   margin-right: 20px;
 }
 
+.select-80 {
+  width: 80px;
+}
+
 .select-100 {
   width: 100px;
 }

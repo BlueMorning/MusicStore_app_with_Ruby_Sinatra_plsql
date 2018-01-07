@@ -1,0 +1,14 @@
+<div class="flex-column">
+  <div class="flex-row">
+    <div class="div-80">Qty. Sold</div>
+    <div class="div-80 div-number"><%= album.nb_item_sold() %></div>
+  </div>
+  <div class="flex-row">
+    <div class="div-80">Total</div>
+    <div class="div-80 div-number"><span>£</span><%= album.total_amount_sold() %></div>
+  </div>
+  <div class="flex-row">
+    <div class="div-80">Nb. Cus.</div>
+    <div class="div-80 div-number"><%= album.nb_distinct_customers() %></div>
+  </div>
+</div>

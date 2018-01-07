@@ -1,0 +1,31 @@
+<div class="flex-row-wrap">
+  <% @albums.each do |album| %>
+    <div class="div-album-grid">
+      <div class="flex-row div-album-grid-title">
+        <%= album.alb_title %>
+        <span class="label_separator">|</span>
+        <a href="<%= NavArtists.nav_get_with_art_name(album.artist.art_name, true) %>"><%= album.artist.art_name %></a>
+        <span class="label_separator">|</span>
+        <a href="<%= NavGenres.nav_get_with_gen_name(album.genre.gen_name, true) %>"><%= album.genre.gen_name %></a>
+      </div>
+      <div class="flex-row">
+        <div class="div-album-img-small">
+          <section>
+            <img src="<%= album.alb_image_path %>" class="album-img-grid" />
+            <div class="div-album-price">£<%= album.alb_price %></div>
+          </section>
+        </div>
+        <div class="flex-row">
+            <%= erb(:"albums/parts/stock_part",     :locals => {:album => album})  %>
+            <div class="flex-column flex-column-center div-grid-action">
+              <a href="<%= NavAlbums.nav_get_edit_by_id(album.alb_id) %>">Modify</a>
+              <form action="<%= NavAlbums.nav_post_delete_by_id(album.alb_id) %>" method="POST">
+                <input type="submit" value="Delete" />
+              </form>
+            </div>
+        </div>
+      </div>
+
+    </div>
+  <% end %>
+</div>

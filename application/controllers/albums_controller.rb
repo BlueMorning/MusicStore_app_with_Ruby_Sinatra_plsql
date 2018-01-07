@@ -5,16 +5,18 @@ require_relative('./../models/album')
 require_relative('./../models/artist')
 require_relative('./../models/genre')
 require_relative('./../helper/navigation')
+require_relative('./../helper/view')
 
 
 get NavAlbums::GET_INDEX do
   @albums  = Album.find_all()
   @genres  = Genre.find_all()
   @filters = {}
-  params.include?("alb_title")   ? @filters["alb_title"]    = params["alb_title"]         : @filters["alb_title"]   = ""
-  params.include?("art_name")    ? @filters["art_name"]     = params["art_name"]          : @filters["art_name"]    = ""
-  params.include?("alb_gen_id")  ? @filters["alb_gen_id"]   = params["alb_gen_id"].to_i   : @filters["alb_gen_id"]  = 0
-  params.include?("stock_level") ? @filters["stock_level"]  = params["stock_level"]       : @filters["stock_level"] = ""
+  params.include?("alb_title")        ? @filters["alb_title"]         = params["alb_title"]         : @filters["alb_title"]         = ""
+  params.include?("art_name")         ? @filters["art_name"]          = params["art_name"]          : @filters["art_name"]          = ""
+  params.include?("alb_gen_id")       ? @filters["alb_gen_id"]        = params["alb_gen_id"].to_i   : @filters["alb_gen_id"]        = 0
+  params.include?("stock_level")      ? @filters["stock_level"]       = params["stock_level"]       : @filters["stock_level"]       = ""
+  params.include?("display_option")  ? @filters["display_option"]   = params["display_option"]   : @filters["display_option"]   = ""
   erb(:"/albums/index")
 end
 
@@ -23,10 +25,11 @@ get NavAlbums::GET_WITH_FILTERS do
   @albums  = Album.find_with_filters(params)
   @genres  = Genre.find_all()
   @filters = {}
-  params.include?("alb_title")   ? @filters["alb_title"]    = params["alb_title"]         : @filters["alb_title"]   = ""
-  params.include?("art_name")    ? @filters["art_name"]     = params["art_name"]          : @filters["art_name"]    = ""
-  params.include?("alb_gen_id")  ? @filters["alb_gen_id"]   = params["alb_gen_id"].to_i   : @filters["alb_gen_id"]  = 0
-  params.include?("stock_level") ? @filters["stock_level"]  = params["stock_level"]       : @filters["stock_level"] = ""
+  params.include?("alb_title")        ? @filters["alb_title"]         = params["alb_title"]         : @filters["alb_title"]         = ""
+  params.include?("art_name")         ? @filters["art_name"]          = params["art_name"]          : @filters["art_name"]          = ""
+  params.include?("alb_gen_id")       ? @filters["alb_gen_id"]        = params["alb_gen_id"].to_i   : @filters["alb_gen_id"]        = 0
+  params.include?("stock_level")      ? @filters["stock_level"]       = params["stock_level"]       : @filters["stock_level"]       = ""
+    params.include?("display_option")  ? @filters["display_option"]   = params["display_option"]   : @filters["display_option"]   = ""
   erb(:"/albums/index")
 end
 
