@@ -181,6 +181,38 @@ class Album
      return DbHelper.run_sql(query, ["%#{alb_title_or_art_name}%"]).map {|album| Album.new(album, true)}
   end
 
+
+# Pseudocode to find all the albums which match with the provided filters
+# find_albums_with_filters(filters, limit)
+# - Initialize the sql query for albums
+# - For each filter in filters
+#               if the filter value is not null
+#                   then add the filter to the WHERE clause of the query
+#               end if
+#    end for
+# - Add the clause ORDER BY title to the sql query
+# - if limit > 0
+#      then add the statement LIMIT to the sql query
+#   end if
+# - Return the result of the sql query execution
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
   def self.find_with_filters(filters, limit = 0)
     query = "SELECT alb_id, alb_title, alb_price, alb_image, alb_art_id, alb_gen_id,
                     alb_qty_available, alb_qty_min, alb_qty_max,
