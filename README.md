@@ -37,23 +37,42 @@ Data persistence : PL/SQL database
   - The album profile
   - The artist profile
   
-
+> Diplay mode list.
 ![Optional Text](./documentation/5_screenshots/albums_in_stock.png)
+
+> Diplay mode grid.
 ![Optional Text](./documentation/5_screenshots/albums_grid_presentation.png)
+
+> Filter activated on albums whose stock is running low.
 ![Optional Text](./documentation/5_screenshots/albums_low_in_stock.png)
+
+> Modify operation on an album
 ![Optional Text](./documentation/5_screenshots/album_modification.png)
 
 ### CRUD operations on suppliers
-
+- Suppliers can be searched by name.
+- The link "sales" open the page which displays all the supplier's sales. 
 ![Optional Text](./documentation/5_screenshots/supliers.png)
 
 ### CRUD operations on customers
+- Customers can be searched by name.
+- The link "sales" open the page which displays all the customer's sales. 
 ![Optional Text](./documentation/5_screenshots/customers.png)
 
 ### CRUD operations on purchase orders
+> Depending on its status "OnGoing" or "Done" a purchase order can be modified and deleted or not.
 ![Optional Text](./documentation/5_screenshots/purchase_order_list.png)
+> A purchase order consists on : 
+- Selecting a supplier
+- Adding albums in the bascket with their quantity
+- Checking out the basket
 ![Optional Text](./documentation/5_screenshots/purchase_order_modification.png)
 
 ### CRUD operations on sale orders
+> Depending on its status "OnGoing" or "Done" a sale order can be modified and deleted or not.
 ![Optional Text](./documentation/5_screenshots/sales_orders_list.png)
+> A sale order consists on : 
+- Selecting a customer
+- Adding albums in the bascket with their quantity
+- Checking out the basket
 ![Optional Text](./documentation/5_screenshots/sale_order_modification.png)
