@@ -12,11 +12,9 @@
 
 ## Technical stack
 
-Frontend : HTML 5 + CSS 3
-
-Backend : Ruby with the Sinatra MVC freamework
-
-Data persistence : PL/SQL database
+- Frontend : HTML 5 + CSS 3
+- Backend : Ruby with the Sinatra MVC freamework
+- Data persistence : PL/SQL database
 
 ## At a glance
 
@@ -60,18 +58,18 @@ Data persistence : PL/SQL database
 ![Optional Text](./documentation/5_screenshots/customers.png)
 
 ### CRUD operations on purchase orders
-> Depending on its status "OnGoing" or "Done" a purchase order can be modified and deleted or not.
+Depending on its status "OnGoing" or "Done" a purchase order can be modified and deleted or not.
 ![Optional Text](./documentation/5_screenshots/purchase_order_list.png)
-> A purchase order consists on : 
-- Selecting a supplier
-- Adding albums in the bascket with their quantity
-- Checking out the basket
+A purchase order consists on : 
+- > Selecting a supplier
+- > Adding albums in the bascket with their quantity
+- > Checking out the basket
 ![Optional Text](./documentation/5_screenshots/purchase_order_modification.png)
 
 ### CRUD operations on sale orders
-> Depending on its status "OnGoing" or "Done" a sale order can be modified and deleted or not.
+Depending on its status "OnGoing" or "Done" a sale order can be modified and deleted or not.
 ![Optional Text](./documentation/5_screenshots/sales_orders_list.png)
-> A sale order consists on : 
+A sale order consists on : 
 - Selecting a customer
 - Adding albums in the bascket with their quantity
 - Checking out the basket
