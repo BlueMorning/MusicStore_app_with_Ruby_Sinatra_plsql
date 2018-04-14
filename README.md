@@ -24,7 +24,7 @@ Data persistence : PL/SQL database
 ### CRUD operations on artists
 ### CRUD operations on albums
 
-![Optional Text](../documentation/5_screenshots/album_modification.png)
+![Optional Text](./documentation/5_screenshots/album_modification.png)
 
 ### CRUD operations on suppliers
 ### CRUD operations on clients
