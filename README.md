@@ -1,4 +1,4 @@
-# A music store application with Ruby/Sinatra and PL/SQL
+# A music store application with Ruby/Sinatra and PL/SQL. One-Week project from scratch.
 
 ## This application aims at helping the manager of a music store to perform :
 - CRUD operations on genres of music
