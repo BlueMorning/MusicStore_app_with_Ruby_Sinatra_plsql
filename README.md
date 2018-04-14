@@ -50,7 +50,7 @@
 ### CRUD operations on suppliers
 - Suppliers can be searched by name.
 - The link "sales" open the page which displays all the supplier's sales. 
-![Optional Text](./documentation/5_screenshots/supliers.png)
+![Optional Text](./documentation/5_screenshots/suppliers.png)
 
 ### CRUD operations on customers
 - Customers can be searched by name.
