@@ -13,7 +13,7 @@
 ## Technical stack
 
 - Frontend : HTML 5 + CSS 3
-- Backend : Ruby with the Sinatra MVC freamework
+- Backend : Ruby with the Sinatra MVC framework
 - Data persistence : PL/SQL database
 
 ## At a glance
