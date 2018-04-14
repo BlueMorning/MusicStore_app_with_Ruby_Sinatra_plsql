@@ -61,9 +61,9 @@
 Depending on its status "OnGoing" or "Done" a purchase order can be modified and deleted or not.
 ![Optional Text](./documentation/5_screenshots/purchase_order_list.png)
 A purchase order consists on : 
-- > Selecting a supplier
-- > Adding albums in the bascket with their quantity
-- > Checking out the basket
+- Selecting a supplier
+- Adding albums in the bascket with their quantity
+- Checking out the basket
 ![Optional Text](./documentation/5_screenshots/purchase_order_modification.png)
 
 ### CRUD operations on sale orders
