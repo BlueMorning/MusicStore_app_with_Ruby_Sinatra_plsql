@@ -1,6 +1,7 @@
 # A music store application with Ruby/Sinatra and PL/SQL. One-Week project from scratch.
 
-## This application aims at helping the manager of a music store to perform :
+## At a glance
+This application aims at helping the manager of a music store to perform :
 - CRUD operations on genres of music
 - CRUD operations on artists
 - CRUD operations on albums
@@ -16,7 +17,7 @@
 - Backend : Ruby with the Sinatra MVC framework
 - Data persistence : PL/SQL database
 
-## At a glance
+## Description
 
 ### CRUD operations on genres of music
 - Genres can be searched by name.
